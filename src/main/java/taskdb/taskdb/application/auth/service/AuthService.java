@@ -6,6 +6,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import taskdb.taskdb.application.auth.port.in.AuthLoginUseCase;
+import taskdb.taskdb.application.auth.port.out.SaveRefreshTokenPort;
 import taskdb.taskdb.domain.auth.exception.InvalidPasswordException;
 import taskdb.taskdb.domain.user.entity.User;
 import taskdb.taskdb.application.auth.dto.UserLoginRequestDto;
@@ -22,20 +23,22 @@ public class AuthService implements AuthLoginUseCase {
     private final JwtTokenProvider jwtTokenProvider;
     private final PasswordEncoder passwordEncoder;
     private final GetUserPort getUserPort;
+    private final SaveRefreshTokenPort saveRefreshTokenPort;
     private final UserMapper userMapper;
 
     @Override
     public TokenResponseDto login(UserLoginRequestDto requestDto) {
         User user = getUserPort.getUserByEmail(requestDto.getEmail());
-        checkPassword(requestDto, user);
-        String accessToken = jwtTokenProvider.createAccessToken(user);
-        return userMapper.of(accessToken);
+        checkPassword(requestDto.getPassword(), user);
+        final String accessToken = jwtTokenProvider.createAccessToken(user.getEmail());
+        final String refreshToken = jwtTokenProvider.createRefreshToken();
+        saveRefreshTokenPort.save(user.getEmail(), refreshToken);
+        return userMapper.of(accessToken, refreshToken);
     }
 
-    private void checkPassword(UserLoginRequestDto requestDto, User user) {
-        String requestPassword = requestDto.getPassword();
+    private void checkPassword(String password, User user) {
         String userPassword = user.getPassword();
-        if(!passwordEncoder.matches(requestPassword, userPassword)) {
+        if(!passwordEncoder.matches(password, userPassword)) {
             throw new InvalidPasswordException();
         }
     }

@@ -11,7 +11,7 @@ import taskdb.taskdb.application.answerLike.port.out.ExistAnswerLikePort;
 import taskdb.taskdb.application.answerLike.port.out.ExistAnswerUnLikePort;
 import taskdb.taskdb.application.answerLike.port.out.SaveAnswerUnLikePort;
 import taskdb.taskdb.application.user.port.out.GetUserPort;
-import taskdb.taskdb.domain.answer.domain.Answer;
+import taskdb.taskdb.domain.answer.entity.Answer;
 import taskdb.taskdb.domain.answerLike.entity.AnswerUnLike;
 import taskdb.taskdb.domain.answerLike.exception.DuplicateAnswerUnLikeException;
 import taskdb.taskdb.domain.user.entity.User;

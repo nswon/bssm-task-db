@@ -1,9 +1,8 @@
 package taskdb.taskdb.application.comment.dto;
 
 import org.springframework.stereotype.Component;
-import taskdb.taskdb.domain.comment.domain.Comment;
-import taskdb.taskdb.domain.comment.domain.Content;
-import taskdb.taskdb.application.comment.dto.CommentCreateRequestDto;
+import taskdb.taskdb.domain.comment.entity.Comment;
+import taskdb.taskdb.domain.comment.entity.Content;
 import taskdb.taskdb.domain.question.entity.Question;
 import taskdb.taskdb.domain.user.entity.User;
 

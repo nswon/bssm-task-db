@@ -1,4 +1,4 @@
-package taskdb.taskdb.domain.answer.domain;
+package taskdb.taskdb.domain.answer.entity;
 
 import lombok.Getter;
 

@@ -2,8 +2,8 @@ package taskdb.taskdb.domain.question.entity;
 
 import lombok.Builder;
 import lombok.Getter;
-import taskdb.taskdb.domain.answer.domain.Answer;
-import taskdb.taskdb.domain.comment.domain.Comment;
+import taskdb.taskdb.domain.answer.entity.Answer;
+import taskdb.taskdb.domain.comment.entity.Comment;
 import taskdb.taskdb.domain.questionLike.entity.QuestionLike;
 import taskdb.taskdb.domain.questionLike.entity.QuestionUnLike;
 import taskdb.taskdb.domain.user.entity.User;

@@ -1,7 +1,7 @@
 package taskdb.taskdb.application.comment.dto;
 
 import lombok.Getter;
-import taskdb.taskdb.domain.comment.domain.Comment;
+import taskdb.taskdb.domain.comment.entity.Comment;
 
 import java.time.LocalDateTime;
 

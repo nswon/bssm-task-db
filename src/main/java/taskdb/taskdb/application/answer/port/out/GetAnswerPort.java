@@ -1,6 +1,6 @@
 package taskdb.taskdb.application.answer.port.out;
 
-import taskdb.taskdb.domain.answer.domain.Answer;
+import taskdb.taskdb.domain.answer.entity.Answer;
 import taskdb.taskdb.domain.question.entity.Question;
 
 import java.util.List;

@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import taskdb.taskdb.application.answer.port.out.GetAnswerPort;
 import taskdb.taskdb.application.answerLike.port.out.GetAnswerLikePort;
 import taskdb.taskdb.application.answerLike.port.out.GetAnswerUnLikePort;
-import taskdb.taskdb.domain.answer.domain.Answer;
+import taskdb.taskdb.domain.answer.entity.Answer;
 
 @Service
 @RequiredArgsConstructor

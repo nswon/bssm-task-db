@@ -4,15 +4,11 @@ import lombok.Builder;
 import lombok.Getter;
 import taskdb.taskdb.application.answer.dto.AnswersResponseDto;
 import taskdb.taskdb.application.comment.dto.CommentsResponseDto;
-import taskdb.taskdb.domain.answer.domain.Answer;
-import taskdb.taskdb.domain.comment.domain.Comment;
+import taskdb.taskdb.domain.comment.entity.Comment;
 import taskdb.taskdb.domain.question.entity.Question;
 import taskdb.taskdb.domain.question.entity.QuestionStatus;
-import taskdb.taskdb.domain.user.entity.User;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 

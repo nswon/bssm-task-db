@@ -1,9 +1,8 @@
 package taskdb.taskdb.application.answer.dto;
 
 import org.springframework.stereotype.Component;
-import taskdb.taskdb.domain.answer.domain.Answer;
-import taskdb.taskdb.domain.answer.domain.Content;
-import taskdb.taskdb.application.answer.dto.AnswerCreateRequestDto;
+import taskdb.taskdb.domain.answer.entity.Answer;
+import taskdb.taskdb.domain.answer.entity.Content;
 import taskdb.taskdb.domain.question.entity.Question;
 import taskdb.taskdb.domain.user.entity.User;
 

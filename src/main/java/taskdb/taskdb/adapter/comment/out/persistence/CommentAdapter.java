@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import taskdb.taskdb.application.comment.port.out.DeleteCommentPort;
 import taskdb.taskdb.application.comment.port.out.GetCommentPort;
 import taskdb.taskdb.application.comment.port.out.SaveCommentPort;
-import taskdb.taskdb.domain.comment.domain.Comment;
+import taskdb.taskdb.domain.comment.entity.Comment;
 import taskdb.taskdb.domain.comment.exception.CommentNotFoundException;
 import taskdb.taskdb.domain.question.entity.Question;
 

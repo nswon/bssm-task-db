@@ -6,7 +6,7 @@ import taskdb.taskdb.application.answerLike.port.out.DeleteAnswerLikePort;
 import taskdb.taskdb.application.answerLike.port.out.ExistAnswerLikePort;
 import taskdb.taskdb.application.answerLike.port.out.GetAnswerLikePort;
 import taskdb.taskdb.application.answerLike.port.out.SaveAnswerLikePort;
-import taskdb.taskdb.domain.answer.domain.Answer;
+import taskdb.taskdb.domain.answer.entity.Answer;
 import taskdb.taskdb.domain.answerLike.entity.AnswerLike;
 import taskdb.taskdb.domain.user.entity.User;
 

@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import taskdb.taskdb.application.answer.port.out.DeleteAnswerPort;
 import taskdb.taskdb.application.answer.port.out.GetAnswerPort;
 import taskdb.taskdb.application.answer.port.out.SaveAnswerPort;
-import taskdb.taskdb.domain.answer.domain.Answer;
+import taskdb.taskdb.domain.answer.entity.Answer;
 import taskdb.taskdb.domain.answer.exception.AnswerNotFoundException;
 import taskdb.taskdb.domain.question.entity.Question;
 

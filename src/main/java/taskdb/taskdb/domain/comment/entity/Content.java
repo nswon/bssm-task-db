@@ -1,7 +1,7 @@
-package taskdb.taskdb.domain.answer.domain;
+package taskdb.taskdb.domain.comment.entity;
 
 import lombok.Getter;
-import taskdb.taskdb.domain.answer.exception.InvalidAnswerRangeException;
+import taskdb.taskdb.domain.comment.exception.InvalidCommentRangeException;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 @Getter
 @Embeddable
 public class Content {
-    private static final Pattern PATTERN = Pattern.compile("^{1,10000}$");
+    private static final Pattern PATTERN = Pattern.compile("^{1,5000}$");
 
     @Column(name = "content", columnDefinition = "LONGTEXT")
     private String value;
@@ -29,7 +29,7 @@ public class Content {
 
     private static void validate(String value) {
         if(PATTERN.matcher(value).matches()) {
-            throw new InvalidAnswerRangeException();
+            throw new InvalidCommentRangeException();
         }
     }
 }

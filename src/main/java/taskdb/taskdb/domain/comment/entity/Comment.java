@@ -1,4 +1,4 @@
-package taskdb.taskdb.domain.comment.domain;
+package taskdb.taskdb.domain.comment.entity;
 
 import lombok.Builder;
 import lombok.Getter;

@@ -27,7 +27,7 @@ public class UserMapper {
                 .build();
     }
 
-    public TokenResponseDto of(String accessToken) {
-        return new TokenResponseDto(accessToken);
+    public TokenResponseDto of(String accessToken, String refreshToken) {
+        return new TokenResponseDto(accessToken, refreshToken);
     }
 }

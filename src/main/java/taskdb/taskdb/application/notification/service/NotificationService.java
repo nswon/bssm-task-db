@@ -12,7 +12,7 @@ import taskdb.taskdb.application.notification.port.in.NotificationSaveUseCase;
 import taskdb.taskdb.application.notification.port.out.DeleteUserDeviceTokenPort;
 import taskdb.taskdb.application.notification.port.out.GetNotificationPort;
 import taskdb.taskdb.application.notification.port.out.SaveUserDeviceTokenPort;
-import taskdb.taskdb.domain.comment.domain.Comment;
+import taskdb.taskdb.domain.comment.entity.Comment;
 import taskdb.taskdb.domain.notification.entity.Notification;
 import taskdb.taskdb.application.notification.dto.NotificationPermitRequestDto;
 import taskdb.taskdb.domain.notification.exception.InvalidNotificationException;

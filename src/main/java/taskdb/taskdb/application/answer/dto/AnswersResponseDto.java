@@ -1,7 +1,7 @@
 package taskdb.taskdb.application.answer.dto;
 
 import lombok.Getter;
-import taskdb.taskdb.domain.answer.domain.Answer;
+import taskdb.taskdb.domain.answer.entity.Answer;
 
 import java.time.LocalDateTime;
 
