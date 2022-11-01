@@ -23,10 +23,8 @@
 
 # UI
 
-메인화면
 <img src="./img/won.png" width="450px" height="250px">
 
-질문글 작성 화면
 <img src="./img/two.png" width="450px" height="250px">
 
 
