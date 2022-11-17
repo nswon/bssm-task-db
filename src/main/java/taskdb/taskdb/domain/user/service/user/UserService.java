@@ -1,4 +1,4 @@
-package taskdb.taskdb.domain.user.service;
+package taskdb.taskdb.domain.user.service.user;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -7,7 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import taskdb.taskdb.domain.user.domain.User;
 import taskdb.taskdb.domain.user.domain.UserRepository;
-import taskdb.taskdb.domain.user.presentation.dto.request.UserJoinRequestDto;
+import taskdb.taskdb.domain.user.presentation.dto.user.request.UserJoinRequestDto;
+import taskdb.taskdb.domain.user.service.EmailService;
 
 
 @Service

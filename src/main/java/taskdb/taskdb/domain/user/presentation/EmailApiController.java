@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import taskdb.taskdb.domain.user.presentation.dto.request.EmailDto;
+import taskdb.taskdb.domain.user.presentation.dto.user.request.EmailDto;
 import taskdb.taskdb.domain.user.service.EmailService;
 
 import javax.validation.Valid;

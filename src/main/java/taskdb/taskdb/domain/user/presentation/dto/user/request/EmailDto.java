@@ -1,4 +1,4 @@
-package taskdb.taskdb.domain.user.presentation.dto.request;
+package taskdb.taskdb.domain.user.presentation.dto.user.request;
 
 import lombok.Getter;
 import taskdb.taskdb.domain.user.domain.User;

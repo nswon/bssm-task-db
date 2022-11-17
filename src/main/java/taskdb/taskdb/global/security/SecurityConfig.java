@@ -14,6 +14,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import taskdb.taskdb.global.security.auth.CustomUserDetailsService;
+import taskdb.taskdb.global.security.jwt.JwtAuthenticationFilter;
+import taskdb.taskdb.global.security.jwt.JwtTokenProvider;
 
 import java.util.Arrays;
 
@@ -22,8 +25,8 @@ import java.util.Arrays;
 @RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-//    private final JwtTokenProvider jwtTokenProvider;
-//    private final CustomUserDetailsService customUserDetailsService;
+    private final JwtTokenProvider jwtTokenProvider;
+    private final CustomUserDetailsService customUserDetailsService;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -46,10 +49,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .anyRequest().authenticated();
-//                .and()
-//                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider, customUserDetailsService),
-//                        UsernamePasswordAuthenticationFilter.class);
+                .antMatchers("/auth/login").permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider, customUserDetailsService),
+                        UsernamePasswordAuthenticationFilter.class);
     }
 
     @Bean
