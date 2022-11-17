@@ -4,15 +4,13 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.servlet.http.Cookie;
-
 @Getter
 @NoArgsConstructor
 public class TokenResponseDto {
-    private Cookie cookie;
+    private String accessToken;
 
     @Builder
-    public TokenResponseDto(Cookie cookie) {
-        this.cookie = cookie;
+    public TokenResponseDto(String accessToken) {
+        this.accessToken = accessToken;
     }
 }

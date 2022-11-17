@@ -11,8 +11,6 @@ import taskdb.taskdb.domain.user.presentation.dto.auth.request.UserLoginRequestD
 import taskdb.taskdb.domain.user.presentation.dto.auth.response.TokenResponseDto;
 import taskdb.taskdb.global.security.jwt.JwtTokenProvider;
 
-import javax.servlet.http.Cookie;
-
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -32,11 +30,9 @@ public class AuthService {
         }
 
         String accessToken = jwtTokenProvider.createAccessToken(user.getEmail(), user.getRole().name());
-        Cookie cookie = new Cookie("ACCESS_TOKEN", accessToken);
-        cookie.setHttpOnly(true);
 
         return TokenResponseDto.builder()
-                .cookie(cookie)
+                .accessToken(accessToken)
                 .build();
     }
 }
