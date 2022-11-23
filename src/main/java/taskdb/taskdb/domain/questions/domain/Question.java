@@ -3,9 +3,12 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import taskdb.taskdb.domain.comment.domain.Comment;
 import taskdb.taskdb.domain.user.domain.User;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -39,6 +42,9 @@ public class Question {
     //댓글
 
     //답변
+
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
+    private final List<Comment> comments = new ArrayList<>();
 
     @Builder
     public Question(String title, String content, Category category) {
@@ -75,5 +81,9 @@ public class Question {
 
     public boolean isClose() {
         return this.questionStatus == QuestionStatus.CLOSE;
+    }
+
+    public void addComment(Comment comment) {
+        this.comments.add(comment);
     }
 }

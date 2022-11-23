@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import taskdb.taskdb.domain.comment.domain.Comment;
 import taskdb.taskdb.domain.questions.domain.Question;
 
 import javax.persistence.*;
@@ -34,8 +35,11 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "user")
     private final List<Question> questions = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private final List<Comment> comments = new ArrayList<>();
 
     @Builder
     public User(String email, String nickname, String password) {
@@ -69,5 +73,9 @@ public class User {
         final int END_GRADLE = 5;
         String grade = this.email.substring(START_GRADLE, END_GRADLE);
         this.grade = Integer.parseInt(grade);
+    }
+
+    public void addComment(Comment comment) {
+        this.comments.add(comment);
     }
 }
