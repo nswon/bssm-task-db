@@ -57,4 +57,8 @@ public class User {
     public void addQuestion(Question question) {
         this.questions.add(question);
     }
+
+    public boolean isNotCorrectEmail(String checkEmail) {
+        return !this.email.equals(checkEmail);
+    }
 }

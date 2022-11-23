@@ -5,9 +5,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import taskdb.taskdb.domain.questions.domain.Question;
 import taskdb.taskdb.domain.questions.domain.QuestionRepository;
-import taskdb.taskdb.domain.questions.exception.QuestionException;
-import taskdb.taskdb.domain.questions.exception.QuestionExceptionType;
+import taskdb.taskdb.domain.questions.facade.QuestionFacade;
 import taskdb.taskdb.domain.questions.presentation.dto.request.QuestionCreateRequestDto;
+import taskdb.taskdb.domain.questions.presentation.dto.request.QuestionUpdateRequestDto;
 import taskdb.taskdb.domain.questions.presentation.dto.response.QuestionResponseDto;
 import taskdb.taskdb.domain.questions.presentation.dto.response.QuestionsResponseDto;
 import taskdb.taskdb.domain.user.domain.User;
@@ -22,6 +22,7 @@ import java.util.stream.Collectors;
 public class QuestionService {
     private final QuestionRepository questionRepository;
     private final UserFacade userFacade;
+    private final QuestionFacade questionFacade;
 
     public void create(QuestionCreateRequestDto requestDto) {
         User user = userFacade.getCurrentUser();
@@ -40,13 +41,19 @@ public class QuestionService {
 
     @Transactional(readOnly = true)
     public QuestionResponseDto getQuestion(Long id) {
-        return questionRepository.findById(id)
-                .map(question -> {
-                    question.addViewCount();
-                    return QuestionResponseDto.builder()
-                            .question(question)
-                            .build();
-                })
-                .orElseThrow(() -> new QuestionException(QuestionExceptionType.NOT_FOUND_QUESTION));
+        Question question = questionFacade.getQuestionById(id);
+        question.addViewCount();
+        return QuestionResponseDto.builder()
+                .question(question)
+                .build();
+    }
+
+    public void update(Long id, QuestionUpdateRequestDto requestDto) {
+        User user = userFacade.getCurrentUser();
+        Question question = questionFacade.getQuestionById(id);
+        User writer = question.getUser();
+        String writerEmail = writer.getEmail();
+        questionFacade.checkDifferentUser(user, writerEmail);
+        question.updateQuestion(requestDto.getTitle(), requestDto.getContent());
     }
 }
