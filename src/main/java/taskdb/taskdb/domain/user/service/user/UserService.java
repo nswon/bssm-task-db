@@ -9,8 +9,8 @@ import taskdb.taskdb.domain.user.domain.User;
 import taskdb.taskdb.domain.user.domain.UserRepository;
 import taskdb.taskdb.domain.user.exception.UserException;
 import taskdb.taskdb.domain.user.exception.UserExceptionType;
-import taskdb.taskdb.domain.user.presentation.dto.user.request.UserJoinRequestDto;
-import taskdb.taskdb.domain.user.service.EmailService;
+import taskdb.taskdb.domain.user.service.dto.user.request.UserJoinRequestDto;
+import taskdb.taskdb.domain.user.service.auth.EmailService;
 
 
 @Service

@@ -9,8 +9,8 @@ import taskdb.taskdb.domain.user.domain.User;
 import taskdb.taskdb.domain.user.domain.UserRepository;
 import taskdb.taskdb.domain.user.exception.UserException;
 import taskdb.taskdb.domain.user.exception.UserExceptionType;
-import taskdb.taskdb.domain.user.presentation.dto.auth.request.UserLoginRequestDto;
-import taskdb.taskdb.domain.user.presentation.dto.auth.response.TokenResponseDto;
+import taskdb.taskdb.domain.user.service.dto.auth.request.UserLoginRequestDto;
+import taskdb.taskdb.domain.user.service.dto.auth.response.TokenResponseDto;
 import taskdb.taskdb.global.security.jwt.JwtTokenProvider;
 
 @Service

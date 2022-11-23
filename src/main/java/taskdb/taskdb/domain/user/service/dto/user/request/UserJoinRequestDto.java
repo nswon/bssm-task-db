@@ -1,18 +1,27 @@
-package taskdb.taskdb.domain.user.presentation.dto.auth.request;
+package taskdb.taskdb.domain.user.service.dto.user.request;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import taskdb.taskdb.domain.user.domain.User;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 @Getter
-public class UserLoginRequestDto {
-
+@NoArgsConstructor
+public class UserJoinRequestDto {
     @NotNull(message = "이메일을 입력해주세요.")
     @Email
     private String email;
+
+    @NotNull(message = "인증코드를 입력해주세요.")
+    private String checkCode;
+
+    @NotNull(message = "닉네임을 입력해주세요.")
+    @Size(min = 2, max = 20)
+    private String nickname;
 
     @NotNull(message = "비밀번호를 입력해주세요.")
     @Pattern(regexp = "(?=.*[0-9])(?=.*[a-zA-Z])(?=.*\\W)(?=\\S+$).{6,20}",
@@ -22,6 +31,7 @@ public class UserLoginRequestDto {
     public User toEntity() {
         return User.builder()
                 .email(email)
+                .nickname(nickname)
                 .password(password)
                 .build();
     }

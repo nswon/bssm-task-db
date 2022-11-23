@@ -1,4 +1,4 @@
-package taskdb.taskdb.domain.user.presentation.dto.auth.response;
+package taskdb.taskdb.domain.user.service.dto.auth.response;
 
 import lombok.Builder;
 import lombok.Getter;
