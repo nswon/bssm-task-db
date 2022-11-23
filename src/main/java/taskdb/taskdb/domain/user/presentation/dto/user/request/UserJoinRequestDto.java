@@ -1,5 +1,6 @@
 package taskdb.taskdb.domain.user.presentation.dto.user.request;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import taskdb.taskdb.domain.user.domain.User;
@@ -10,23 +11,23 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 @Getter
-@NoArgsConstructor
+@AllArgsConstructor
 public class UserJoinRequestDto {
     @NotNull(message = "이메일을 입력해주세요.")
     @Email
-    private String email;
+    private final String email;
 
     @NotNull(message = "인증코드를 입력해주세요.")
-    private String checkCode;
+    private final String checkCode;
 
     @NotNull(message = "닉네임을 입력해주세요.")
     @Size(min = 2, max = 20)
-    private String nickname;
+    private final String nickname;
 
     @NotNull(message = "비밀번호를 입력해주세요.")
     @Pattern(regexp = "(?=.*[0-9])(?=.*[a-zA-Z])(?=.*\\W)(?=\\S+$).{6,20}",
             message = "영문 대,소문자와 숫자, 특수기호가 적어도 1개 이상씩 포함된 6자 ~ 20자여야 합니다.")
-    private String password;
+    private final String password;
 
     public User toEntity() {
         return User.builder()
