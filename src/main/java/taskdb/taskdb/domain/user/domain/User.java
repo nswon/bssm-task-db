@@ -43,4 +43,8 @@ public class User {
     public void addUserAuthority() {
         this.role = Role.ROLE_USER;
     }
+
+    public boolean isNotCorrectPassword(PasswordEncoder passwordEncoder, String checkPassword) {
+        return !passwordEncoder.matches(checkPassword, this.password);
+    }
 }

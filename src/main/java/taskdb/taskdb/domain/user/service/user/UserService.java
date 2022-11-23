@@ -7,23 +7,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import taskdb.taskdb.domain.user.domain.User;
 import taskdb.taskdb.domain.user.domain.UserRepository;
-import taskdb.taskdb.domain.user.exception.UserException;
-import taskdb.taskdb.domain.user.exception.UserExceptionType;
 import taskdb.taskdb.domain.user.facade.UserFacade;
 import taskdb.taskdb.domain.user.presentation.dto.user.request.UserJoinRequestDto;
-import taskdb.taskdb.domain.user.service.auth.EmailService;
 
 
 @Service
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
+@Transactional
 @Slf4j
 public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final UserFacade userFacade;
 
-    @Transactional
     public boolean join(UserJoinRequestDto requestDto) {
         String email = requestDto.getEmail();
         userFacade.checkAvailableEmail(email);

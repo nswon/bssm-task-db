@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import taskdb.taskdb.domain.user.domain.User;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
@@ -29,7 +30,9 @@ public class JwtTokenProvider {
     private final long ACCESS_TOKEN_VALID_TIME = 30 * 24 * 60 * 60 * 1000L;
     private static final String HEADER_ACCESS_TOKEN = "ACCESS_TOKEN";
 
-    public String createAccessToken(String email, String role) {
+    public String createAccessToken(User user) {
+        String email = user.getEmail();
+        String role = user.getRole().name();
         Claims claims = Jwts.claims().setSubject(email);
         claims.put("role", role);
         Date now = new Date();
