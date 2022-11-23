@@ -6,8 +6,12 @@ import org.springframework.transaction.annotation.Transactional;
 import taskdb.taskdb.domain.questions.domain.Question;
 import taskdb.taskdb.domain.questions.domain.QuestionRepository;
 import taskdb.taskdb.domain.questions.presentation.dto.request.QuestionCreateRequestDto;
+import taskdb.taskdb.domain.questions.presentation.dto.response.QuestionsResponseDto;
 import taskdb.taskdb.domain.user.domain.User;
 import taskdb.taskdb.domain.user.facade.UserFacade;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -22,5 +26,12 @@ public class QuestionService {
         question.confirmUser(user);
         question.openQuestion();
         questionRepository.save(question);
+    }
+
+    @Transactional(readOnly = true)
+    public List<QuestionsResponseDto> getQuestions() {
+        return questionRepository.findAll().stream()
+                .map(QuestionsResponseDto::new)
+                .collect(Collectors.toList());
     }
 }
