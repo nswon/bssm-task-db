@@ -5,8 +5,11 @@ import org.springframework.web.bind.annotation.*;
 import taskdb.taskdb.domain.questions.presentation.dto.request.QuestionCreateRequestDto;
 import taskdb.taskdb.domain.questions.presentation.dto.request.QuestionUpdateRequestDto;
 import taskdb.taskdb.domain.questions.presentation.dto.response.QuestionResponseDto;
+import taskdb.taskdb.domain.questions.presentation.dto.response.QuestionsResponseDto;
 import taskdb.taskdb.domain.questions.service.QuestionService;
 import taskdb.taskdb.global.cover.Result;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -39,5 +42,10 @@ public class QuestionApiController {
     @DeleteMapping("/{id}")
     public void delete(@PathVariable("id") Long id) {
         questionService.delete(id);
+    }
+
+    @GetMapping("/search")
+    public List<QuestionsResponseDto> searchByTitleOrId(@RequestParam("q") Object keyword) {
+        return questionService.searchByTitleOrId(keyword);
     }
 }
