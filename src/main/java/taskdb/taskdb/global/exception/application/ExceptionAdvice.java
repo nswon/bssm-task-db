@@ -15,10 +15,17 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 @Slf4j
 public class ExceptionAdvice {
+    private static final String BASE_EXCEPTION_ERROR_MESSAGE = "BaseException errorMessage(): {}";
+    private static final String BASE_EXCEPTION_ERROR_CODE = "BaseException errorCode(): {}";
+    private static final String WRONG_REQUEST_HTTP_METHOD = "잘못된 메서드 요청입니다.";
+    private static final int BAD_HTTP_METHOD_HTTP_STATUS = 405;
+    private static final int BAD_REQUEST_HTTP_STATUS = 400;
+    private static final String START_ERROR_MESSAGE = "[";
+    private static final String CONFIRM_ERROR_MESSAGE = "](은)는 ";
     @ExceptionHandler(BaseException.class)
     public ResponseEntity handleBaseException(BaseException exception) {
-        log.error("BaseException errorMessage(): {}", exception.getExceptionType().getErrorMessage());
-        log.error("BaseException errorCode(): {}", exception.getExceptionType().getErrorCode());
+        log.error(BASE_EXCEPTION_ERROR_MESSAGE, exception.getExceptionType().getErrorMessage());
+        log.error(BASE_EXCEPTION_ERROR_CODE, exception.getExceptionType().getErrorCode());
 
         return new ResponseEntity(ExceptionDto.builder()
                 .errorCode(exception.getExceptionType().getErrorCode())
@@ -35,29 +42,31 @@ public class ExceptionAdvice {
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     public ResponseEntity handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
         ExceptionDto dto = ExceptionDto.builder()
-                .errorCode(405)
-                .errorMessage("잘못된 메서드 요청입니다.").build();
+                .errorCode(BAD_HTTP_METHOD_HTTP_STATUS)
+                .errorMessage(WRONG_REQUEST_HTTP_METHOD).build();
         return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).body(dto);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity processValidationError(MethodArgumentNotValidException e) {
         BindingResult bindingResult = e.getBindingResult();
-
         StringBuilder builder = new StringBuilder();
         for (FieldError fieldError : bindingResult.getFieldErrors()) {
-            builder.append("[");
-            builder.append(fieldError.getField());
-            builder.append("](은)는 ");
-            builder.append(fieldError.getDefaultMessage());
+            appendFieldError(builder, fieldError);
             break;
         }
 
         return new ResponseEntity(ExceptionDto.builder()
-                .errorCode(700)
+                .errorCode(BAD_REQUEST_HTTP_STATUS)
                 .errorMessage(builder.toString())
                 .build(), HttpStatus.BAD_REQUEST);
+    }
 
+    private void appendFieldError(StringBuilder builder, FieldError fieldError) {
+        builder.append(START_ERROR_MESSAGE);
+        builder.append(fieldError.getField());
+        builder.append(CONFIRM_ERROR_MESSAGE);
+        builder.append(fieldError.getDefaultMessage());
     }
 
     @Data
