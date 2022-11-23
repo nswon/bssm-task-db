@@ -3,10 +3,7 @@ package taskdb.taskdb.domain.questions.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import taskdb.taskdb.domain.questions.domain.Category;
-import taskdb.taskdb.domain.questions.domain.Question;
-import taskdb.taskdb.domain.questions.domain.QuestionQuerydslRepository;
-import taskdb.taskdb.domain.questions.domain.QuestionRepository;
+import taskdb.taskdb.domain.questions.domain.*;
 import taskdb.taskdb.domain.questions.facade.QuestionFacade;
 import taskdb.taskdb.domain.questions.presentation.dto.request.QuestionCreateRequestDto;
 import taskdb.taskdb.domain.questions.presentation.dto.request.QuestionUpdateRequestDto;
@@ -20,13 +17,14 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-@Transactional
+@Transactional(readOnly = true)
 public class QuestionService {
     private final QuestionRepository questionRepository;
     private final UserFacade userFacade;
     private final QuestionFacade questionFacade;
     private final QuestionQuerydslRepository questionQuerydslRepository;
 
+    @Transactional
     public void create(QuestionCreateRequestDto requestDto) {
         User user = userFacade.getCurrentUser();
         Question question = requestDto.toEntity();
@@ -35,14 +33,12 @@ public class QuestionService {
         questionRepository.save(question);
     }
 
-    @Transactional(readOnly = true)
     public List<QuestionsResponseDto> getQuestions() {
         return questionRepository.findAll().stream()
                 .map(QuestionsResponseDto::new)
                 .collect(Collectors.toList());
     }
 
-    @Transactional(readOnly = true)
     public QuestionResponseDto getQuestion(Long id) {
         Question question = questionFacade.getQuestionById(id);
         question.addViewCount();
@@ -51,6 +47,7 @@ public class QuestionService {
                 .build();
     }
 
+    @Transactional
     public void update(Long id, QuestionUpdateRequestDto requestDto) {
         User user = userFacade.getCurrentUser();
         Question question = questionFacade.getQuestionById(id);
@@ -59,6 +56,7 @@ public class QuestionService {
         question.updateQuestion(requestDto.getTitle(), requestDto.getContent());
     }
 
+    @Transactional
     public void delete(Long id) {
         User user = userFacade.getCurrentUser();
         Question question = questionFacade.getQuestionById(id);
@@ -67,32 +65,35 @@ public class QuestionService {
         questionRepository.delete(question);
     }
 
-    @Transactional(readOnly = true)
     public List<QuestionsResponseDto> searchByTitleOrId(Object keyword) {
         return questionQuerydslRepository.getQuestionByTitleOrId(keyword).stream()
                 .map(QuestionsResponseDto::new)
                 .collect(Collectors.toList());
     }
 
-    @Transactional(readOnly = true)
     public List<QuestionsResponseDto> getQuestionsByCategory(Category category) {
         return questionRepository.findByCategory(category).stream()
                 .map(QuestionsResponseDto::new)
                 .collect(Collectors.toList());
     }
 
-    @Transactional(readOnly = true)
     public List<QuestionsResponseDto> getQuestionsByGrade(int grade) {
         return questionQuerydslRepository.getQuestionByGrade(grade).stream()
                 .map(QuestionsResponseDto::new)
                 .collect(Collectors.toList());
     }
 
-//    @Transactional(readOnly = true)
-//    public List<QuestionsResponseDto> getOpenQuestions() {
-//        return questionRepository.findAll().stream()
-//                .filter(question -> question.getUser().isJunior())
-//                .map(QuestionsResponseDto::new)
-//                .collect(Collectors.toList());
-//    }
+    public List<QuestionsResponseDto> getOpenQuestions() {
+        return questionRepository.findAll().stream()
+                .filter(Question::isOpen)
+                .map(QuestionsResponseDto::new)
+                .collect(Collectors.toList());
+    }
+
+    public List<QuestionsResponseDto> getCloseQuestions() {
+        return questionRepository.findAll().stream()
+                .filter(Question::isClose)
+                .map(QuestionsResponseDto::new)
+                .collect(Collectors.toList());
+    }
 }

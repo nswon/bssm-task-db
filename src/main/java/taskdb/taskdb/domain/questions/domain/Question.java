@@ -68,4 +68,12 @@ public class Question {
         this.user = user;
         user.addQuestion(this);
     }
+
+    public boolean isOpen() {
+        return this.questionStatus == QuestionStatus.OPEN;
+    }
+
+    public boolean isClose() {
+        return this.questionStatus == QuestionStatus.CLOSE;
+    }
 }

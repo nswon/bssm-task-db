@@ -59,4 +59,14 @@ public class QuestionApiController {
     public List<QuestionsResponseDto> getQuestionsByGrade(@RequestParam("g") int grade) {
         return questionService.getQuestionsByGrade(grade);
     }
+
+    @GetMapping("/open")
+    public List<QuestionsResponseDto> getOpenQuestions() {
+        return questionService.getOpenQuestions();
+    }
+
+    @GetMapping("/close")
+    public List<QuestionsResponseDto> getCloseQuestions() {
+        return questionService.getCloseQuestions();
+    }
 }
