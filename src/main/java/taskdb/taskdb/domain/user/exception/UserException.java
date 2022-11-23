@@ -9,7 +9,7 @@ import taskdb.taskdb.global.exception.application.BaseExceptionType;
 @RequiredArgsConstructor
 public class UserException extends BaseException {
 
-    private BaseExceptionType exceptionType;
+    private final BaseExceptionType exceptionType;
 
     @Override
     public BaseExceptionType getExceptionType() {

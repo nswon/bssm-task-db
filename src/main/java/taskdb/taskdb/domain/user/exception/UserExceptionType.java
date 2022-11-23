@@ -15,7 +15,8 @@ public enum UserExceptionType implements BaseExceptionType {
     WRONG_EMAIL_CHECK_CODE(603, HttpStatus.BAD_REQUEST, "이메일 인증 코드가 일치하지 않습니다."),
     REQUIRED_DO_LOGIN(604, HttpStatus.BAD_REQUEST, "로그인이 필요합니다."),
     FORBIDDEN(605, HttpStatus.BAD_REQUEST, "권한이 부족합니다."),
-    NOT_FOUND_USER(606, HttpStatus.BAD_REQUEST, "회원이 존재하지 않습니다.");
+    NOT_FOUND_USER(606, HttpStatus.BAD_REQUEST, "회원이 존재하지 않습니다."),
+    DIFFERENT_USER(701, HttpStatus.BAD_REQUEST, "다른 유저의 질문글입니다.");
 
     private final int errorCode;
     private final HttpStatus httpStatus;

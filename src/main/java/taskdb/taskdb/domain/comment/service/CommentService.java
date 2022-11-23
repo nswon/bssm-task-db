@@ -5,7 +5,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import taskdb.taskdb.domain.comment.domain.Comment;
 import taskdb.taskdb.domain.comment.domain.CommentRepository;
+import taskdb.taskdb.domain.comment.facade.CommentFacade;
 import taskdb.taskdb.domain.comment.presentation.dto.request.CommentCreateRequestDto;
+import taskdb.taskdb.domain.comment.presentation.dto.request.CommentUpdateRequestDto;
 import taskdb.taskdb.domain.questions.domain.Question;
 import taskdb.taskdb.domain.questions.facade.QuestionFacade;
 import taskdb.taskdb.domain.user.domain.User;
@@ -18,6 +20,7 @@ public class CommentService {
     private final CommentRepository commentRepository;
     private final UserFacade userFacade;
     private final QuestionFacade questionFacade;
+    private final CommentFacade commentFacade;
 
     public void create(Long id, CommentCreateRequestDto requestDto) {
         User user = userFacade.getCurrentUser();
@@ -26,5 +29,14 @@ public class CommentService {
         comment.confirmUser(user);
         comment.confirmQuestion(question);
         commentRepository.save(comment);
+    }
+
+    public void update(Long id, CommentUpdateRequestDto requestDto) {
+        User user = userFacade.getCurrentUser();
+        Comment comment = commentFacade.getCommentById(id);
+        User writer = comment.getUser();
+        userFacade.checkDifferentUser(user, writer);
+        String content = requestDto.getContent();
+        comment.update(content);
     }
 }

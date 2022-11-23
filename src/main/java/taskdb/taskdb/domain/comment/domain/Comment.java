@@ -61,4 +61,8 @@ public class Comment {
     public void addChild(Comment child) {
         this.child.add(child);
     }
+
+    public void update(String content) {
+        this.content = content;
+    }
 }

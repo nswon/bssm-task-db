@@ -52,8 +52,8 @@ public class QuestionService {
         User user = userFacade.getCurrentUser();
         Question question = questionFacade.getQuestionById(id);
         User writer = question.getUser();
-        questionFacade.checkDifferentUser(user, writer);
-        question.updateQuestion(requestDto.getTitle(), requestDto.getContent());
+        userFacade.checkDifferentUser(user, writer);
+        question.update(requestDto.getTitle(), requestDto.getContent());
     }
 
     @Transactional
@@ -61,7 +61,7 @@ public class QuestionService {
         User user = userFacade.getCurrentUser();
         Question question = questionFacade.getQuestionById(id);
         User writer = question.getUser();
-        questionFacade.checkDifferentUser(user, writer);
+        userFacade.checkDifferentUser(user, writer);
         questionRepository.delete(question);
     }
 

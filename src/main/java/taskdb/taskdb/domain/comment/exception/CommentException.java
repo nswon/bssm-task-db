@@ -1,4 +1,4 @@
-package taskdb.taskdb.domain.questions.exception;
+package taskdb.taskdb.domain.comment.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -7,7 +7,7 @@ import taskdb.taskdb.global.exception.application.BaseExceptionType;
 
 @AllArgsConstructor
 @RequiredArgsConstructor
-public class QuestionException extends BaseException {
+public class CommentException extends BaseException {
 
     private final BaseExceptionType exceptionType;
 

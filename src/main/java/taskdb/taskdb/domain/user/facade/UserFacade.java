@@ -3,6 +3,8 @@ package taskdb.taskdb.domain.user.facade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import taskdb.taskdb.domain.questions.exception.QuestionException;
+import taskdb.taskdb.domain.questions.exception.QuestionExceptionType;
 import taskdb.taskdb.domain.user.domain.User;
 import taskdb.taskdb.domain.user.domain.UserRepository;
 import taskdb.taskdb.domain.user.exception.UserException;
@@ -43,5 +45,12 @@ public class UserFacade {
     public User getCurrentUser() {
         return userRepository.findByEmail(SecurityUtil.getLoginUserEmail())
                 .orElseThrow(() -> new UserException(UserExceptionType.REQUIRED_DO_LOGIN));
+    }
+
+    public void checkDifferentUser(User user, User writer) {
+        String email = writer.getEmail();
+        if(user.isNotCorrectEmail(email)) {
+            throw new UserException(UserExceptionType.DIFFERENT_USER);
+        }
     }
 }

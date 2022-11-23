@@ -65,7 +65,7 @@ public class Question {
         this.questionStatus = QuestionStatus.CLOSE;
     }
 
-    public void updateQuestion(String title, String content) {
+    public void update(String title, String content) {
         this.title = title;
         this.content = content;
     }
