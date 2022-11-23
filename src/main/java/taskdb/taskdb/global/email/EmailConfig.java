@@ -1,4 +1,4 @@
-package taskdb.taskdb.global.email.config;
+package taskdb.taskdb.global.email;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

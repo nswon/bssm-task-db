@@ -27,12 +27,12 @@ public class JwtTokenProvider {
         secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
     }
 
-    private final long ACCESS_TOKEN_VALID_TIME = 30 * 24 * 60 * 60 * 1000L;
     private static final String HEADER_ACCESS_TOKEN = "ACCESS_TOKEN";
 
     public String createAccessToken(User user) {
-        String email = user.getEmail();
-        String role = user.getRole().name();
+        final String email = user.getEmail();
+        final String role = user.getRole().name();
+        final long ACCESS_TOKEN_VALID_TIME = 30 * 24 * 60 * 60 * 1000L;
         Claims claims = Jwts.claims().setSubject(email);
         claims.put("role", role);
         Date now = new Date();
@@ -45,7 +45,6 @@ public class JwtTokenProvider {
     }
 
     public String resolveAccessToken(HttpServletRequest request) {
-        log.info("토큰 들고옴 = " + request.getHeader(HEADER_ACCESS_TOKEN));
         return request.getHeader(HEADER_ACCESS_TOKEN);
     }
 
