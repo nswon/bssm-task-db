@@ -52,8 +52,15 @@ public class QuestionService {
         User user = userFacade.getCurrentUser();
         Question question = questionFacade.getQuestionById(id);
         User writer = question.getUser();
-        String writerEmail = writer.getEmail();
-        questionFacade.checkDifferentUser(user, writerEmail);
+        questionFacade.checkDifferentUser(user, writer);
         question.updateQuestion(requestDto.getTitle(), requestDto.getContent());
+    }
+
+    public void delete(Long id) {
+        User user = userFacade.getCurrentUser();
+        Question question = questionFacade.getQuestionById(id);
+        User writer = question.getUser();
+        questionFacade.checkDifferentUser(user, writer);
+        questionRepository.delete(question);
     }
 }

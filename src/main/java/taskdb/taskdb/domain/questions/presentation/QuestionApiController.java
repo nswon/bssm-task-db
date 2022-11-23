@@ -31,8 +31,13 @@ public class QuestionApiController {
         return questionService.getQuestion(id);
     }
 
-    @PostMapping("/{id}/edit")
+    @PutMapping("/{id}/edit")
     public void update(@PathVariable("id") Long id, @RequestBody QuestionUpdateRequestDto requestDto) {
         questionService.update(id, requestDto);
+    }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable("id") Long id) {
+        questionService.delete(id);
     }
 }

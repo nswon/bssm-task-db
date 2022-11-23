@@ -18,7 +18,8 @@ public class QuestionFacade {
                 .orElseThrow(() -> new QuestionException(QuestionExceptionType.NOT_FOUND_QUESTION));
     }
 
-    public void checkDifferentUser(User user, String email) {
+    public void checkDifferentUser(User user, User writer) {
+        String email = writer.getEmail();
         if(user.isNotCorrectEmail(email)) {
             throw new QuestionException(QuestionExceptionType.DIFFERENT_USER);
         }
