@@ -3,10 +3,8 @@ package taskdb.taskdb.domain.questions.presentation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import taskdb.taskdb.domain.questions.presentation.dto.request.QuestionCreateRequestDto;
-import taskdb.taskdb.domain.questions.presentation.dto.response.QuestionsResponseDto;
 import taskdb.taskdb.domain.questions.service.QuestionService;
-
-import java.util.List;
+import taskdb.taskdb.global.cover.Result;
 
 @RestController
 @RequiredArgsConstructor
@@ -20,7 +18,9 @@ public class QuestionApiController {
     }
 
     @GetMapping("")
-    public List<QuestionsResponseDto> getQuestions() {
-        return questionService.getQuestions();
+    public Result getQuestions() {
+        return Result.builder()
+                .data(questionService.getQuestions())
+                .build();
     }
 }
