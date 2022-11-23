@@ -8,6 +8,7 @@ import taskdb.taskdb.domain.user.domain.UserRepository;
 import taskdb.taskdb.domain.user.exception.UserException;
 import taskdb.taskdb.domain.user.exception.UserExceptionType;
 import taskdb.taskdb.domain.user.service.auth.EmailService;
+import taskdb.taskdb.global.security.jwt.SecurityUtil;
 
 @Component
 @RequiredArgsConstructor
@@ -37,5 +38,10 @@ public class UserFacade {
         if(user.isNotCorrectPassword(passwordEncoder, password)) {
             throw new UserException(UserExceptionType.WRONG_PASSWORD);
         }
+    }
+
+    public User getCurrentUser() {
+        return userRepository.findByEmail(SecurityUtil.getLoginUserEmail())
+                .orElseThrow(() -> new UserException(UserExceptionType.REQUIRED_DO_LOGIN));
     }
 }

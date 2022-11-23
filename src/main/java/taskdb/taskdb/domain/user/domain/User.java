@@ -53,4 +53,8 @@ public class User {
     public boolean isNotCorrectPassword(PasswordEncoder passwordEncoder, String checkPassword) {
         return !passwordEncoder.matches(checkPassword, this.password);
     }
+
+    public void addQuestion(Question question) {
+        this.questions.add(question);
+    }
 }
