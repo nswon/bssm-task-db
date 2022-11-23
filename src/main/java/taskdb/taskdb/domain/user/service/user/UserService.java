@@ -9,7 +9,8 @@ import taskdb.taskdb.domain.user.domain.User;
 import taskdb.taskdb.domain.user.domain.UserRepository;
 import taskdb.taskdb.domain.user.exception.UserException;
 import taskdb.taskdb.domain.user.exception.UserExceptionType;
-import taskdb.taskdb.domain.user.service.dto.user.request.UserJoinRequestDto;
+import taskdb.taskdb.domain.user.facade.UserFacade;
+import taskdb.taskdb.domain.user.presentation.dto.user.request.UserJoinRequestDto;
 import taskdb.taskdb.domain.user.service.auth.EmailService;
 
 
@@ -20,19 +21,17 @@ import taskdb.taskdb.domain.user.service.auth.EmailService;
 public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final EmailService emailService;
+    private final UserFacade userFacade;
 
     @Transactional
     public boolean join(UserJoinRequestDto requestDto) {
-        if(userRepository.findByEmail(requestDto.getEmail()).isPresent()) {
-            throw new UserException(UserExceptionType.ALREADY_EXIST_EMAIL);
-        }
+        String email = requestDto.getEmail();
+        userFacade.checkAvailableEmail(email);
+        String emailVerificationCode = requestDto.getCheckCode();
+        userFacade.checkCorrectEmailCheckCode(emailVerificationCode);
 
-        if(emailService.verityCode(requestDto.getCheckCode())) {
-            throw new UserException(UserExceptionType.WRONG_EMAIL_CHECK_CODE);
-        }
-
-        User user = userRepository.save(requestDto.toEntity());
+        User user = requestDto.toEntity();
+        userRepository.save(user);
         user.encodedPassword(passwordEncoder);
         user.addUserAuthority();
         return true;

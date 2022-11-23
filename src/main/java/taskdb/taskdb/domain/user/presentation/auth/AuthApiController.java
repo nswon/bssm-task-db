@@ -1,12 +1,12 @@
-package taskdb.taskdb.domain.user.presentation.api.auth;
+package taskdb.taskdb.domain.user.presentation.auth;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import taskdb.taskdb.domain.user.service.dto.auth.request.UserLoginRequestDto;
-import taskdb.taskdb.domain.user.service.dto.auth.response.TokenResponseDto;
+import taskdb.taskdb.domain.user.presentation.dto.auth.request.UserLoginRequestDto;
+import taskdb.taskdb.domain.user.presentation.dto.auth.response.TokenResponseDto;
 import taskdb.taskdb.domain.user.service.auth.AuthService;
 
 import javax.validation.Valid;
