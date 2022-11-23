@@ -39,4 +39,12 @@ public class CommentService {
         String content = requestDto.getContent();
         comment.update(content);
     }
+
+    public void delete(Long id) {
+        User user = userFacade.getCurrentUser();
+        Comment comment = commentFacade.getCommentById(id);
+        User writer = comment.getUser();
+        userFacade.checkDifferentUser(user, writer);
+        commentRepository.delete(comment);
+    }
 }
