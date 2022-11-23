@@ -3,6 +3,7 @@ package taskdb.taskdb.domain.questions.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import taskdb.taskdb.domain.questions.domain.Category;
 import taskdb.taskdb.domain.questions.domain.Question;
 import taskdb.taskdb.domain.questions.domain.QuestionQuerydslRepository;
 import taskdb.taskdb.domain.questions.domain.QuestionRepository;
@@ -69,6 +70,13 @@ public class QuestionService {
     @Transactional(readOnly = true)
     public List<QuestionsResponseDto> searchByTitleOrId(Object keyword) {
         return questionQuerydslRepository.getQuestionByTitleOrId(keyword).stream()
+                .map(QuestionsResponseDto::new)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public List<QuestionsResponseDto> getQuestionsByCategory(Category category) {
+        return questionRepository.findByCategory(category).stream()
                 .map(QuestionsResponseDto::new)
                 .collect(Collectors.toList());
     }

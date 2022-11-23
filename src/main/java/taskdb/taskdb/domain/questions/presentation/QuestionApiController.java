@@ -2,6 +2,7 @@ package taskdb.taskdb.domain.questions.presentation;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import taskdb.taskdb.domain.questions.domain.Category;
 import taskdb.taskdb.domain.questions.presentation.dto.request.QuestionCreateRequestDto;
 import taskdb.taskdb.domain.questions.presentation.dto.request.QuestionUpdateRequestDto;
 import taskdb.taskdb.domain.questions.presentation.dto.response.QuestionResponseDto;
@@ -47,5 +48,10 @@ public class QuestionApiController {
     @GetMapping("/search")
     public List<QuestionsResponseDto> searchByTitleOrId(@RequestParam("q") Object keyword) {
         return questionService.searchByTitleOrId(keyword);
+    }
+
+    @GetMapping("/categories")
+    public List<QuestionsResponseDto> getQuestionsByCategory(@RequestParam("c")Category category) {
+        return questionService.getQuestionsByCategory(category);
     }
 }

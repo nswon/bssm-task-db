@@ -31,6 +31,9 @@ public class Question {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @Enumerated(EnumType.STRING)
+    private Category category;
+
     //좋아요
 
     //댓글
@@ -38,9 +41,10 @@ public class Question {
     //답변
 
     @Builder
-    public Question(String title, String content) {
+    public Question(String title, String content, Category category) {
         this.title = title;
         this.content = content;
+        this.category = category;
     }
 
     public void addViewCount() {
