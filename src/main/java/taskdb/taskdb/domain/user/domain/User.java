@@ -26,6 +26,8 @@ public class User {
     @Column(nullable = false)
     private String nickname;
 
+    private int grade;
+
     @Column(nullable = false)
     private String password;
 
@@ -60,5 +62,12 @@ public class User {
 
     public boolean isNotCorrectEmail(String checkEmail) {
         return !this.email.equals(checkEmail);
+    }
+
+    public void setGradeByParseEmail() {
+        final int START_GRADLE = 4;
+        final int END_GRADLE = 5;
+        String grade = this.email.substring(START_GRADLE, END_GRADLE);
+        this.grade = Integer.parseInt(grade);
     }
 }

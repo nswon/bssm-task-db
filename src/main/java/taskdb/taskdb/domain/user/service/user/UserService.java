@@ -30,6 +30,7 @@ public class UserService {
         userRepository.save(user);
         user.encodedPassword(passwordEncoder);
         user.addUserAuthority();
+        user.setGradeByParseEmail();
         return true;
     }
 }
