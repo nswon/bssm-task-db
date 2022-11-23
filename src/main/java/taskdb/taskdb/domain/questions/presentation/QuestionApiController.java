@@ -54,4 +54,9 @@ public class QuestionApiController {
     public List<QuestionsResponseDto> getQuestionsByCategory(@RequestParam("c")Category category) {
         return questionService.getQuestionsByCategory(category);
     }
+
+    @GetMapping("/grade")
+    public List<QuestionsResponseDto> getQuestionsByGrade(@RequestParam("g") int grade) {
+        return questionService.getQuestionsByGrade(grade);
+    }
 }

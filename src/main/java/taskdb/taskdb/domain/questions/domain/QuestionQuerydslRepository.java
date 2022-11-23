@@ -21,6 +21,13 @@ public class QuestionQuerydslRepository {
                 .fetch();
     }
 
+    public List<Question> getQuestionByGrade(int grade) {
+        return factory
+                .selectFrom(question)
+                .where(isJunior(grade), isSophomore(grade))
+                .fetch();
+    }
+
     private BooleanExpression titleEq(Object keyword) {
         if(keyword == null) {
             return null;
@@ -35,5 +42,19 @@ public class QuestionQuerydslRepository {
         }
         Long id = (Long) keyword;
         return question.id.eq(id);
+    }
+
+    private BooleanExpression isJunior(int grade) {
+        if(grade == 0) {
+            return null;
+        }
+        return question.user.grade.eq(grade);
+    }
+
+    private BooleanExpression isSophomore(int grade) {
+        if(grade == 0) {
+            return null;
+        }
+        return question.user.grade.eq(grade);
     }
 }

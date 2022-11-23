@@ -27,10 +27,10 @@ public class UserService {
         userFacade.checkCorrectEmailCheckCode(emailVerificationCode);
 
         User user = requestDto.toEntity();
+        user.setGradeByParseEmail();
         userRepository.save(user);
         user.encodedPassword(passwordEncoder);
         user.addUserAuthority();
-        user.setGradeByParseEmail();
         return true;
     }
 }

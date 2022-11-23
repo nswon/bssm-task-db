@@ -80,4 +80,19 @@ public class QuestionService {
                 .map(QuestionsResponseDto::new)
                 .collect(Collectors.toList());
     }
+
+    @Transactional(readOnly = true)
+    public List<QuestionsResponseDto> getQuestionsByGrade(int grade) {
+        return questionQuerydslRepository.getQuestionByGrade(grade).stream()
+                .map(QuestionsResponseDto::new)
+                .collect(Collectors.toList());
+    }
+
+//    @Transactional(readOnly = true)
+//    public List<QuestionsResponseDto> getOpenQuestions() {
+//        return questionRepository.findAll().stream()
+//                .filter(question -> question.getUser().isJunior())
+//                .map(QuestionsResponseDto::new)
+//                .collect(Collectors.toList());
+//    }
 }
