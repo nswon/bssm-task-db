@@ -86,4 +86,8 @@ public class Question {
     public void addComment(Comment comment) {
         this.comments.add(comment);
     }
+
+    public int getCommentsSize() {
+        return comments.size();
+    }
 }

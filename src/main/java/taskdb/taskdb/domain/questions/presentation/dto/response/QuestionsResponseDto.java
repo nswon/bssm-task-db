@@ -12,7 +12,7 @@ public class QuestionsResponseDto {
     private final QuestionStatus status;
     private final String title;
     private final Category category;
-    //댓글 개수
+    private final int commentCount;
     //좋아요 개수
     //등록 날짜
 
@@ -22,5 +22,6 @@ public class QuestionsResponseDto {
         this.status = question.getQuestionStatus();
         this.title = question.getTitle();
         this.category = question.getCategory();
+        this.commentCount = question.getCommentsSize();
     }
 }
