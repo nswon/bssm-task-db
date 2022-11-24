@@ -5,6 +5,8 @@ import org.springframework.stereotype.Component;
 import taskdb.taskdb.domain.comment.domain.Comment;
 import taskdb.taskdb.domain.notification.domain.Notification;
 import taskdb.taskdb.domain.notification.domain.NotificationRepository;
+import taskdb.taskdb.domain.notification.exception.NotificationException;
+import taskdb.taskdb.domain.notification.exception.NotificationExceptionType;
 import taskdb.taskdb.domain.user.domain.User;
 
 import java.util.List;
@@ -20,11 +22,12 @@ public class NotificationFacade {
         List<String> tokens = comments.stream()
                 .map(Comment::getUser)
                 .map(user -> notificationRepository.findByUser(user)
-                        .orElseThrow())
+                        .orElseThrow(() -> new NotificationException(NotificationExceptionType.NOT_FOUND_TOKEN)))
                 .map(Notification::getToken)
                 .collect(Collectors.toList());
 
-        Notification notification = notificationRepository.findByUser(questionWriter).orElseThrow();
+        Notification notification = notificationRepository.findByUser(questionWriter)
+                .orElseThrow(() -> new NotificationException(NotificationExceptionType.NOT_FOUND_TOKEN));
         String token = notification.getToken();
         tokens.add(token);
         return tokens;

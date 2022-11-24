@@ -50,7 +50,6 @@ public class NotificationService {
                         .build())
                 .setToken(token)
                 .build();
-
         try {
             FirebaseMessaging.getInstance().sendAsync(message).get();
         } catch (InterruptedException | ExecutionException e) {
