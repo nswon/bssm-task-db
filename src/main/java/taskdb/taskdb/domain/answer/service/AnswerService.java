@@ -39,4 +39,12 @@ public class AnswerService {
         userFacade.checkDifferentUser(user, writer);
         answer.update(requestDto.getContent());
     }
+
+    public void delete(Long id) {
+        User user = userFacade.getCurrentUser();
+        Answer answer = answerFacade.getAnswerById(id);
+        User writer = answer.getUser();
+        userFacade.checkDifferentUser(user, writer);
+        answerRepository.delete(answer);
+    }
 }

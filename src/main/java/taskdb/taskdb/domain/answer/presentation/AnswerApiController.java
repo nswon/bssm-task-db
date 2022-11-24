@@ -21,4 +21,9 @@ public class AnswerApiController {
     public void update(@PathVariable("id") Long id, @RequestBody AnswerUpdateRequestDto requestDto) {
         answerService.update(id, requestDto);
     }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable("id") Long id) {
+        answerService.delete(id);
+    }
 }
