@@ -21,15 +21,18 @@ public class NotificationFacade {
         List<Comment> comments = questionWriter.getComments();
         List<String> tokens = comments.stream()
                 .map(Comment::getUser)
-                .map(user -> notificationRepository.findByUser(user)
-                        .orElseThrow(() -> new NotificationException(NotificationExceptionType.NOT_FOUND_TOKEN)))
+                .map(this::getNotificationByUser)
                 .map(Notification::getToken)
                 .collect(Collectors.toList());
 
-        Notification notification = notificationRepository.findByUser(questionWriter)
-                .orElseThrow(() -> new NotificationException(NotificationExceptionType.NOT_FOUND_TOKEN));
+        Notification notification = getNotificationByUser(questionWriter);
         String token = notification.getToken();
         tokens.add(token);
         return tokens;
+    }
+
+    private Notification getNotificationByUser(User user) {
+        return notificationRepository.findByUser(user)
+                .orElseThrow(() -> new NotificationException(NotificationExceptionType.NOT_FOUND_TOKEN));
     }
 }
