@@ -20,7 +20,7 @@ public class EmailService {
     private static String ePw;
 
     public static void createKey() {
-        StringBuffer key = new StringBuffer();
+        StringBuilder key = new StringBuilder();
         Random rnd = new Random();
 
         for (int i = 0; i < 8; i++) {
@@ -57,7 +57,7 @@ public class EmailService {
         msgg+= ePw+"</h1><div><br/> ";
         msgg+= "</div>";
         message.setText(msgg, "utf-8", "html");
-        message.setFrom(new InternetAddress("javaprojectnamse@gmail.com", "부산소마고 중고 마켓"));
+        message.setFrom(new InternetAddress("taskdb0729@gmail.com", "부산소마고 중고 마켓"));
 
         return message;
     }

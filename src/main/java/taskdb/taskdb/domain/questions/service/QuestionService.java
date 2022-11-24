@@ -65,7 +65,7 @@ public class QuestionService {
         questionRepository.delete(question);
     }
 
-    public List<QuestionsResponseDto> searchByTitleOrId(Object keyword) {
+    public List<QuestionsResponseDto> searchByTitleOrId(String keyword) {
         return questionQuerydslRepository.getQuestionByTitleOrId(keyword).stream()
                 .map(QuestionsResponseDto::new)
                 .collect(Collectors.toList());

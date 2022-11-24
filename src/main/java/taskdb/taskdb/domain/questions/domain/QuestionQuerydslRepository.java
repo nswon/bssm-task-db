@@ -6,18 +6,20 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 import static taskdb.taskdb.domain.questions.domain.QQuestion.question;
 
 @Repository
 @RequiredArgsConstructor
 public class QuestionQuerydslRepository {
+    private static final Pattern ONLY_NUMBER_REGEX = Pattern.compile("^[0-9]*$");
     private final JPAQueryFactory factory;
 
-    public List<Question> getQuestionByTitleOrId(Object keyword) {
+    public List<Question> getQuestionByTitleOrId(String keyword) {
         return factory
                 .selectFrom(question)
-                .where(titleEq(keyword), idEq(keyword))
+                .where(isTitleContainsOrIdEq(keyword))
                 .fetch();
     }
 
@@ -28,20 +30,11 @@ public class QuestionQuerydslRepository {
                 .fetch();
     }
 
-    private BooleanExpression titleEq(Object keyword) {
-        if(keyword == null) {
-            return null;
+    private BooleanExpression isTitleContainsOrIdEq(String keyword) {
+        if(ONLY_NUMBER_REGEX.matcher(keyword).matches()) {
+            return question.id.eq(Long.valueOf(keyword));
         }
-        String titleKeyword = String.valueOf(keyword);
-        return question.title.contains(titleKeyword);
-    }
-
-    private BooleanExpression idEq(Object keyword) {
-        if(keyword == null) {
-            return null;
-        }
-        Long id = (Long) keyword;
-        return question.id.eq(id);
+        return question.title.contains(keyword);
     }
 
     private BooleanExpression isJunior(int grade) {

@@ -9,7 +9,7 @@ import taskdb.taskdb.global.exception.application.BaseExceptionType;
 @RequiredArgsConstructor
 public class CommentException extends BaseException {
 
-    private final BaseExceptionType exceptionType;
+    private BaseExceptionType exceptionType;
 
     @Override
     public BaseExceptionType getExceptionType() {

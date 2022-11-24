@@ -19,7 +19,7 @@ public class QuestionApiController {
     private final QuestionService questionService;
 
     @PostMapping("/new")
-    public void create(QuestionCreateRequestDto requestDto) {
+    public void create(@RequestBody QuestionCreateRequestDto requestDto) {
         questionService.create(requestDto);
     }
 
@@ -47,7 +47,7 @@ public class QuestionApiController {
     }
 
     @GetMapping("/search")
-    public Result searchByTitleOrId(@RequestParam("q") Object keyword) {
+    public Result searchByTitleOrId(@RequestParam("q") String keyword) {
         List<QuestionsResponseDto> response = questionService.searchByTitleOrId(keyword);
         return Result.builder()
                 .data(response)

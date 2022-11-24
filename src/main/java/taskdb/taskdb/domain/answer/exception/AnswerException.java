@@ -8,7 +8,7 @@ import taskdb.taskdb.global.exception.application.BaseExceptionType;
 @AllArgsConstructor
 @RequiredArgsConstructor
 public class AnswerException extends BaseException {
-    private final BaseExceptionType exceptionType;
+    private BaseExceptionType exceptionType;
 
     @Override
     public BaseExceptionType getExceptionType() {
