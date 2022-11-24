@@ -29,6 +29,9 @@ public class Answer {
     @JoinColumn(name = "question_id")
     private Question question;
 
+    @Enumerated(EnumType.STRING)
+    private AnswerChoose choose;
+
     @Builder
     public Answer(String content) {
         this.content = content;
@@ -42,5 +45,9 @@ public class Answer {
     public void confirmQuestion(Question question) {
         this.question = question;
         question.addAnswer(this);
+    }
+
+    public void ongoing() {
+        this.choose = AnswerChoose.ONGOING;
     }
 }
