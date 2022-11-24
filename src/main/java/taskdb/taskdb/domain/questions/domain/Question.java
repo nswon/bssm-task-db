@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import taskdb.taskdb.domain.answer.domain.Answer;
+import taskdb.taskdb.domain.answer.presentation.dto.response.AnswersResponseDto;
 import taskdb.taskdb.domain.comment.domain.Comment;
 import taskdb.taskdb.domain.comment.presentation.dto.response.CommentsResponseDto;
 import taskdb.taskdb.domain.user.domain.User;
@@ -100,6 +101,12 @@ public class Question {
     public List<CommentsResponseDto> toCommentsResponseDto() {
         return this.comments.stream()
                 .map(CommentsResponseDto::new)
+                .collect(Collectors.toList());
+    }
+
+    public List<AnswersResponseDto> toAnswersResponseDto() {
+        return this.answers.stream()
+                .map(AnswersResponseDto::new)
                 .collect(Collectors.toList());
     }
 

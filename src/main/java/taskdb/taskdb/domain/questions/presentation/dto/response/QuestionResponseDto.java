@@ -2,6 +2,7 @@ package taskdb.taskdb.domain.questions.presentation.dto.response;
 
 import lombok.Builder;
 import lombok.Getter;
+import taskdb.taskdb.domain.answer.presentation.dto.response.AnswersResponseDto;
 import taskdb.taskdb.domain.comment.presentation.dto.response.CommentsResponseDto;
 import taskdb.taskdb.domain.questions.domain.Question;
 import taskdb.taskdb.domain.questions.domain.QuestionStatus;
@@ -19,7 +20,7 @@ public class QuestionResponseDto {
     //좋아요 수
     private final String content;
     private final List<CommentsResponseDto> comments;
-    //답변들
+    private final List<AnswersResponseDto> answers;
 
     @Builder
     public QuestionResponseDto(Question question) {
@@ -29,5 +30,6 @@ public class QuestionResponseDto {
         this.viewCount = question.getViewCount();
         this.content = question.getContent();
         this.comments = question.toCommentsResponseDto();
+        this.answers = question.toAnswersResponseDto();
     }
 }
