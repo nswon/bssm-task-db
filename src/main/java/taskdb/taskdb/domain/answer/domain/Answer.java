@@ -54,4 +54,8 @@ public class Answer {
     public void update(String content) {
         this.content = content;
     }
+
+    public void adopt() {
+        this.choose = AnswerChoose.ADOPT;
+    }
 }

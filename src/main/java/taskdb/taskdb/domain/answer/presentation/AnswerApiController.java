@@ -26,4 +26,9 @@ public class AnswerApiController {
     public void delete(@PathVariable("id") Long id) {
         answerService.delete(id);
     }
+
+    @PutMapping("/{id}/adopt")
+    public void adopt(@PathVariable("id") Long id) {
+        answerService.adopt(id);
+    }
 }
