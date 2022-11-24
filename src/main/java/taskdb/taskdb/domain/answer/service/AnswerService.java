@@ -56,5 +56,6 @@ public class AnswerService {
         userFacade.checkDifferentUser(user, writer);
         answer.adopt();
         question.closeQuestion();
+        writer.addContributionLevel();
     }
 }

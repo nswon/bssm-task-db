@@ -32,6 +32,8 @@ public class User {
 
     private int grade;
 
+    private int contributionLevel;
+
     @Column(nullable = false)
     private String password;
 
@@ -93,5 +95,9 @@ public class User {
         return this.questions.stream()
                 .map(QuestionsResponseDto::new)
                 .collect(Collectors.toList());
+    }
+
+    public void addContributionLevel() {
+        this.contributionLevel += 1;
     }
 }
