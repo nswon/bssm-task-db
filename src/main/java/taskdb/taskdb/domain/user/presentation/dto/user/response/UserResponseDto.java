@@ -7,8 +7,10 @@ import taskdb.taskdb.domain.user.domain.User;
 public class UserResponseDto {
     //TODO
     private final String nickname;
+    private final int contributionLevel;
 
     public UserResponseDto(User user) {
         this.nickname = user.getNickname();
+        this.contributionLevel = user.getContributionLevel();
     }
 }
