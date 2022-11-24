@@ -33,19 +33,41 @@ public class NotificationService {
     }
 
     @Transactional(readOnly = true)
-    public void sendByCreateComment(String nickname) {
-        List<String> tokens = notificationFacade.getTokens();
-        tokens.forEach(token -> {
-            sendPushNotification(token, nickname);
-        });
+    public void sendByCreateComment(String nickname, User questionWriter) {
+        List<String> tokens = notificationFacade.getTokenByUserAndCommentUsers(questionWriter);
+        tokens.forEach(token -> sendPushNotificationByComment(token, nickname));
     }
 
-    private void sendPushNotification(String token, String nickname) {
+    @Transactional(readOnly = true)
+    public void sendByCreateAnswer(String nickname, User questionWriter) {
+        List<String> tokens = notificationFacade.getTokenByUserAndCommentUsers(questionWriter);
+        tokens.forEach(token -> sendPushNotificationByAnswer(token, nickname));
+    }
+
+    private void sendPushNotificationByComment(String token, String nickname) {
         Message message = Message.builder()
                 .setWebpushConfig(WebpushConfig.builder()
                         .setNotification(WebpushNotification.builder()
                                 .setTitle("TaskDB")
                                 .setBody(nickname + "님이 댓글을 등록하였습니다.")
+                                .build())
+                        .build())
+                .setToken(token)
+                .build();
+
+        try {
+            FirebaseMessaging.getInstance().sendAsync(message).get();
+        } catch (InterruptedException | ExecutionException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void sendPushNotificationByAnswer(String token, String nickname) {
+        Message message = Message.builder()
+                .setWebpushConfig(WebpushConfig.builder()
+                        .setNotification(WebpushNotification.builder()
+                                .setTitle("TaskDB")
+                                .setBody(nickname + "님이 답변을 등록하였습니다.")
                                 .build())
                         .build())
                 .setToken(token)

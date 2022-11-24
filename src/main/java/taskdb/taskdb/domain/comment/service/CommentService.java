@@ -32,7 +32,8 @@ public class CommentService {
         comment.confirmQuestion(question);
         commentRepository.save(comment);
         String nickname = user.getNickname();
-        notificationService.sendByCreateComment(nickname);
+        User questionWriter = question.getUser();
+        notificationService.sendByCreateComment(nickname, questionWriter);
     }
 
     public void createReComment(Long questionId, Long parentId, CommentCreateRequestDto requestDto) {
