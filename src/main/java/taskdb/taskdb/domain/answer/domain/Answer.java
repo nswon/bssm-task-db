@@ -50,4 +50,8 @@ public class Answer {
     public void ongoing() {
         this.choose = AnswerChoose.ONGOING;
     }
+
+    public void update(String content) {
+        this.content = content;
+    }
 }

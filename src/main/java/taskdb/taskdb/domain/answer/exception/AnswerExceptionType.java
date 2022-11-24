@@ -1,4 +1,4 @@
-package taskdb.taskdb.domain.comment.exception;
+package taskdb.taskdb.domain.answer.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,8 +7,8 @@ import taskdb.taskdb.global.exception.application.BaseExceptionType;
 
 @Getter
 @AllArgsConstructor
-public enum CommentExceptionType implements BaseExceptionType {
-    NOT_FOUND_COMMENT(800, HttpStatus.BAD_REQUEST, "댓글이 존재하지 않습니다.");
+public enum AnswerExceptionType implements BaseExceptionType {
+    NOT_FOUND_ANSWER(900, HttpStatus.BAD_REQUEST, "답변이 존재하지 않습니다.");
 
     private final int errorCode;
     private final HttpStatus httpStatus;
