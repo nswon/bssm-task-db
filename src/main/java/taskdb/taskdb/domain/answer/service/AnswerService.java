@@ -51,10 +51,10 @@ public class AnswerService {
     public void adopt(Long id) {
         User user = userFacade.getCurrentUser();
         Answer answer = answerFacade.getAnswerById(id);
-        User writer = answer.getUser();
+        Question question = answer.getQuestion();
+        User writer = question.getUser();
         userFacade.checkDifferentUser(user, writer);
         answer.adopt();
-        Question question = answer.getQuestion();
         question.closeQuestion();
     }
 }
