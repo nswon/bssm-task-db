@@ -8,6 +8,7 @@ import taskdb.taskdb.domain.comment.domain.CommentRepository;
 import taskdb.taskdb.domain.comment.facade.CommentFacade;
 import taskdb.taskdb.domain.comment.presentation.dto.request.CommentCreateRequestDto;
 import taskdb.taskdb.domain.comment.presentation.dto.request.CommentUpdateRequestDto;
+import taskdb.taskdb.domain.notification.service.NotificationService;
 import taskdb.taskdb.domain.questions.domain.Question;
 import taskdb.taskdb.domain.questions.facade.QuestionFacade;
 import taskdb.taskdb.domain.user.domain.User;
@@ -21,6 +22,7 @@ public class CommentService {
     private final UserFacade userFacade;
     private final QuestionFacade questionFacade;
     private final CommentFacade commentFacade;
+    private final NotificationService notificationService;
 
     public void create(Long id, CommentCreateRequestDto requestDto) {
         User user = userFacade.getCurrentUser();
@@ -29,6 +31,8 @@ public class CommentService {
         comment.confirmUser(user);
         comment.confirmQuestion(question);
         commentRepository.save(comment);
+        String nickname = user.getNickname();
+        notificationService.sendByCreateComment(nickname);
     }
 
     public void createReComment(Long questionId, Long parentId, CommentCreateRequestDto requestDto) {
