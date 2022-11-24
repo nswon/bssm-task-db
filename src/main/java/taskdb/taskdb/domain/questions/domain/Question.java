@@ -4,11 +4,13 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import taskdb.taskdb.domain.comment.domain.Comment;
+import taskdb.taskdb.domain.comment.presentation.dto.response.CommentsResponseDto;
 import taskdb.taskdb.domain.user.domain.User;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Getter
@@ -89,5 +91,11 @@ public class Question {
 
     public int getCommentsSize() {
         return comments.size();
+    }
+
+    public List<CommentsResponseDto> toCommentsResponseDto() {
+        return this.comments.stream()
+                .map(CommentsResponseDto::new)
+                .collect(Collectors.toList());
     }
 }

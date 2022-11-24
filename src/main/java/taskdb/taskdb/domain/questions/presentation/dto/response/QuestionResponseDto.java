@@ -7,7 +7,6 @@ import taskdb.taskdb.domain.questions.domain.Question;
 import taskdb.taskdb.domain.questions.domain.QuestionStatus;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Getter
 public class QuestionResponseDto {
@@ -27,8 +26,6 @@ public class QuestionResponseDto {
         this.status = question.getQuestionStatus();
         this.viewCount = question.getViewCount();
         this.content = question.getContent();
-        this.comments = question.getComments().stream()
-                .map(CommentsResponseDto::new)
-                .collect(Collectors.toList());
+        this.comments = question.toCommentsResponseDto();
     }
 }
