@@ -21,6 +21,8 @@ import java.util.concurrent.ExecutionException;
 @RequiredArgsConstructor
 @Transactional
 public class NotificationService {
+    private static final String PUSH_NOTIFICATION_TITLE = "TaskDB";
+    private static final String PUSH_NOTIFICATION_BODY = "님이 답변을 등록하였습니다.";
     private final NotificationRepository notificationRepository;
     private final UserFacade userFacade;
     private final NotificationFacade notificationFacade;
@@ -33,41 +35,17 @@ public class NotificationService {
     }
 
     @Transactional(readOnly = true)
-    public void sendByCreateComment(String nickname, User questionWriter) {
-        List<String> tokens = notificationFacade.getTokenByUserAndCommentUsers(questionWriter);
-        tokens.forEach(token -> sendPushNotificationByComment(token, nickname));
-    }
-
-    @Transactional(readOnly = true)
     public void sendByCreateAnswer(String nickname, User questionWriter) {
         List<String> tokens = notificationFacade.getTokenByUserAndCommentUsers(questionWriter);
         tokens.forEach(token -> sendPushNotificationByAnswer(token, nickname));
-    }
-
-    private void sendPushNotificationByComment(String token, String nickname) {
-        Message message = Message.builder()
-                .setWebpushConfig(WebpushConfig.builder()
-                        .setNotification(WebpushNotification.builder()
-                                .setTitle("TaskDB")
-                                .setBody(nickname + "님이 댓글을 등록하였습니다.")
-                                .build())
-                        .build())
-                .setToken(token)
-                .build();
-
-        try {
-            FirebaseMessaging.getInstance().sendAsync(message).get();
-        } catch (InterruptedException | ExecutionException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     private void sendPushNotificationByAnswer(String token, String nickname) {
         Message message = Message.builder()
                 .setWebpushConfig(WebpushConfig.builder()
                         .setNotification(WebpushNotification.builder()
-                                .setTitle("TaskDB")
-                                .setBody(nickname + "님이 답변을 등록하였습니다.")
+                                .setTitle(PUSH_NOTIFICATION_TITLE)
+                                .setBody(nickname + PUSH_NOTIFICATION_BODY)
                                 .build())
                         .build())
                 .setToken(token)
