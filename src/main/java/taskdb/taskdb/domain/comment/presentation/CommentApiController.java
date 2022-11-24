@@ -17,6 +17,13 @@ public class CommentApiController {
         commentService.create(id, requestDto);
     }
 
+    @PostMapping("/{id}/{pId}/new")
+    public void createReComment(@PathVariable("id") Long questionId,
+                                @PathVariable("pId") Long parentId,
+                                @RequestBody CommentCreateRequestDto requestDto) {
+        commentService.createReComment(questionId, parentId, requestDto);
+    }
+
     @PutMapping("/{id}/edit")
     public void update(@PathVariable("id") Long id, @RequestBody CommentUpdateRequestDto requestDto) {
         commentService.update(id, requestDto);

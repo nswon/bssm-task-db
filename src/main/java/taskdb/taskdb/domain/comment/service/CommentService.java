@@ -31,6 +31,17 @@ public class CommentService {
         commentRepository.save(comment);
     }
 
+    public void createReComment(Long questionId, Long parentId, CommentCreateRequestDto requestDto) {
+        User user = userFacade.getCurrentUser();
+        Question question = questionFacade.getQuestionById(questionId);
+        Comment parentComment = commentFacade.getCommentById(parentId);
+        Comment comment = requestDto.toEntity();
+        comment.confirmQuestion(question);
+        comment.confirmUser(user);
+        comment.confirmParent(parentComment);
+        commentRepository.save(comment);
+    }
+
     public void update(Long id, CommentUpdateRequestDto requestDto) {
         User user = userFacade.getCurrentUser();
         Comment comment = commentFacade.getCommentById(id);
