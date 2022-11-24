@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import taskdb.taskdb.domain.user.presentation.dto.user.request.UserJoinRequestDto;
 import taskdb.taskdb.domain.user.presentation.dto.user.response.UserResponseDto;
 import taskdb.taskdb.domain.user.service.user.UserService;
+import taskdb.taskdb.global.cover.Result;
 
 import javax.validation.Valid;
 
@@ -22,5 +23,12 @@ public class UserApiController {
     @GetMapping("/{id}")
     public UserResponseDto getUserById(@PathVariable("id") Long id) {
         return userService.getUserById(id);
+    }
+
+    @GetMapping("/questions")
+    public Result getQuestions() {
+        return Result.builder()
+                .data(userService.getQuestions())
+                .build();
     }
 }

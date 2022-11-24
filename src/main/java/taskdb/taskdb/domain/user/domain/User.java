@@ -8,10 +8,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import taskdb.taskdb.domain.answer.domain.Answer;
 import taskdb.taskdb.domain.comment.domain.Comment;
 import taskdb.taskdb.domain.questions.domain.Question;
+import taskdb.taskdb.domain.questions.presentation.dto.response.QuestionsResponseDto;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Getter
@@ -85,5 +87,11 @@ public class User {
 
     public void addAnswer(Answer answer) {
         this.answers.add(answer);
+    }
+
+    public List<QuestionsResponseDto> toQuestionsResponseDto() {
+        return this.questions.stream()
+                .map(QuestionsResponseDto::new)
+                .collect(Collectors.toList());
     }
 }
