@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import taskdb.taskdb.domain.answer.domain.Answer;
 import taskdb.taskdb.domain.comment.domain.Comment;
 import taskdb.taskdb.domain.questions.domain.Question;
 
@@ -40,6 +41,9 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     private final List<Comment> comments = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private final List<Answer> answers = new ArrayList<>();
 
     @Builder
     public User(String email, String nickname, String password) {
@@ -77,5 +81,9 @@ public class User {
 
     public void addComment(Comment comment) {
         this.comments.add(comment);
+    }
+
+    public void addAnswer(Answer answer) {
+        this.answers.add(answer);
     }
 }

@@ -3,6 +3,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import taskdb.taskdb.domain.answer.domain.Answer;
 import taskdb.taskdb.domain.comment.domain.Comment;
 import taskdb.taskdb.domain.comment.presentation.dto.response.CommentsResponseDto;
 import taskdb.taskdb.domain.user.domain.User;
@@ -47,6 +48,9 @@ public class Question {
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
     private final List<Comment> comments = new ArrayList<>();
+
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
+    private final List<Answer> answers = new ArrayList<>();
 
     @Builder
     public Question(String title, String content, Category category) {
@@ -97,5 +101,9 @@ public class Question {
         return this.comments.stream()
                 .map(CommentsResponseDto::new)
                 .collect(Collectors.toList());
+    }
+
+    public void addAnswer(Answer answer) {
+        this.answers.add(answer);
     }
 }
