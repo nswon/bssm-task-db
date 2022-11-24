@@ -12,6 +12,7 @@ import java.util.List;
 public class QuestionResponseDto {
     private final String title;
     private final QuestionStatus status;
+    private final String nickname;
     //등록한 날짜
     //수정한 날짜
     private final int viewCount;
@@ -24,6 +25,7 @@ public class QuestionResponseDto {
     public QuestionResponseDto(Question question) {
         this.title = question.getTitle();
         this.status = question.getQuestionStatus();
+        this.nickname = question.getUser().getNickname();
         this.viewCount = question.getViewCount();
         this.content = question.getContent();
         this.comments = question.toCommentsResponseDto();
