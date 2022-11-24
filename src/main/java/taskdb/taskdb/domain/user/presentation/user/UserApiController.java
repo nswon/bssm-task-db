@@ -2,12 +2,14 @@ package taskdb.taskdb.domain.user.presentation.user;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import taskdb.taskdb.domain.questions.presentation.dto.response.QuestionsResponseDto;
 import taskdb.taskdb.domain.user.presentation.dto.user.request.UserJoinRequestDto;
 import taskdb.taskdb.domain.user.presentation.dto.user.response.UserResponseDto;
 import taskdb.taskdb.domain.user.service.user.UserService;
 import taskdb.taskdb.global.cover.Result;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -27,8 +29,9 @@ public class UserApiController {
 
     @GetMapping("/questions")
     public Result getQuestions() {
+        List<QuestionsResponseDto> response = userService.getQuestions();
         return Result.builder()
-                .data(userService.getQuestions())
+                .data(response)
                 .build();
     }
 }

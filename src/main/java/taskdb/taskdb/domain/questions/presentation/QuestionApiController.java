@@ -25,8 +25,9 @@ public class QuestionApiController {
 
     @GetMapping("")
     public Result getQuestions() {
+        List<QuestionsResponseDto> response = questionService.getQuestions();
         return Result.builder()
-                .data(questionService.getQuestions())
+                .data(response)
                 .build();
     }
 
@@ -46,27 +47,42 @@ public class QuestionApiController {
     }
 
     @GetMapping("/search")
-    public List<QuestionsResponseDto> searchByTitleOrId(@RequestParam("q") Object keyword) {
-        return questionService.searchByTitleOrId(keyword);
+    public Result searchByTitleOrId(@RequestParam("q") Object keyword) {
+        List<QuestionsResponseDto> response = questionService.searchByTitleOrId(keyword);
+        return Result.builder()
+                .data(response)
+                .build();
     }
 
     @GetMapping("/categories")
-    public List<QuestionsResponseDto> getQuestionsByCategory(@RequestParam("c")Category category) {
-        return questionService.getQuestionsByCategory(category);
+    public Result getQuestionsByCategory(@RequestParam("c")Category category) {
+        List<QuestionsResponseDto> response = questionService.getQuestionsByCategory(category);
+        return Result.builder()
+                .data(response)
+                .build();
     }
 
     @GetMapping("/grade")
-    public List<QuestionsResponseDto> getQuestionsByGrade(@RequestParam("g") int grade) {
-        return questionService.getQuestionsByGrade(grade);
+    public Result getQuestionsByGrade(@RequestParam("g") int grade) {
+        List<QuestionsResponseDto> response = questionService.getQuestionsByGrade(grade);
+        return Result.builder()
+                .data(response)
+                .build();
     }
 
     @GetMapping("/open")
-    public List<QuestionsResponseDto> getOpenQuestions() {
-        return questionService.getOpenQuestions();
+    public Result getOpenQuestions() {
+        List<QuestionsResponseDto> response = questionService.getOpenQuestions();
+        return Result.builder()
+                .data(response)
+                .build();
     }
 
     @GetMapping("/close")
-    public List<QuestionsResponseDto> getCloseQuestions() {
-        return questionService.getCloseQuestions();
+    public Result getCloseQuestions() {
+        List<QuestionsResponseDto> response = questionService.getCloseQuestions();
+        return Result.builder()
+                .data(response)
+                .build();
     }
 }
