@@ -14,7 +14,9 @@ import taskdb.taskdb.domain.user.exception.UserExceptionType;
 import taskdb.taskdb.domain.user.facade.UserFacade;
 import taskdb.taskdb.domain.user.presentation.dto.user.request.UserJoinRequestDto;
 import taskdb.taskdb.domain.user.presentation.dto.user.response.UserResponseDto;
+import taskdb.taskdb.domain.user.presentation.dto.user.response.UsersRankResponseDto;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -57,5 +59,13 @@ public class UserService {
     public List<StoreQuestionsResponseDto> getSavedQuestions() {
         User user = userFacade.getCurrentUser();
         return user.toStoreQuestionsResponseDto();
+    }
+
+    public List<UsersRankResponseDto> rank() {
+        return userRepository.findAll().stream()
+                .sorted(Comparator.comparing(User::getContributionLevel).reversed().thenComparing(User::getAnswerCount))
+                .limit(10)
+                .map(UsersRankResponseDto::new)
+                .collect(Collectors.toList());
     }
 }

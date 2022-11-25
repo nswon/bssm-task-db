@@ -115,4 +115,12 @@ public class User {
     public void addQuestion(QuestionStore question) {
         this.questionStores.add(question);
     }
+
+    public int getAnswerCount() {
+        return this.answers.size();
+    }
+
+    public int getQuestionCount() {
+        return this.questions.size();
+    }
 }

@@ -6,6 +6,7 @@ import taskdb.taskdb.domain.questions.presentation.dto.response.QuestionsRespons
 import taskdb.taskdb.domain.store.presentation.dto.response.StoreQuestionsResponseDto;
 import taskdb.taskdb.domain.user.presentation.dto.user.request.UserJoinRequestDto;
 import taskdb.taskdb.domain.user.presentation.dto.user.response.UserResponseDto;
+import taskdb.taskdb.domain.user.presentation.dto.user.response.UsersRankResponseDto;
 import taskdb.taskdb.domain.user.service.user.UserService;
 import taskdb.taskdb.global.cover.Result;
 
@@ -39,6 +40,14 @@ public class UserApiController {
     @GetMapping("/saved/questions")
     public Result getSavedQuestions() {
         List<StoreQuestionsResponseDto> response = userService.getSavedQuestions();
+        return Result.builder()
+                .data(response)
+                .build();
+    }
+
+    @GetMapping("/rank")
+    public Result rank() {
+        List<UsersRankResponseDto> response = userService.rank();
         return Result.builder()
                 .data(response)
                 .build();
