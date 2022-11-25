@@ -21,9 +21,9 @@ public class QuestionStoreApiController {
 
     @GetMapping("")
     public Result getQuestions() {
-        List<StoreQuestionsResponseDto> response = questionStoreService.getQuestions();
+        List<StoreQuestionsResponseDto> savedQuestions = questionStoreService.getQuestions();
         return Result.builder()
-                .data(response)
+                .data(savedQuestions)
                 .build();
     }
 
