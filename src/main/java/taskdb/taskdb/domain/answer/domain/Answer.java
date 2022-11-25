@@ -68,4 +68,8 @@ public class Answer {
     public void addAnswerLike(AnswerLike answerLike) {
         this.answerLikes.add(answerLike);
     }
+
+    public int getAnswerLikeCount() {
+        return this.answerLikes.size();
+    }
 }
