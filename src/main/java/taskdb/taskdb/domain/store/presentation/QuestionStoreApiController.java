@@ -26,4 +26,14 @@ public class QuestionStoreApiController {
                 .data(response)
                 .build();
     }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable("id") Long id) {
+        questionStoreService.delete(id);
+    }
+
+    @DeleteMapping("deleteAll")
+    public void deleteAll() {
+        questionStoreService.deleteAll();
+    }
 }
