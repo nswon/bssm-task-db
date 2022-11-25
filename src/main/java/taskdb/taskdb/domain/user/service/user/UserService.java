@@ -64,7 +64,9 @@ public class UserService {
 
     public List<UsersRankResponseDto> rank() {
         return userRepository.findAll().stream()
-                .sorted(Comparator.comparing(User::getContributionLevel).reversed().thenComparing(User::getAnswerCount))
+                .sorted(Comparator.comparing(User::getContributionLevel).reversed()
+                        .thenComparing(User::getAnswerCount)
+                        .thenComparing(User::getQuestionCount))
                 .limit(RANK_SIZE)
                 .map(UsersRankResponseDto::new)
                 .collect(Collectors.toList());
