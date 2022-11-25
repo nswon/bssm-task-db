@@ -6,6 +6,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import taskdb.taskdb.domain.questions.presentation.dto.response.QuestionsResponseDto;
+import taskdb.taskdb.domain.store.presentation.dto.response.StoreQuestionsResponseDto;
 import taskdb.taskdb.domain.user.domain.User;
 import taskdb.taskdb.domain.user.domain.UserRepository;
 import taskdb.taskdb.domain.user.exception.UserException;
@@ -51,5 +52,10 @@ public class UserService {
     public List<QuestionsResponseDto> getQuestions() {
         User user = userFacade.getCurrentUser();
         return user.toQuestionsResponseDto();
+    }
+
+    public List<StoreQuestionsResponseDto> getSavedQuestions() {
+        User user = userFacade.getCurrentUser();
+        return user.toStoreQuestionsResponseDto();
     }
 }

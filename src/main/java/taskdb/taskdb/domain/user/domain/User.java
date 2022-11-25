@@ -10,6 +10,7 @@ import taskdb.taskdb.domain.comment.domain.Comment;
 import taskdb.taskdb.domain.questions.domain.Question;
 import taskdb.taskdb.domain.questions.presentation.dto.response.QuestionsResponseDto;
 import taskdb.taskdb.domain.store.domain.QuestionStore;
+import taskdb.taskdb.domain.store.presentation.dto.response.StoreQuestionsResponseDto;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -98,6 +99,12 @@ public class User {
     public List<QuestionsResponseDto> toQuestionsResponseDto() {
         return this.questions.stream()
                 .map(QuestionsResponseDto::new)
+                .collect(Collectors.toList());
+    }
+
+    public List<StoreQuestionsResponseDto> toStoreQuestionsResponseDto() {
+        return this.questionStores.stream()
+                .map(StoreQuestionsResponseDto::new)
                 .collect(Collectors.toList());
     }
 
