@@ -120,4 +120,8 @@ public class Question extends BaseTimeEntity {
     public int getQuestionLikeCount() {
         return this.questionLikes.size();
     }
+
+    public boolean isTitleContainsByKeyword(String keyword) {
+        return title.contains(keyword);
+    }
 }

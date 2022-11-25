@@ -96,4 +96,11 @@ public class QuestionService {
                 .map(QuestionsResponseDto::new)
                 .collect(Collectors.toList());
     }
+
+    public List<String> getRecommendTitles(String keyword) {
+        return questionRepository.findAll().stream()
+                .filter(question -> question.isTitleContainsByKeyword(keyword))
+                .map(Question::getTitle)
+                .collect(Collectors.toList());
+    }
 }
