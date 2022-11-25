@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
-@AllArgsConstructor
 public class AnswerUpdateRequestDto {
-    private final String content;
+    private String content;
 }
