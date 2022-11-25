@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import taskdb.taskdb.domain.answer.domain.Answer;
 import taskdb.taskdb.domain.comment.domain.Comment;
+import taskdb.taskdb.domain.like.question.domain.QuestionLike;
 import taskdb.taskdb.domain.questions.domain.Question;
 import taskdb.taskdb.domain.questions.presentation.dto.response.QuestionsResponseDto;
 import taskdb.taskdb.domain.store.domain.QuestionStore;
@@ -53,6 +54,9 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private final List<QuestionStore> questionStores = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private final List<QuestionLike> questionLikes = new ArrayList<>();
 
     @Builder
     public User(String email, String nickname, String password) {
@@ -122,5 +126,9 @@ public class User {
 
     public int getQuestionCount() {
         return this.questions.size();
+    }
+
+    public void addQuestionLike(QuestionLike questionLike) {
+        this.questionLikes.add(questionLike);
     }
 }

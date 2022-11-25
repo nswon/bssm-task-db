@@ -7,6 +7,7 @@ import taskdb.taskdb.domain.answer.domain.Answer;
 import taskdb.taskdb.domain.answer.presentation.dto.response.AnswersResponseDto;
 import taskdb.taskdb.domain.comment.domain.Comment;
 import taskdb.taskdb.domain.comment.presentation.dto.response.CommentsResponseDto;
+import taskdb.taskdb.domain.like.question.domain.QuestionLike;
 import taskdb.taskdb.domain.user.domain.User;
 
 import javax.persistence.*;
@@ -41,17 +42,14 @@ public class Question {
     @Enumerated(EnumType.STRING)
     private Category category;
 
-    //좋아요
-
-    //댓글
-
-    //답변
-
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
     private final List<Comment> comments = new ArrayList<>();
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
     private final List<Answer> answers = new ArrayList<>();
+
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
+    private final List<QuestionLike> questionLikes = new ArrayList<>();
 
     @Builder
     public Question(String title, String content, Category category) {
@@ -112,5 +110,9 @@ public class Question {
 
     public void addAnswer(Answer answer) {
         this.answers.add(answer);
+    }
+
+    public void addQuestionLike(QuestionLike questionLike) {
+        this.questionLikes.add(questionLike);
     }
 }
