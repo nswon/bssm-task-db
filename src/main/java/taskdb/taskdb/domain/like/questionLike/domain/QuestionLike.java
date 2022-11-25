@@ -1,4 +1,4 @@
-package taskdb.taskdb.domain.like.question.domain;
+package taskdb.taskdb.domain.like.questionLike.domain;
 
 import lombok.AccessLevel;
 import lombok.Builder;

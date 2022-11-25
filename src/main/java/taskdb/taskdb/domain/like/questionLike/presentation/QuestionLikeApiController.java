@@ -1,4 +1,4 @@
-package taskdb.taskdb.domain.like.question.presentation;
+package taskdb.taskdb.domain.like.questionLike.presentation;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PathVariable;

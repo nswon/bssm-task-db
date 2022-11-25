@@ -1,4 +1,4 @@
-package taskdb.taskdb.domain.like.question.domain;
+package taskdb.taskdb.domain.like.questionLike.domain;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import taskdb.taskdb.domain.questions.domain.Question;

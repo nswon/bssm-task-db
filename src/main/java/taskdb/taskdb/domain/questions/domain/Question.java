@@ -7,7 +7,7 @@ import taskdb.taskdb.domain.answer.domain.Answer;
 import taskdb.taskdb.domain.answer.presentation.dto.response.AnswersResponseDto;
 import taskdb.taskdb.domain.comment.domain.Comment;
 import taskdb.taskdb.domain.comment.presentation.dto.response.CommentsResponseDto;
-import taskdb.taskdb.domain.like.question.domain.QuestionLike;
+import taskdb.taskdb.domain.like.questionLike.domain.QuestionLike;
 import taskdb.taskdb.domain.user.domain.User;
 
 import javax.persistence.*;
@@ -114,5 +114,9 @@ public class Question {
 
     public void addQuestionLike(QuestionLike questionLike) {
         this.questionLikes.add(questionLike);
+    }
+
+    public int getQuestionLikeCount() {
+        return this.questionLikes.size();
     }
 }

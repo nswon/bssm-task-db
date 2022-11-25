@@ -17,7 +17,7 @@ public class QuestionResponseDto {
     //등록한 날짜
     //수정한 날짜
     private final int viewCount;
-    //좋아요 수
+    private final int likeCount;
     private final String content;
     private final List<CommentsResponseDto> comments;
     private final List<AnswersResponseDto> answers;
@@ -28,6 +28,7 @@ public class QuestionResponseDto {
         this.status = question.getQuestionStatus();
         this.nickname = question.getUser().getNickname();
         this.viewCount = question.getViewCount();
+        this.likeCount = question.getQuestionLikeCount();
         this.content = question.getContent();
         this.comments = question.toCommentsResponseDto();
         this.answers = question.toAnswersResponseDto();

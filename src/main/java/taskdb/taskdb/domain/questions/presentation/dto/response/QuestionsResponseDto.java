@@ -13,7 +13,7 @@ public class QuestionsResponseDto {
     private final String title;
     private final Category category;
     private final int commentCount;
-    //좋아요 개수
+    private final int likeCount;
     //등록 날짜
 
     @Builder
@@ -23,5 +23,6 @@ public class QuestionsResponseDto {
         this.title = question.getTitle();
         this.category = question.getCategory();
         this.commentCount = question.getCommentsSize();
+        this.likeCount = question.getQuestionLikeCount();
     }
 }

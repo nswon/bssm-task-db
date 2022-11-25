@@ -1,11 +1,11 @@
-package taskdb.taskdb.domain.like.question.service;
+package taskdb.taskdb.domain.like.questionLike.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import taskdb.taskdb.domain.like.LikeService;
-import taskdb.taskdb.domain.like.question.domain.QuestionLike;
-import taskdb.taskdb.domain.like.question.domain.QuestionLikeRepository;
+import taskdb.taskdb.domain.like.questionLike.domain.QuestionLike;
+import taskdb.taskdb.domain.like.questionLike.domain.QuestionLikeRepository;
 import taskdb.taskdb.domain.questions.domain.Question;
 import taskdb.taskdb.domain.questions.facade.QuestionFacade;
 import taskdb.taskdb.domain.user.domain.User;
