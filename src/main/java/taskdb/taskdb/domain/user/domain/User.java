@@ -9,6 +9,7 @@ import taskdb.taskdb.domain.answer.domain.Answer;
 import taskdb.taskdb.domain.comment.domain.Comment;
 import taskdb.taskdb.domain.questions.domain.Question;
 import taskdb.taskdb.domain.questions.presentation.dto.response.QuestionsResponseDto;
+import taskdb.taskdb.domain.store.domain.QuestionStore;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -48,6 +49,9 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     private final List<Answer> answers = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private final List<QuestionStore> questionStores = new ArrayList<>();
 
     @Builder
     public User(String email, String nickname, String password) {
@@ -99,5 +103,9 @@ public class User {
 
     public void addContributionLevel() {
         this.contributionLevel += 1;
+    }
+
+    public void addQuestion(QuestionStore question) {
+        this.questionStores.add(question);
     }
 }
