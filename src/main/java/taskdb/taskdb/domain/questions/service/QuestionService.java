@@ -101,6 +101,7 @@ public class QuestionService {
         return questionRepository.findAll().stream()
                 .filter(question -> question.isTitleContainsByKeyword(keyword))
                 .map(Question::getTitle)
+                .limit(10)
                 .collect(Collectors.toList());
     }
 }
