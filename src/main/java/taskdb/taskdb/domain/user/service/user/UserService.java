@@ -26,6 +26,7 @@ import java.util.stream.Collectors;
 @Transactional(readOnly = true)
 @Slf4j
 public class UserService {
+    private static final int RANK_SIZE = 10;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final UserFacade userFacade;
@@ -64,7 +65,7 @@ public class UserService {
     public List<UsersRankResponseDto> rank() {
         return userRepository.findAll().stream()
                 .sorted(Comparator.comparing(User::getContributionLevel).reversed().thenComparing(User::getAnswerCount))
-                .limit(10)
+                .limit(RANK_SIZE)
                 .map(UsersRankResponseDto::new)
                 .collect(Collectors.toList());
     }
