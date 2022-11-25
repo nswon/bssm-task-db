@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import taskdb.taskdb.domain.like.answerLike.domain.AnswerLike;
 import taskdb.taskdb.domain.questions.domain.Question;
 import taskdb.taskdb.domain.user.domain.User;
+import taskdb.taskdb.global.entity.BaseTimeEntity;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -16,7 +17,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "ANSWER")
-public class Answer {
+public class Answer extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

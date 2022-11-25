@@ -6,6 +6,8 @@ import taskdb.taskdb.domain.questions.domain.Category;
 import taskdb.taskdb.domain.questions.domain.Question;
 import taskdb.taskdb.domain.questions.domain.QuestionStatus;
 
+import java.time.LocalDateTime;
+
 @Getter
 public class QuestionsResponseDto {
     private final Long id;
@@ -14,7 +16,7 @@ public class QuestionsResponseDto {
     private final Category category;
     private final int commentCount;
     private final int likeCount;
-    //등록 날짜
+    private final LocalDateTime createdDate;
 
     @Builder
     public QuestionsResponseDto(Question question) {
@@ -24,5 +26,6 @@ public class QuestionsResponseDto {
         this.category = question.getCategory();
         this.commentCount = question.getCommentsSize();
         this.likeCount = question.getQuestionLikeCount();
+        this.createdDate = question.getCreatedDate();
     }
 }

@@ -9,6 +9,7 @@ import taskdb.taskdb.domain.comment.domain.Comment;
 import taskdb.taskdb.domain.comment.presentation.dto.response.CommentsResponseDto;
 import taskdb.taskdb.domain.like.questionLike.domain.QuestionLike;
 import taskdb.taskdb.domain.user.domain.User;
+import taskdb.taskdb.global.entity.BaseTimeEntity;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ import java.util.stream.Collectors;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "QUESTION")
-public class Question {
+public class Question extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

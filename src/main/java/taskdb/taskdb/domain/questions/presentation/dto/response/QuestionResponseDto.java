@@ -7,6 +7,7 @@ import taskdb.taskdb.domain.comment.presentation.dto.response.CommentsResponseDt
 import taskdb.taskdb.domain.questions.domain.Question;
 import taskdb.taskdb.domain.questions.domain.QuestionStatus;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -14,8 +15,8 @@ public class QuestionResponseDto {
     private final String title;
     private final QuestionStatus status;
     private final String nickname;
-    //등록한 날짜
-    //수정한 날짜
+    private final LocalDateTime createdDate;
+    private final LocalDateTime modifiedDate;
     private final int viewCount;
     private final int likeCount;
     private final String content;
@@ -27,6 +28,8 @@ public class QuestionResponseDto {
         this.title = question.getTitle();
         this.status = question.getQuestionStatus();
         this.nickname = question.getUser().getNickname();
+        this.createdDate = question.getCreatedDate();
+        this.modifiedDate = question.getModifiedDate();
         this.viewCount = question.getViewCount();
         this.likeCount = question.getQuestionLikeCount();
         this.content = question.getContent();
