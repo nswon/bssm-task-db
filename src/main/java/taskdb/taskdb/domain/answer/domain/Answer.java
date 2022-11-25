@@ -4,10 +4,13 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import taskdb.taskdb.domain.like.answerLike.domain.AnswerLike;
 import taskdb.taskdb.domain.questions.domain.Question;
 import taskdb.taskdb.domain.user.domain.User;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -31,6 +34,9 @@ public class Answer {
 
     @Enumerated(EnumType.STRING)
     private AnswerChoose choose;
+
+    @OneToMany(mappedBy = "answer", cascade = CascadeType.ALL, orphanRemoval = true)
+    private final List<AnswerLike> answerLikes = new ArrayList<>();
 
     @Builder
     public Answer(String content) {
@@ -57,5 +63,9 @@ public class Answer {
 
     public void adopt() {
         this.choose = AnswerChoose.ADOPT;
+    }
+
+    public void addAnswerLike(AnswerLike answerLike) {
+        this.answerLikes.add(answerLike);
     }
 }
