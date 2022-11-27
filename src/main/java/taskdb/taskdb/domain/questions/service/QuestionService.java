@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class QuestionService {
+    private static final int RECOMMEND_TITLE_COUNT = 10;
     private final QuestionRepository questionRepository;
     private final UserFacade userFacade;
     private final QuestionFacade questionFacade;
@@ -101,7 +102,7 @@ public class QuestionService {
         return questionRepository.findAll().stream()
                 .filter(question -> question.isTitleContainsByKeyword(keyword))
                 .map(Question::getTitle)
-                .limit(10)
+                .limit(RECOMMEND_TITLE_COUNT)
                 .collect(Collectors.toList());
     }
 }

@@ -18,7 +18,10 @@ import taskdb.taskdb.domain.user.presentation.dto.user.response.UsersRankRespons
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 
 @Service
@@ -62,7 +65,14 @@ public class UserService {
         return user.toStoreQuestionsResponseDto();
     }
 
-    public List<UsersRankResponseDto> rank() {
+    public Map<Integer, UsersRankResponseDto> rank() {
+        List<UsersRankResponseDto> usersRank = getUsersByContributionLevel();
+        return IntStream.rangeClosed(1, RANK_SIZE)
+                .boxed()
+                .collect(Collectors.toMap(integer -> integer, usersRank::get));
+    }
+
+    private List<UsersRankResponseDto> getUsersByContributionLevel() {
         return userRepository.findAll().stream()
                 .sorted(Comparator.comparing(User::getContributionLevel).reversed()
                         .thenComparing(User::getAnswerCount)

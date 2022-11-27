@@ -12,6 +12,7 @@ import taskdb.taskdb.global.cover.Result;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -47,7 +48,7 @@ public class UserApiController {
 
     @GetMapping("/rank")
     public Result rank() {
-        List<UsersRankResponseDto> response = userService.rank();
+        Map<Integer, UsersRankResponseDto> response = userService.rank();
         return Result.builder()
                 .data(response)
                 .build();
