@@ -24,6 +24,7 @@ public class QuestionLikeService {
 
         if(questionLikeRepository.existsByQuestionAndUser(question, user)) {
             questionLikeRepository.deleteByQuestionAndUser(question, user);
+            question.downLikeCount();
             return true;
         }
         QuestionLike questionLike = QuestionLike.builder()
@@ -34,6 +35,7 @@ public class QuestionLikeService {
         questionLike.addQuestion();
         questionLike.addUser();
         questionLikeRepository.save(questionLike);
+        question.addLikeCount();
         return true;
     }
 }

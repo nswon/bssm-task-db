@@ -31,7 +31,7 @@ public class QuestionResponseDto {
         this.createdDate = question.getCreatedDate();
         this.modifiedDate = question.getModifiedDate();
         this.viewCount = question.getViewCount();
-        this.likeCount = question.getQuestionLikeCount();
+        this.likeCount = question.getLikeCount();
         this.content = question.getContent();
         this.comments = question.toCommentsResponseDto();
         this.answers = question.toAnswersResponseDto();

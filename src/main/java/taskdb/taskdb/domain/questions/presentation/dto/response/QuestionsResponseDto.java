@@ -25,7 +25,7 @@ public class QuestionsResponseDto {
         this.title = question.getTitle();
         this.category = question.getCategory();
         this.commentCount = question.getCommentsSize();
-        this.likeCount = question.getQuestionLikeCount();
+        this.likeCount = question.getLikeCount();
         this.createdDate = question.getCreatedDate();
     }
 }

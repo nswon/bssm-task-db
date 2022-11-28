@@ -33,6 +33,8 @@ public class Question extends BaseTimeEntity {
 
     private int viewCount;
 
+    private int likeCount;
+
     @Enumerated(EnumType.STRING)
     private QuestionStatus questionStatus;
 
@@ -117,11 +119,15 @@ public class Question extends BaseTimeEntity {
         this.questionLikes.add(questionLike);
     }
 
-    public int getQuestionLikeCount() {
-        return this.questionLikes.size();
-    }
-
     public boolean isTitleContainsByKeyword(String keyword) {
         return title.contains(keyword);
+    }
+
+    public void addLikeCount() {
+        this.likeCount += 1;
+    }
+
+    public void downLikeCount() {
+        this.likeCount -= 1;
     }
 }

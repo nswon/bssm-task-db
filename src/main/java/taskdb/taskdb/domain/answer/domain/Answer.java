@@ -39,6 +39,8 @@ public class Answer extends BaseTimeEntity {
     @OneToMany(mappedBy = "answer", cascade = CascadeType.ALL, orphanRemoval = true)
     private final List<AnswerLike> answerLikes = new ArrayList<>();
 
+    private int likeCount;
+
     @Builder
     public Answer(String content) {
         this.content = content;
@@ -70,7 +72,11 @@ public class Answer extends BaseTimeEntity {
         this.answerLikes.add(answerLike);
     }
 
-    public int getAnswerLikeCount() {
-        return this.answerLikes.size();
+    public void addLikeCount() {
+        this.likeCount += 1;
+    }
+
+    public void downLikeCount() {
+        this.likeCount -= 1;
     }
 }

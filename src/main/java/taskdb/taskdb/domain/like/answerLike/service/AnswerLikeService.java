@@ -23,6 +23,7 @@ public class AnswerLikeService {
         Answer answer = answerFacade.getAnswerById(id);
         if(answerLikeRepository.existsByAnswerAndUser(answer, user)) {
             answerLikeRepository.deleteByAnswerAndUser(answer, user);
+            answer.downLikeCount();
             return true;
         }
 
@@ -33,6 +34,7 @@ public class AnswerLikeService {
         answerLike.addAnswer();
         answerLike.addUser();
         answerLikeRepository.save(answerLike);
+        answer.addLikeCount();
         return true;
     }
 }

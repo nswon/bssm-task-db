@@ -15,7 +15,7 @@ public class AnswersResponseDto {
     public AnswersResponseDto(Answer answer) {
         this.content = answer.getContent();
         this.nickname = answer.getUser().getNickname();
-        this.likeCount = answer.getAnswerLikeCount();
+        this.likeCount = answer.getLikeCount();
         this.createdDate = answer.getCreatedDate();
     }
 }
