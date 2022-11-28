@@ -9,12 +9,18 @@ import taskdb.taskdb.domain.user.domain.User;
 import taskdb.taskdb.domain.user.domain.UserRepository;
 import taskdb.taskdb.domain.user.exception.UserException;
 import taskdb.taskdb.domain.user.exception.UserExceptionType;
+import taskdb.taskdb.domain.user.presentation.dto.user.response.UsersRankResponseDto;
 import taskdb.taskdb.domain.user.service.auth.EmailService;
 import taskdb.taskdb.global.security.jwt.SecurityUtil;
+
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
 public class UserFacade {
+    public static final int RANK_SIZE = 10;
     private final UserRepository userRepository;
     private final EmailService emailService;
     private final PasswordEncoder passwordEncoder;
@@ -52,5 +58,15 @@ public class UserFacade {
         if(user.isNotCorrectEmail(email)) {
             throw new UserException(UserExceptionType.DIFFERENT_USER);
         }
+    }
+
+    public List<UsersRankResponseDto> getUsersByContributionLevel() {
+        return userRepository.findAll().stream()
+                .sorted(Comparator.comparing(User::getContributionLevel).reversed()
+                        .thenComparing(User::getAnswerCount)
+                        .thenComparing(User::getQuestionCount))
+                .limit(RANK_SIZE)
+                .map(UsersRankResponseDto::new)
+                .collect(Collectors.toList());
     }
 }
