@@ -54,24 +54,6 @@ public class SecurityConfig {
         return httpSecurity.build();
     }
 
-    //TODO : 삭제
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//        http
-//                .httpBasic().disable()
-//                .cors().configurationSource(corsConfigurationSource())
-//                .and()
-//                .csrf().disable()
-//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-//                .and()
-//                .authorizeRequests()
-//                .antMatchers("/auth/login").permitAll()
-//                .anyRequest().authenticated()
-//                .and()
-//                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider, customUserDetailsService),
-//                        UsernamePasswordAuthenticationFilter.class);
-//    }
-
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();

@@ -41,7 +41,7 @@ public class UserService {
         userFacade.checkCorrectEmailCheckCode(emailVerificationCode);
 
         User user = requestDto.toEntity();
-        user.setGradeByParseEmail();
+        user.generateGrade();
         userRepository.save(user);
         user.encodedPassword(passwordEncoder);
         user.addUserAuthority();

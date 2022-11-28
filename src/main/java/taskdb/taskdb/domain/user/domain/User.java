@@ -34,7 +34,8 @@ public class User {
     @Column(nullable = false)
     private String nickname;
 
-    private int grade;
+    @Embedded
+    private Grade grade;
 
     private int contributionLevel;
 
@@ -89,11 +90,8 @@ public class User {
         return !this.email.equals(checkEmail);
     }
 
-    public void setGradeByParseEmail() {
-        final int START_GRADLE = 4;
-        final int END_GRADLE = 5;
-        String grade = this.email.substring(START_GRADLE, END_GRADLE);
-        this.grade = Integer.parseInt(grade);
+    public void generateGrade() {
+        this.grade = new Grade(this.email);
     }
 
     public void addComment(Comment comment) {

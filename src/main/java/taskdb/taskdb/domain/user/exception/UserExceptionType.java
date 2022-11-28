@@ -16,7 +16,8 @@ public enum UserExceptionType implements BaseExceptionType {
     REQUIRED_DO_LOGIN(604, HttpStatus.BAD_REQUEST, "로그인이 필요합니다."),
     FORBIDDEN(605, HttpStatus.BAD_REQUEST, "권한이 부족합니다."),
     NOT_FOUND_USER(606, HttpStatus.BAD_REQUEST, "회원이 존재하지 않습니다."),
-    DIFFERENT_USER(701, HttpStatus.BAD_REQUEST, "다른 유저의 질문글입니다.");
+    DIFFERENT_USER(607, HttpStatus.BAD_REQUEST, "다른 유저의 질문글입니다."),
+    INVALID_EMAIL(608, HttpStatus.BAD_REQUEST, "잘못된 양식의 이메일입니다.");
 
     private final int errorCode;
     private final HttpStatus httpStatus;
