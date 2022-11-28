@@ -1,9 +1,11 @@
 package taskdb.taskdb.domain.like.answerLike.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import taskdb.taskdb.domain.answer.domain.Answer;
+import taskdb.taskdb.domain.answer.domain.AnswerRepository;
 import taskdb.taskdb.domain.answer.facade.AnswerFacade;
 import taskdb.taskdb.domain.like.answerLike.domain.AnswerLike;
 import taskdb.taskdb.domain.like.answerLike.domain.AnswerLikeRepository;
@@ -14,7 +16,9 @@ import taskdb.taskdb.domain.user.facade.UserFacade;
 @RequiredArgsConstructor
 @Transactional
 public class AnswerLikeService {
+    private static final String FOUR_A_M_CORN = "0 0 4 * * *";
     private final AnswerLikeRepository answerLikeRepository;
+    private final AnswerRepository answerRepository;
     private final UserFacade userFacade;
     private final AnswerFacade answerFacade;
 
@@ -36,5 +40,16 @@ public class AnswerLikeService {
         answerLikeRepository.save(answerLike);
         answer.addLikeCount();
         return true;
+    }
+
+    @Scheduled(cron = FOUR_A_M_CORN)
+    public void syncLike() {
+        answerRepository.findAll()
+                .forEach(this::syncAnswerLike);
+    }
+
+    private void syncAnswerLike(Answer answer) {
+        int likeCount = answerLikeRepository.findByAnswer(answer).size();
+        answer.syncLikeCount(likeCount);
     }
 }

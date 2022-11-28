@@ -130,4 +130,8 @@ public class Question extends BaseTimeEntity {
     public void downLikeCount() {
         this.likeCount -= 1;
     }
+
+    public void syncLikeCount(int likeCount) {
+        this.likeCount = likeCount;
+    }
 }
