@@ -41,13 +41,13 @@ public class QuestionQuerydslRepository {
         if(grade == 0) {
             return null;
         }
-        return question.user.grade.eq(grade);
+        return question.user.grade.grade.eq(grade);
     }
 
     private BooleanExpression isSophomore(int grade) {
         if(grade == 0) {
             return null;
         }
-        return question.user.grade.eq(grade);
+        return question.user.grade.grade.eq(grade);
     }
 }

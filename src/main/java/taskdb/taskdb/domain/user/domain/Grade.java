@@ -18,7 +18,7 @@ public class Grade {
     private static final int START_GRADE_SUB = 4;
     private static final int END_GRADE_SUB = 5;
     private static final int EMAIL_SUB_LENGTH = 9;
-    private String grade;
+    private int grade;
 
     public Grade(String email) {
         validateSplit(email);
@@ -40,7 +40,8 @@ public class Grade {
         }
     }
 
-    private String getGradeByEmail(String email) {
-        return email.substring(START_GRADE_SUB, END_GRADE_SUB);
+    private int getGradeByEmail(String email) {
+        String grade = email.substring(START_GRADE_SUB, END_GRADE_SUB);
+        return Integer.parseInt(grade);
     }
 }
