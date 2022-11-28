@@ -34,10 +34,8 @@ public class QuestionApiController {
     }
 
     @GetMapping("/{id}")
-    public QuestionResponseDto getQuestion(@PathVariable("id") Long id,
-                                           HttpServletRequest request,
-                                           HttpServletResponse response) {
-        return questionService.getQuestion(id, request, response);
+    public QuestionResponseDto getQuestion(@PathVariable("id") Long id) {
+        return questionService.getQuestion(id);
     }
 
     @PutMapping("/{id}/edit")
