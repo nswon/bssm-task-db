@@ -10,6 +10,8 @@ import taskdb.taskdb.domain.questions.presentation.dto.response.QuestionsRespons
 import taskdb.taskdb.domain.questions.service.QuestionService;
 import taskdb.taskdb.global.cover.Result;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @RestController
@@ -32,8 +34,10 @@ public class QuestionApiController {
     }
 
     @GetMapping("/{id}")
-    public QuestionResponseDto getQuestion(@PathVariable("id") Long id) {
-        return questionService.getQuestion(id);
+    public QuestionResponseDto getQuestion(@PathVariable("id") Long id,
+                                           HttpServletRequest request,
+                                           HttpServletResponse response) {
+        return questionService.getQuestion(id, request, response);
     }
 
     @PutMapping("/{id}/edit")

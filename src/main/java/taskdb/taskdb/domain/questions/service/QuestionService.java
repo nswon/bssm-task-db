@@ -12,6 +12,10 @@ import taskdb.taskdb.domain.questions.presentation.dto.response.QuestionsRespons
 import taskdb.taskdb.domain.user.domain.User;
 import taskdb.taskdb.domain.user.facade.UserFacade;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -40,9 +44,16 @@ public class QuestionService {
                 .collect(Collectors.toList());
     }
 
-    public QuestionResponseDto getQuestion(Long id) {
+    @Transactional
+    public QuestionResponseDto getQuestion(Long id,
+                                           HttpServletRequest request,
+                                           HttpServletResponse response) {
         Question question = questionFacade.getQuestionById(id);
-        question.addViewCount();
+        if(questionFacade.canAddViewCount(request, id)) {
+            Cookie cookie = questionFacade.createCookie(id);
+            response.addCookie(cookie);
+            question.addViewCount();
+        }
         return QuestionResponseDto.builder()
                 .question(question)
                 .build();
