@@ -15,12 +15,13 @@ import taskdb.taskdb.global.security.jwt.SecurityUtil;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
 public class UserFacade {
-    public static final int RANK_SIZE = 10;
+    private static final int RANK_SIZE = 10;
     private final UserRepository userRepository;
     private final EmailService emailService;
     private final PasswordEncoder passwordEncoder;
@@ -63,8 +64,8 @@ public class UserFacade {
     public List<UsersRankResponseDto> getUsersByContributionLevel() {
         return userRepository.findAll().stream()
                 .sorted(Comparator.comparing(User::getContributionLevel).reversed()
-                        .thenComparing(User::getAnswerCount)
-                        .thenComparing(User::getQuestionCount))
+                        .thenComparing(User::getAnswerCount).reversed()
+                        .thenComparing(User::getQuestionCount).reversed())
                 .limit(RANK_SIZE)
                 .map(UsersRankResponseDto::new)
                 .collect(Collectors.toList());

@@ -29,7 +29,6 @@ import java.util.stream.Stream;
 @Transactional(readOnly = true)
 @Slf4j
 public class UserService {
-    private static final int START_RANK = 1;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final UserFacade userFacade;
@@ -67,8 +66,8 @@ public class UserService {
 
     public Map<Integer, UsersRankResponseDto> rank() {
         List<UsersRankResponseDto> usersRank = userFacade.getUsersByContributionLevel();
-        return IntStream.rangeClosed(START_RANK, UserFacade.RANK_SIZE)
+        return IntStream.range(0, usersRank.size())
                 .boxed()
-                .collect(Collectors.toMap(rank -> rank, usersRank::get));
+                .collect(Collectors.toMap(rank -> rank+1, usersRank::get));
     }
 }
