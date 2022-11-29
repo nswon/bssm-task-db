@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 public class NotificationFacade {
     private final NotificationRepository notificationRepository;
 
-    public List<String> getTokenByUserAndCommentUsers(User questionWriter) {
+    public List<String> getTokenByCommentUsers(User questionWriter) {
         List<Comment> comments = questionWriter.getComments();
         List<String> tokens = comments.stream()
                 .map(Comment::getUser)
@@ -25,10 +25,14 @@ public class NotificationFacade {
                 .map(Notification::getToken)
                 .collect(Collectors.toList());
 
-        Notification notification = getNotificationByUser(questionWriter);
-        String token = notification.getToken();
+        String token = getQuestionWriterToken(questionWriter);
         tokens.add(token);
         return tokens;
+    }
+
+    private String getQuestionWriterToken(User questionWriter) {
+        Notification notification = getNotificationByUser(questionWriter);
+        return notification.getToken();
     }
 
     public Notification getNotificationByUser(User user) {

@@ -36,7 +36,7 @@ public class NotificationService {
 
     @Transactional(readOnly = true)
     public void sendByCreateAnswer(String nickname, User questionWriter) {
-        List<String> tokens = notificationFacade.getTokenByUserAndCommentUsers(questionWriter);
+        List<String> tokens = notificationFacade.getTokenByCommentUsers(questionWriter);
         tokens.forEach(token -> sendPushNotificationByAnswer(token, nickname));
     }
 
