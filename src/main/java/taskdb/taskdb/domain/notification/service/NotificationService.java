@@ -56,4 +56,10 @@ public class NotificationService {
             throw new RuntimeException(e);
         }
     }
+
+    public void deleteTokenByUser() {
+        User user = userFacade.getCurrentUser();
+        Notification notification = notificationFacade.getNotificationByUser(user);
+        notificationRepository.delete(notification);
+    }
 }

@@ -31,7 +31,7 @@ public class NotificationFacade {
         return tokens;
     }
 
-    private Notification getNotificationByUser(User user) {
+    public Notification getNotificationByUser(User user) {
         return notificationRepository.findByUser(user)
                 .orElseThrow(() -> new NotificationException(NotificationExceptionType.NOT_FOUND_TOKEN));
     }

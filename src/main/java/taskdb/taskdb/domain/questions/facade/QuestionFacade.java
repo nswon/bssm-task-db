@@ -16,4 +16,6 @@ public class QuestionFacade {
         return questionRepository.findById(id)
                 .orElseThrow(() -> new QuestionException(QuestionExceptionType.NOT_FOUND_QUESTION));
     }
+
+
 }
