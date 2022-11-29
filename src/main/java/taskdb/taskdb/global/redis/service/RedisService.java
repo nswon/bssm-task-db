@@ -36,4 +36,8 @@ public class RedisService {
         SetOperations<String, Object> setOperations = recommendRedisTemplate.opsForSet();
         return setOperations.members(RECOMMEND_KEYWORD_NAME);
     }
+
+    public void deleteRecommendKeywords() {
+        recommendRedisTemplate.delete(RECOMMEND_KEYWORD_NAME);
+    }
 }

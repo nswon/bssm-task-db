@@ -85,12 +85,4 @@ public class QuestionApiController {
                 .data(closedQuestions)
                 .build();
     }
-
-    @GetMapping("/recommend")
-    public Result getRecommendTitles(@RequestParam("q") String keyword) {
-        List<String> recommendTitles = questionService.getRecommendKeyword(keyword);
-        return Result.builder()
-                .data(recommendTitles)
-                .build();
-    }
 }

@@ -1,6 +1,7 @@
 package taskdb.taskdb.domain.questions.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import taskdb.taskdb.domain.questions.domain.*;
@@ -25,7 +26,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class QuestionService {
-    private static final int RECOMMENDS_SIZE = 10;
     private static final int ONE_DAY_EXPIRE = 86400;
     private static final String REDIS_KEY = "visit";
     private final QuestionRepository questionRepository;
@@ -116,15 +116,6 @@ public class QuestionService {
         return questionRepository.findAll().stream()
                 .filter(Question::isClose)
                 .map(QuestionsResponseDto::new)
-                .collect(Collectors.toList());
-    }
-
-    public List<String> getRecommendKeyword(String keyword) {
-        redisService.setRecommendKeyword(keyword);
-        return redisService.getRecommendKeywords().stream()
-                .map(String::valueOf)
-                .sorted(Comparator.reverseOrder())
-                .limit(RECOMMENDS_SIZE)
                 .collect(Collectors.toList());
     }
 }
