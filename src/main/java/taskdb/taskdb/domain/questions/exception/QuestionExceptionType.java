@@ -9,7 +9,7 @@ import taskdb.taskdb.global.exception.application.BaseExceptionType;
 @AllArgsConstructor
 public enum QuestionExceptionType implements BaseExceptionType {
 
-    NOT_FOUND_QUESTION(700, HttpStatus.BAD_REQUEST, "질문글이 존재하지 않습니다.");
+    NOT_FOUND_QUESTION(300, HttpStatus.BAD_REQUEST, "질문글이 존재하지 않습니다.");
     private final int errorCode;
     private final HttpStatus httpStatus;
     private final String errorMessage;

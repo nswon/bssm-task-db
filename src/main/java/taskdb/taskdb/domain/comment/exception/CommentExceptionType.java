@@ -8,7 +8,7 @@ import taskdb.taskdb.global.exception.application.BaseExceptionType;
 @Getter
 @AllArgsConstructor
 public enum CommentExceptionType implements BaseExceptionType {
-    NOT_FOUND_COMMENT(800, HttpStatus.BAD_REQUEST, "댓글이 존재하지 않습니다.");
+    NOT_FOUND_COMMENT(700, HttpStatus.BAD_REQUEST, "댓글이 존재하지 않습니다.");
 
     private final int errorCode;
     private final HttpStatus httpStatus;

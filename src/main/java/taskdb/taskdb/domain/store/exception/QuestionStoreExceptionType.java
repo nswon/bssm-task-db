@@ -8,7 +8,7 @@ import taskdb.taskdb.global.exception.application.BaseExceptionType;
 @Getter
 @AllArgsConstructor
 public enum QuestionStoreExceptionType implements BaseExceptionType {
-    NOT_FOUND_STORE_QUESTION(1000,HttpStatus.BAD_REQUEST, "저장한 질문글이 존재하지 않습니다.");
+    NOT_FOUND_STORE_QUESTION(200,HttpStatus.BAD_REQUEST, "저장한 질문글이 존재하지 않습니다.");
 
     private final int errorCode;
     private final HttpStatus httpStatus;

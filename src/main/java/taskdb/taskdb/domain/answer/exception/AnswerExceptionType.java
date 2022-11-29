@@ -8,7 +8,7 @@ import taskdb.taskdb.global.exception.application.BaseExceptionType;
 @Getter
 @AllArgsConstructor
 public enum AnswerExceptionType implements BaseExceptionType {
-    NOT_FOUND_ANSWER(900, HttpStatus.BAD_REQUEST, "답변이 존재하지 않습니다.");
+    NOT_FOUND_ANSWER(800, HttpStatus.BAD_REQUEST, "답변이 존재하지 않습니다.");
 
     private final int errorCode;
     private final HttpStatus httpStatus;
