@@ -21,17 +21,18 @@ public class Grade {
     private int grade;
 
     public Grade(String email) {
-        validateSplit(email);
-        validateOnlyNumber(email);
+        String checkEmail = validateSplit(email);
+        validateOnlyNumber(checkEmail);
         this.grade = getGradeByEmail(email);
     }
 
-    private void validateSplit(String email) {
+    private String validateSplit(String email) {
         int index = email.indexOf(AT);
         String checkEmail = email.substring(0, index);
         if(checkEmail.length() != EMAIL_SUB_LENGTH) {
             throw new UserException(UserExceptionType.INVALID_EMAIL);
         }
+        return checkEmail;
     }
 
     private void validateOnlyNumber(String email) {

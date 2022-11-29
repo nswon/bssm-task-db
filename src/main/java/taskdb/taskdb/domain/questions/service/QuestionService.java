@@ -17,6 +17,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,7 +25,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class QuestionService {
-    private static final int RECOMMEND_TITLE_COUNT = 10;
+    private static final int RECOMMENDS_SIZE = 10;
     private static final int ONE_DAY_EXPIRE = 86400;
     private static final String REDIS_KEY = "visit";
     private final QuestionRepository questionRepository;
@@ -50,16 +51,17 @@ public class QuestionService {
 
     public QuestionResponseDto getQuestion(Long id) {
         Question question = questionFacade.getQuestionById(id);
-        String questionIds = redisService.getData(REDIS_KEY);
+        String questionIds = redisService.getAlreadyVisitedQuestions(REDIS_KEY);
         String questionId = String.valueOf(question.getId());
         if(questionIds == null) {
-            redisService.setQuestionIdExpire(REDIS_KEY, questionId + "/", ONE_DAY_EXPIRE);
+            redisService.setVisitQuestion(REDIS_KEY, questionId + "/", ONE_DAY_EXPIRE);
+            question.addViewCount();
             return QuestionResponseDto.builder()
                     .question(question)
                     .build();
         }
         if(!questionIds.contains(questionId)) {
-            redisService.setQuestionIdExpire(REDIS_KEY, questionIds + questionId + "/", ONE_DAY_EXPIRE);
+            redisService.setVisitQuestion(REDIS_KEY, questionIds + questionId + "/", ONE_DAY_EXPIRE);
             question.addViewCount();
         }
         return QuestionResponseDto.builder()
@@ -117,11 +119,12 @@ public class QuestionService {
                 .collect(Collectors.toList());
     }
 
-    public List<String> getRecommendTitles(String keyword) {
-        return questionRepository.findAll().stream()
-                .filter(question -> question.isTitleContainsByKeyword(keyword))
-                .map(Question::getTitle)
-                .limit(RECOMMEND_TITLE_COUNT)
+    public List<String> getRecommendKeyword(String keyword) {
+        redisService.setRecommendKeyword(keyword);
+        return redisService.getRecommendKeywords().stream()
+                .map(String::valueOf)
+                .sorted(Comparator.reverseOrder())
+                .limit(RECOMMENDS_SIZE)
                 .collect(Collectors.toList());
     }
 }

@@ -10,8 +10,6 @@ import taskdb.taskdb.domain.questions.presentation.dto.response.QuestionsRespons
 import taskdb.taskdb.domain.questions.service.QuestionService;
 import taskdb.taskdb.global.cover.Result;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @RestController
@@ -90,7 +88,7 @@ public class QuestionApiController {
 
     @GetMapping("/recommend")
     public Result getRecommendTitles(@RequestParam("q") String keyword) {
-        List<String> recommendTitles = questionService.getRecommendTitles(keyword);
+        List<String> recommendTitles = questionService.getRecommendKeyword(keyword);
         return Result.builder()
                 .data(recommendTitles)
                 .build();
