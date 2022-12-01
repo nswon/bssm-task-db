@@ -1,4 +1,4 @@
-package taskdb.taskdb.global.redis.config;
+package taskdb.taskdb.global.redis;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

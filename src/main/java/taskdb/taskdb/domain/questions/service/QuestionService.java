@@ -1,7 +1,6 @@
 package taskdb.taskdb.domain.questions.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import taskdb.taskdb.domain.questions.domain.*;
@@ -12,13 +11,7 @@ import taskdb.taskdb.domain.questions.presentation.dto.response.QuestionResponse
 import taskdb.taskdb.domain.questions.presentation.dto.response.QuestionsResponseDto;
 import taskdb.taskdb.domain.user.domain.User;
 import taskdb.taskdb.domain.user.facade.UserFacade;
-import taskdb.taskdb.global.redis.service.RedisService;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,7 +25,7 @@ public class QuestionService {
     private final UserFacade userFacade;
     private final QuestionFacade questionFacade;
     private final QuestionQuerydslRepository questionQuerydslRepository;
-    private final RedisService redisService;
+//    private final RedisService redisService;
 
     @Transactional
     public void create(QuestionCreateRequestDto requestDto) {
@@ -51,19 +44,19 @@ public class QuestionService {
 
     public QuestionResponseDto getQuestion(Long id) {
         Question question = questionFacade.getQuestionById(id);
-        String questionIds = redisService.getAlreadyVisitedQuestions(REDIS_KEY);
-        String questionId = String.valueOf(question.getId());
-        if(questionIds == null) {
-            redisService.setVisitQuestion(REDIS_KEY, questionId + "/", ONE_DAY_EXPIRE);
-            question.addViewCount();
-            return QuestionResponseDto.builder()
-                    .question(question)
-                    .build();
-        }
-        if(!questionIds.contains(questionId)) {
-            redisService.setVisitQuestion(REDIS_KEY, questionIds + questionId + "/", ONE_DAY_EXPIRE);
-            question.addViewCount();
-        }
+//        String questionIds = redisService.getAlreadyVisitedQuestions(REDIS_KEY);
+//        String questionId = String.valueOf(question.getId());
+//        if(questionIds == null) {
+//            redisService.setVisitQuestion(REDIS_KEY, questionId + "/", ONE_DAY_EXPIRE);
+//            question.addViewCount();
+//            return QuestionResponseDto.builder()
+//                    .question(question)
+//                    .build();
+//        }
+//        if(!questionIds.contains(questionId)) {
+//            redisService.setVisitQuestion(REDIS_KEY, questionIds + questionId + "/", ONE_DAY_EXPIRE);
+//            question.addViewCount();
+//        }
         return QuestionResponseDto.builder()
                 .question(question)
                 .build();
