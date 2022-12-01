@@ -61,13 +61,12 @@ public class UserFacade {
         }
     }
 
-    public List<UsersRankResponseDto> getUsersByContributionLevel() {
+    public List<User> getUsersByContributionLevel() {
         return userRepository.findAll().stream()
                 .sorted(Comparator.comparing(User::getContributionLevel).reversed()
                         .thenComparing(User::getAnswerCount).reversed()
                         .thenComparing(User::getQuestionCount).reversed())
                 .limit(RANK_SIZE)
-                .map(UsersRankResponseDto::new)
                 .collect(Collectors.toList());
     }
 }

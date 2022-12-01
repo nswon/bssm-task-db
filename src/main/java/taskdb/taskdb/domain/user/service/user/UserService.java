@@ -54,10 +54,11 @@ public class UserService {
                 .orElseThrow(() -> new UserException(UserExceptionType.NOT_FOUND_USER));
     }
 
-    public Map<Integer, UsersRankResponseDto> rank() {
-        List<UsersRankResponseDto> usersRank = userFacade.getUsersByContributionLevel();
-        return IntStream.range(0, usersRank.size())
+    public List<UsersRankResponseDto> rank() {
+        List<User> usersRank = userFacade.getUsersByContributionLevel();
+       return IntStream.range(0, usersRank.size())
                 .boxed()
-                .collect(Collectors.toMap(rank -> rank+1, usersRank::get));
+               .map(count -> new UsersRankResponseDto(count+1, usersRank.get(count)))
+                .collect(Collectors.toList());
     }
 }

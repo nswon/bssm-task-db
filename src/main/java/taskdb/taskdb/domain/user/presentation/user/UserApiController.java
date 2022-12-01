@@ -32,9 +32,9 @@ public class UserApiController {
 
     @GetMapping("/rank")
     public Result rank() {
-        Map<Integer, UsersRankResponseDto> response = userService.rank();
+        List<UsersRankResponseDto> usersRank = userService.rank();
         return Result.builder()
-                .data(response)
+                .data(usersRank)
                 .build();
     }
 }
