@@ -11,7 +11,6 @@ import taskdb.taskdb.domain.questions.presentation.dto.response.QuestionResponse
 import taskdb.taskdb.domain.questions.presentation.dto.response.QuestionsResponseDto;
 import taskdb.taskdb.domain.user.domain.User;
 import taskdb.taskdb.domain.user.facade.UserFacade;
-import taskdb.taskdb.global.redis.RedisService;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,12 +19,10 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class QuestionService {
-    private static final int ONE_DAY_EXPIRE = 86400;
     private final QuestionRepository questionRepository;
     private final UserFacade userFacade;
     private final QuestionFacade questionFacade;
     private final QuestionQuerydslRepository questionQuerydslRepository;
-    private final RedisService redisService;
 
     @Transactional
     public void create(QuestionCreateRequestDto requestDto) {
@@ -42,24 +39,10 @@ public class QuestionService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     public QuestionResponseDto getQuestion(Long id) {
         Question question = questionFacade.getQuestionById(id);
-//        redisService.addVisitQuestion(String.valueOf(question.getId()));
-//        redisService.setVisitQuestion(String.valueOf(question.getId()) + "/", ONE_DAY_EXPIRE);
-//        redisService.save(String.valueOf(question.getId()));
-//        String questionIds = redisService.getAlreadyVisitedQuestions();
-//        String questionId = String.valueOf(question.getId());
-//        if(questionIds == null) {
-//            redisService.setVisitQuestion(questionId + "/", ONE_DAY_EXPIRE);
-//            question.addViewCount();
-//            return QuestionResponseDto.builder()
-//                    .question(question)
-//                    .build();
-//        }
-//        if(!questionIds.contains(questionId)) {
-//            redisService.setVisitQuestion(questionIds + questionId + "/", ONE_DAY_EXPIRE);
-//            question.addViewCount();
-//        }
+        questionFacade.addViewCountByVisit(question);
         return QuestionResponseDto.builder()
                 .question(question)
                 .build();
