@@ -54,16 +54,6 @@ public class UserService {
                 .orElseThrow(() -> new UserException(UserExceptionType.NOT_FOUND_USER));
     }
 
-    public List<QuestionsResponseDto> getQuestions() {
-        User user = userFacade.getCurrentUser();
-        return user.toQuestionsResponseDto();
-    }
-
-    public List<StoreQuestionsResponseDto> getSavedQuestions() {
-        User user = userFacade.getCurrentUser();
-        return user.toStoreQuestionsResponseDto();
-    }
-
     public Map<Integer, UsersRankResponseDto> rank() {
         List<UsersRankResponseDto> usersRank = userFacade.getUsersByContributionLevel();
         return IntStream.range(0, usersRank.size())

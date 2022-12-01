@@ -30,22 +30,6 @@ public class UserApiController {
         return userService.getUserById(id);
     }
 
-    @GetMapping("/questions")
-    public Result getQuestions() {
-        List<QuestionsResponseDto> response = userService.getQuestions();
-        return Result.builder()
-                .data(response)
-                .build();
-    }
-
-    @GetMapping("/saved/questions")
-    public Result getSavedQuestions() {
-        List<StoreQuestionsResponseDto> response = userService.getSavedQuestions();
-        return Result.builder()
-                .data(response)
-                .build();
-    }
-
     @GetMapping("/rank")
     public Result rank() {
         Map<Integer, UsersRankResponseDto> response = userService.rank();
