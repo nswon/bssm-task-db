@@ -2,6 +2,7 @@ package taskdb.taskdb.domain.user.presentation.dto.auth.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.ToString;
 import taskdb.taskdb.domain.user.domain.User;
 
 import javax.validation.constraints.Email;
@@ -10,6 +11,7 @@ import javax.validation.constraints.Pattern;
 
 @Getter
 @AllArgsConstructor
+@ToString
 public class UserLoginRequestDto {
 
     @NotNull(message = "이메일을 입력해주세요.")
