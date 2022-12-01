@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import taskdb.taskdb.domain.notification.domain.Notification;
 import taskdb.taskdb.domain.notification.domain.NotificationRepository;
+import taskdb.taskdb.domain.notification.exception.NotificationException;
+import taskdb.taskdb.domain.notification.exception.NotificationExceptionType;
 import taskdb.taskdb.domain.notification.facade.NotificationFacade;
 import taskdb.taskdb.domain.notification.presentation.dto.request.NotificationPermitRequestDto;
 import taskdb.taskdb.domain.user.domain.User;
@@ -50,10 +52,11 @@ public class NotificationService {
                         .build())
                 .setToken(token)
                 .build();
+
         try {
             FirebaseMessaging.getInstance().sendAsync(message).get();
         } catch (InterruptedException | ExecutionException e) {
-            throw new RuntimeException(e);
+            throw new NotificationException(NotificationExceptionType.FAIL_SEND);
         }
     }
 

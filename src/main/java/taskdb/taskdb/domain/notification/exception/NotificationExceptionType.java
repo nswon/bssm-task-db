@@ -8,7 +8,8 @@ import taskdb.taskdb.global.exception.application.BaseExceptionType;
 @Getter
 @AllArgsConstructor
 public enum NotificationExceptionType implements BaseExceptionType {
-    NOT_FOUND_TOKEN(400,HttpStatus.BAD_REQUEST, "기기 토큰이 존재하지 않습니다.");
+    NOT_FOUND_TOKEN(400,HttpStatus.BAD_REQUEST, "기기 토큰이 존재하지 않습니다."),
+    FAIL_SEND(401, HttpStatus.BAD_REQUEST, "알림 전송에 실패하였습니다.");
 
     private final int errorCode;
     private final HttpStatus httpStatus;
