@@ -2,7 +2,7 @@ package taskdb.taskdb.global.redis;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.ListOperations;
-import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +12,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class RedisService {
     private static final String KEY = "visit";
-    private final RedisTemplate visitQuestionIds;
+    private final StringRedisTemplate visitQuestionIds;
 
     public void addQuestionId(String questionId) {
         ListOperations<String, String> alreadyVisitQuestionIds = visitQuestionIds.opsForList();

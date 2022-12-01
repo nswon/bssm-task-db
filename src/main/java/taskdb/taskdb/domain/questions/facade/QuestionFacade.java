@@ -22,8 +22,8 @@ public class QuestionFacade {
     }
 
     public void addViewCountByVisit(Question question) {
-        String questionId = String.valueOf(question.getId());
         List<String> questionIds = redisService.getQuestionIds();
+        String questionId = String.valueOf(question.getId());
         if(canAddViewCount(questionIds, questionId)) {
             redisService.addQuestionId(questionId);
             question.addViewCount();
@@ -31,6 +31,7 @@ public class QuestionFacade {
     }
 
     private boolean canAddViewCount(List<String> questionIds, String questionId) {
-        return questionIds.isEmpty() || !questionIds.contains(questionId);
+        return questionIds.isEmpty() || questionIds.stream()
+                .noneMatch(id -> id.equals(questionId));
     }
 }
