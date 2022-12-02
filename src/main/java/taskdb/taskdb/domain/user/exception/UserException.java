@@ -2,8 +2,8 @@ package taskdb.taskdb.domain.user.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import taskdb.taskdb.global.exception.application.BaseException;
-import taskdb.taskdb.global.exception.application.BaseExceptionType;
+import taskdb.taskdb.global.exception.BaseException;
+import taskdb.taskdb.global.exception.BaseExceptionType;
 
 @AllArgsConstructor
 @RequiredArgsConstructor

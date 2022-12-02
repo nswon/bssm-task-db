@@ -8,8 +8,8 @@ import taskdb.taskdb.domain.comment.domain.CommentRepository;
 import taskdb.taskdb.domain.comment.facade.CommentFacade;
 import taskdb.taskdb.domain.comment.presentation.dto.request.CommentCreateRequestDto;
 import taskdb.taskdb.domain.comment.presentation.dto.request.CommentUpdateRequestDto;
-import taskdb.taskdb.domain.questions.domain.Question;
-import taskdb.taskdb.domain.questions.facade.QuestionFacade;
+import taskdb.taskdb.domain.question.domain.Question;
+import taskdb.taskdb.domain.question.facade.QuestionFacade;
 import taskdb.taskdb.domain.user.domain.User;
 import taskdb.taskdb.domain.user.facade.UserFacade;
 

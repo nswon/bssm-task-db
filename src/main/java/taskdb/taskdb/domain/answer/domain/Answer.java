@@ -4,10 +4,10 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import taskdb.taskdb.domain.like.answerLike.domain.AnswerLike;
-import taskdb.taskdb.domain.questions.domain.Question;
+import taskdb.taskdb.domain.like.domain.AnswerLike;
+import taskdb.taskdb.domain.question.domain.Question;
 import taskdb.taskdb.domain.user.domain.User;
-import taskdb.taskdb.global.entity.BaseTimeEntity;
+import taskdb.taskdb.global.support.BaseTimeEntity;
 
 import javax.persistence.*;
 import java.util.ArrayList;

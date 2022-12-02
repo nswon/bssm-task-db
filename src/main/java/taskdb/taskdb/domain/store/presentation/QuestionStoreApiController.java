@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import taskdb.taskdb.domain.store.presentation.dto.response.StoreQuestionsResponseDto;
 import taskdb.taskdb.domain.store.service.QuestionStoreService;
-import taskdb.taskdb.global.cover.Result;
+import taskdb.taskdb.global.support.Result;
 
 import java.util.List;
 

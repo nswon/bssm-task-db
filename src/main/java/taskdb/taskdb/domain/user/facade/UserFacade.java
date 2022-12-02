@@ -7,7 +7,7 @@ import taskdb.taskdb.domain.user.domain.User;
 import taskdb.taskdb.domain.user.domain.UserRepository;
 import taskdb.taskdb.domain.user.exception.UserException;
 import taskdb.taskdb.domain.user.exception.UserExceptionType;
-import taskdb.taskdb.domain.user.service.auth.EmailService;
+import taskdb.taskdb.domain.auth.service.EmailService;
 import taskdb.taskdb.global.security.jwt.SecurityUtil;
 
 import java.util.Comparator;

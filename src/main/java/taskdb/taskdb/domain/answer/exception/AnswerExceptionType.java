@@ -3,7 +3,7 @@ package taskdb.taskdb.domain.answer.exception;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
-import taskdb.taskdb.global.exception.application.BaseExceptionType;
+import taskdb.taskdb.global.exception.BaseExceptionType;
 
 @Getter
 @AllArgsConstructor
