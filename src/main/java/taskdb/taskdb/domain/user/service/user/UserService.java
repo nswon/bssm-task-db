@@ -27,6 +27,8 @@ import java.util.stream.IntStream;
 @Transactional(readOnly = true)
 @Slf4j
 public class UserService {
+    private static final String DEFAULT_IMAGE_PATH = "de1d0432-0d45-4872-b27c-8ac19f701837_THUMBNAIL_60_60_icon_rep_box.gif";
+    private static final String DEFAULT_IMAGE_URL = "https://taskdb.s3.ap-northeast-2.amazonaws.com/c80a5160-2d8c-42c1-a17b-1f87fd0f58be_THUMBNAIL_60_60_icon_rep_box.gif";
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final UserFacade userFacade;
@@ -44,6 +46,7 @@ public class UserService {
         userRepository.save(user);
         user.encodedPassword(passwordEncoder);
         user.addUserAuthority();
+        user.upload(DEFAULT_IMAGE_PATH, DEFAULT_IMAGE_URL);
         return true;
     }
 
@@ -56,7 +59,7 @@ public class UserService {
     @Transactional
     public void updateProfile(UserProfileRequestDto requestDto) throws IOException {
         User user = userFacade.getCurrentUser();
-        if(!user.getImgPath().isEmpty()) {
+        if(!user.getImgPath().isEmpty() && !user.getImgPath().equals(DEFAULT_IMAGE_PATH)) {
             s3Service.delete(user.getImgPath());
         }
 
