@@ -145,4 +145,8 @@ public class User {
         this.imgPath = imgPath;
         this.imgUrl = imgUrl;
     }
+
+    public void update(String nickname) {
+        this.nickname = nickname;
+    }
 }

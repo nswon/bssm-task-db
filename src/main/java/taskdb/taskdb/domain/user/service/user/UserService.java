@@ -11,10 +11,13 @@ import taskdb.taskdb.domain.user.exception.UserException;
 import taskdb.taskdb.domain.user.exception.UserExceptionType;
 import taskdb.taskdb.domain.user.facade.UserFacade;
 import taskdb.taskdb.domain.user.presentation.dto.user.request.UserJoinRequestDto;
+import taskdb.taskdb.domain.user.presentation.dto.user.request.UserProfileRequestDto;
 import taskdb.taskdb.domain.user.presentation.dto.user.response.UserResponseDto;
 import taskdb.taskdb.domain.user.presentation.dto.user.response.UsersRankResponseDto;
+import taskdb.taskdb.global.s3.ImageDto;
 import taskdb.taskdb.global.s3.S3Service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -48,6 +51,18 @@ public class UserService {
         return userRepository.findById(id)
                 .map(UserResponseDto::new)
                 .orElseThrow(() -> new UserException(UserExceptionType.NOT_FOUND_USER));
+    }
+
+    @Transactional
+    public void updateProfile(UserProfileRequestDto requestDto) throws IOException {
+        User user = userFacade.getCurrentUser();
+        if(!user.getImgPath().isEmpty()) {
+            s3Service.delete(user.getImgPath());
+        }
+
+        ImageDto imageDto = s3Service.create(requestDto.getFile());
+        user.upload(imageDto.getImgPath(), imageDto.getImgUrl());
+        user.update(requestDto.getNickname());
     }
 
     public List<UsersRankResponseDto> rank() {
