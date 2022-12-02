@@ -5,8 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import taskdb.taskdb.domain.questions.presentation.dto.response.QuestionsResponseDto;
-import taskdb.taskdb.domain.store.presentation.dto.response.StoreQuestionsResponseDto;
 import taskdb.taskdb.domain.user.domain.User;
 import taskdb.taskdb.domain.user.domain.UserRepository;
 import taskdb.taskdb.domain.user.exception.UserException;
@@ -15,14 +13,11 @@ import taskdb.taskdb.domain.user.facade.UserFacade;
 import taskdb.taskdb.domain.user.presentation.dto.user.request.UserJoinRequestDto;
 import taskdb.taskdb.domain.user.presentation.dto.user.response.UserResponseDto;
 import taskdb.taskdb.domain.user.presentation.dto.user.response.UsersRankResponseDto;
+import taskdb.taskdb.global.s3.S3Service;
 
-import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
-
 
 @Service
 @RequiredArgsConstructor
@@ -32,6 +27,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final UserFacade userFacade;
+    private final S3Service s3Service;
 
     @Transactional
     public boolean join(UserJoinRequestDto requestDto) {

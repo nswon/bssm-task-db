@@ -33,17 +33,18 @@ logging:
                     EC2MetadataUtils: error
         org.hibernate.SQL: debug
         org.hibernate.type: trace
-#cloud:
-#    aws:
-#        s3:
-#            bucket: usedmarket-nswon
-#        region:
-#            static : ap-northeast-2
-#        credentials:
-#            access-key: AKIA56O7Z7HW6L3X6YOB
-#            secret-key: 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
-#        stack:
-#            auto: false
+
+cloud:
+    aws:
+        s3:
+            bucket: taskdb
+        region:
+            static : ap-northeast-2
+        credentials:
+            access-key: AKIA56O7Z7HWXHREK75S
+            secret-key: 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
+        stack:
+            auto: false
 
 server:
     port: 8092

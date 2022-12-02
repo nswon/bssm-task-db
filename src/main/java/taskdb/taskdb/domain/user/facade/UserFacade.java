@@ -3,19 +3,15 @@ package taskdb.taskdb.domain.user.facade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import taskdb.taskdb.domain.questions.exception.QuestionException;
-import taskdb.taskdb.domain.questions.exception.QuestionExceptionType;
 import taskdb.taskdb.domain.user.domain.User;
 import taskdb.taskdb.domain.user.domain.UserRepository;
 import taskdb.taskdb.domain.user.exception.UserException;
 import taskdb.taskdb.domain.user.exception.UserExceptionType;
-import taskdb.taskdb.domain.user.presentation.dto.user.response.UsersRankResponseDto;
 import taskdb.taskdb.domain.user.service.auth.EmailService;
 import taskdb.taskdb.global.security.jwt.SecurityUtil;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Component

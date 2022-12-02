@@ -39,6 +39,9 @@ public class User {
 
     private int contributionLevel;
 
+    private String imgPath;
+    private String imgUrl;
+
     @Column(nullable = false)
     private String password;
 
@@ -136,5 +139,10 @@ public class User {
 
     public void addAnswerLike(AnswerLike answerLike) {
         this.answerLikes.add(answerLike);
+    }
+
+    public void upload(String imgPath, String imgUrl) {
+        this.imgPath = imgPath;
+        this.imgUrl = imgUrl;
     }
 }
