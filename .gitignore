@@ -37,6 +37,4 @@ out/
 .vscode/
 
 ### Info ###
-/src/main/resources/taskdb-b4857-firebase-adminsdk-bbv2u-ff04edbe81.json
-/src/main/resources/application.yml
-/src/main/resources/email.properties
+/src/main/resources/**
