@@ -1,7 +1,7 @@
 package taskdb.taskdb.domain.question.domain;
 
 import lombok.Getter;
-import taskdb.taskdb.domain.question.exception.OverflowContentException;
+import taskdb.taskdb.domain.question.exception.InvalidContentRangeException;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -29,7 +29,7 @@ public class Content {
 
     private static void validate(String value) {
         if(PATTERN.matcher(value).matches()) {
-            throw new OverflowContentException();
+            throw new InvalidContentRangeException();
         }
     }
 }

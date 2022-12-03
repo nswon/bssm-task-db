@@ -12,12 +12,13 @@ import java.io.IOException;
 @Component
 public class FcmConfig {
     private static final String FIREBASE_CONFIG_PATH = "taskdb-b4857-firebase-adminsdk-bbv2u-ff04edbe81.json";
+    private static final String PROJECT_ID = "154549871574";
 
     @PostConstruct
     public void initialize() throws IOException {
         FirebaseOptions options = new FirebaseOptions.Builder()
                 .setCredentials(GoogleCredentials.fromStream(new ClassPathResource(FIREBASE_CONFIG_PATH).getInputStream()))
-                .setProjectId("154549871574")
+                .setProjectId(PROJECT_ID)
                 .build();
         FirebaseApp.initializeApp(options);
     }

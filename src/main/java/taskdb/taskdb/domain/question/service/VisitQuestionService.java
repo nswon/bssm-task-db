@@ -12,6 +12,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class VisitQuestionService {
     private static final String KEY = "visit";
+    private static final String EVERYDAY_CRON = "0 0 0 * * *";
     private final StringRedisTemplate visitQuestionIds;
 
     public void addQuestionId(String questionId) {
@@ -25,7 +26,7 @@ public class VisitQuestionService {
         return alreadyVisitQuestionIds.range(KEY, 0, questionIdsSize);
     }
 
-    @Scheduled(cron = "0 0 0 * * *")
+    @Scheduled(cron = EVERYDAY_CRON)
     void removeQuestionIds() {
         ListOperations<String, String> alreadyVisitQuestionIds = visitQuestionIds.opsForList();
         int questionIdsSize = getQuestionIdsSize();

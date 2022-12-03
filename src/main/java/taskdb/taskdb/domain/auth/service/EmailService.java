@@ -64,7 +64,7 @@ public class EmailService {
 
     public void sendSimpleMessage(String email) throws Exception {
         MimeMessage message = createMessage(email);
-        try{//예외처리
+        try{
             javaMailSender.send(message);
         }catch(MailException es){
             es.printStackTrace();

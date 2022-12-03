@@ -1,7 +1,7 @@
 package taskdb.taskdb.domain.question.domain;
 
 import lombok.Getter;
-import taskdb.taskdb.domain.question.exception.OverflowTitleException;
+import taskdb.taskdb.domain.question.exception.InvalidTitleRangeException;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -28,7 +28,7 @@ public class Title {
 
     private static void validate(String value) {
         if(PATTERN.matcher(value).matches()) {
-            throw new OverflowTitleException();
+            throw new InvalidTitleRangeException();
         }
     }
 }

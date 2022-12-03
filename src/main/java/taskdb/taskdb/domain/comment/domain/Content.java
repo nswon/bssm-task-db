@@ -1,7 +1,7 @@
 package taskdb.taskdb.domain.comment.domain;
 
 import lombok.Getter;
-import taskdb.taskdb.domain.comment.exception.OverflowCommentException;
+import taskdb.taskdb.domain.comment.exception.InvalidCommentRangeException;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -29,7 +29,7 @@ public class Content {
 
     private static void validate(String value) {
         if(PATTERN.matcher(value).matches()) {
-            throw new OverflowCommentException();
+            throw new InvalidCommentRangeException();
         }
     }
 }

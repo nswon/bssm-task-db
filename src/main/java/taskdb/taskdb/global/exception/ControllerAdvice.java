@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
 public class ControllerAdvice {
-    private static final String UNKNOWN_PROBLEM = "서버에 알 수 없는 문제가 발생하였습니다.";
+    private static final String UNKNOWN_PROBLEM = "서버에 알 수 없는 문제가 발생하였습니다. : \n";
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorResponse> handleMethodArgumentException(BindingResult bindingResult) {
@@ -36,6 +36,6 @@ public class ControllerAdvice {
 
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<ErrorResponse> handleRuntimeException(RuntimeException e) {
-        return ResponseEntity.internalServerError().body(new ErrorResponse(UNKNOWN_PROBLEM));
+        return ResponseEntity.internalServerError().body(new ErrorResponse(UNKNOWN_PROBLEM + e.getMessage()));
     }
 }
