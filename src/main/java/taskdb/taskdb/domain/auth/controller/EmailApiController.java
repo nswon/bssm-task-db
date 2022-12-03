@@ -18,7 +18,7 @@ public class EmailApiController {
     private final EmailService emailService;
 
     @PostMapping("/join")
-    public ResponseEntity<EmailResponseDto> sendSimpleMessage(@RequestBody @Valid EmailRequestDto request) throws Exception {
+    public ResponseEntity<EmailResponseDto> sendSimpleMessage(@RequestBody @Valid EmailRequestDto request) {
         emailService.sendSimpleMessage(request.getEmail());
         return ResponseEntity.status(HttpStatus.OK).body(new EmailResponseDto("성공"));
     }
