@@ -21,8 +21,8 @@ public class Comment extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(columnDefinition = "TEXT")
-    private String content;
+    @Embedded
+    private Content content;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
@@ -40,7 +40,7 @@ public class Comment extends BaseTimeEntity {
     private final List<Comment> child = new ArrayList<>();
 
     @Builder
-    public Comment(String content) {
+    public Comment(Content content) {
         this.content = content;
     }
 
@@ -63,7 +63,7 @@ public class Comment extends BaseTimeEntity {
         this.child.add(child);
     }
 
-    public void update(String content) {
+    public void update(Content content) {
         this.content = content;
     }
 }

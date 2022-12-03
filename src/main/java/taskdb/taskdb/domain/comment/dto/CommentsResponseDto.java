@@ -16,7 +16,7 @@ public class CommentsResponseDto {
     }
 
     public CommentsResponseDto(Comment comment) {
-        this.content = comment.getContent();
+        this.content = comment.getContent().getValue();
         this.userImage = comment.getUser().getImage().getUrl();
         this.nickname = comment.getUser().getNickname().getValue();
         this.createdDate = comment.getCreatedDate();

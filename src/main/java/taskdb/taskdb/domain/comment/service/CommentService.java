@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import taskdb.taskdb.domain.comment.domain.Comment;
+import taskdb.taskdb.domain.comment.domain.Content;
 import taskdb.taskdb.domain.comment.repository.CommentRepository;
 import taskdb.taskdb.domain.comment.facade.CommentFacade;
 import taskdb.taskdb.domain.comment.dto.CommentCreateRequestDto;
@@ -26,7 +27,7 @@ public class CommentService {
         User user = userFacade.getCurrentUser();
         Question question = questionFacade.getQuestionById(id);
         Comment comment = Comment.builder()
-                .content(requestDto.getContent())
+                .content(Content.of(requestDto.getContent()))
                 .build();
         comment.confirmUser(user);
         comment.confirmQuestion(question);
@@ -38,7 +39,7 @@ public class CommentService {
         Question question = questionFacade.getQuestionById(questionId);
         Comment parentComment = commentFacade.getCommentById(parentId);
         Comment comment = Comment.builder()
-                .content(requestDto.getContent())
+                .content(Content.of(requestDto.getContent()))
                 .build();
         comment.confirmQuestion(question);
         comment.confirmUser(user);
@@ -51,7 +52,7 @@ public class CommentService {
         Comment comment = commentFacade.getCommentById(id);
         User writer = comment.getUser();
         userFacade.checkDifferentUser(user, writer);
-        String content = requestDto.getContent();
+        Content content = Content.of(requestDto.getContent());
         comment.update(content);
     }
 
