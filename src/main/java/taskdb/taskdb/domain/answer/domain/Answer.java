@@ -22,8 +22,8 @@ public class Answer extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(columnDefinition = "TEXT")
-    private String content;
+    @Embedded
+    private Content content;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
@@ -42,7 +42,7 @@ public class Answer extends BaseTimeEntity {
     private int likeCount;
 
     @Builder
-    public Answer(String content) {
+    public Answer(Content content) {
         this.content = content;
     }
 
@@ -60,7 +60,7 @@ public class Answer extends BaseTimeEntity {
         this.choose = AnswerChoose.ONGOING;
     }
 
-    public void update(String content) {
+    public void update(Content content) {
         this.content = content;
     }
 

@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import taskdb.taskdb.domain.answer.domain.Answer;
+import taskdb.taskdb.domain.answer.domain.Content;
 import taskdb.taskdb.domain.answer.repository.AnswerRepository;
 import taskdb.taskdb.domain.answer.facade.AnswerFacade;
 import taskdb.taskdb.domain.answer.dto.AnswerCreateRequestDto;
@@ -28,7 +29,7 @@ public class AnswerService {
         User user = userFacade.getCurrentUser();
         Question question = questionFacade.getQuestionById(id);
         Answer answer = Answer.builder()
-                .content(requestDto.getContent())
+                .content(Content.of(requestDto.getContent()))
                 .build();
         answer.confirmUser(user);
         answer.confirmQuestion(question);
@@ -44,7 +45,8 @@ public class AnswerService {
         Answer answer = answerFacade.getAnswerById(id);
         User writer = answer.getUser();
         userFacade.checkDifferentUser(user, writer);
-        answer.update(requestDto.getContent());
+        Content content = Content.of(requestDto.getContent());
+        answer.update(content);
     }
 
     public void delete(Long id) {
