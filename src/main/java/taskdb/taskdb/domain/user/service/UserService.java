@@ -13,7 +13,7 @@ import taskdb.taskdb.domain.user.dto.UserProfileRequestDto;
 import taskdb.taskdb.domain.user.dto.UserResponseDto;
 import taskdb.taskdb.domain.user.dto.UsersRankResponseDto;
 import taskdb.taskdb.domain.user.repository.UserRepository;
-import taskdb.taskdb.domain.user.service.dto.ImageDto;
+import taskdb.taskdb.domain.user.dto.ImageResponse;
 
 import java.io.IOException;
 import java.util.List;
@@ -58,8 +58,8 @@ public class UserService {
             imageService.delete(user.getImagePath());
         }
 
-        ImageDto imageDto = imageService.create(requestDto.getFile());
-        Image image = Image.of(imageDto.getImgPath(), imageDto.getImgUrl());
+        ImageResponse imageResponse = imageService.create(requestDto.getFile());
+        Image image = Image.of(imageResponse.getImgPath(), imageResponse.getImgUrl());
         user.updateImage(image);
         Nickname nickname = Nickname.of(requestDto.getNickname());
         user.updateNickname(nickname);

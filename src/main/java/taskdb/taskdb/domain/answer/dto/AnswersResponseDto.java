@@ -7,16 +7,19 @@ import java.time.LocalDateTime;
 
 @Getter
 public class AnswersResponseDto {
-    private final String content;
-    private final String userImage;
-    private final String nickname;
-    private final int likeCount;
-    private final LocalDateTime createdDate;
+    private String content;
+    private String userImage;
+    private String nickname;
+    private int likeCount;
+    private LocalDateTime createdDate;
+
+    public AnswersResponseDto() {
+    }
 
     public AnswersResponseDto(Answer answer) {
         this.content = answer.getContent();
-        this.userImage = answer.getUser().getImgUrl();
-        this.nickname = answer.getUser().getNickname();
+        this.userImage = answer.getUser().getImage().getUrl();
+        this.nickname = answer.getUser().getNickname().getValue();
         this.likeCount = answer.getLikeCount();
         this.createdDate = answer.getCreatedDate();
     }

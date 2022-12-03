@@ -7,4 +7,11 @@ import lombok.ToString;
 @ToString
 public class CommentUpdateRequestDto {
     private String content;
+
+    public CommentUpdateRequestDto() {
+    }
+
+    public CommentUpdateRequestDto(String content) {
+        this.content = content;
+    }
 }

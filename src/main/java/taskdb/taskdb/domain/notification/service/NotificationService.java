@@ -26,7 +26,9 @@ public class NotificationService {
 
     public void permit(NotificationPermitRequestDto requestDto) {
         User user = userFacade.getCurrentUser();
-        Notification notification = requestDto.toEntity();
+        Notification notification = Notification.builder()
+                .token(requestDto.getToken())
+                .build();
         notification.confirmUser(user);
         notificationRepository.save(notification);
     }

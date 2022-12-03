@@ -9,9 +9,10 @@ import taskdb.taskdb.domain.notification.domain.Notification;
 public class NotificationPermitRequestDto {
     private String token;
 
-    public Notification toEntity() {
-        return Notification.builder()
-                .token(token)
-                .build();
+    public NotificationPermitRequestDto() {
+    }
+
+    public NotificationPermitRequestDto(String token) {
+        this.token = token;
     }
 }

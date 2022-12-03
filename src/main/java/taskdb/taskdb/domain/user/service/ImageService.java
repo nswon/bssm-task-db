@@ -10,7 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import taskdb.taskdb.domain.user.service.dto.ImageDto;
+import taskdb.taskdb.domain.user.dto.ImageResponse;
 
 import java.io.IOException;
 import java.util.UUID;
@@ -23,7 +23,7 @@ public class ImageService {
     private final AmazonS3 amazonS3;
     private final AmazonS3Client amazonS3Client;
 
-    public ImageDto create(MultipartFile multipartFile) throws IOException {
+    public ImageResponse create(MultipartFile multipartFile) throws IOException {
         String imgPath = UUID.randomUUID() + "_" + multipartFile.getOriginalFilename();
         ObjectMetadata objectMetadata = new ObjectMetadata();
         objectMetadata.setContentLength(multipartFile.getSize());
@@ -32,7 +32,7 @@ public class ImageService {
                 .withCannedAcl(CannedAccessControlList.PublicRead));
 
         String url = String.valueOf(amazonS3Client.getUrl(bucket, imgPath));
-        return ImageDto.builder()
+        return ImageResponse.builder()
                 .imgPath(imgPath)
                 .imgUrl(url)
                 .build();

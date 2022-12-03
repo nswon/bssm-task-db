@@ -1,6 +1,5 @@
 package taskdb.taskdb.domain.answer.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
 
@@ -8,4 +7,11 @@ import lombok.ToString;
 @ToString
 public class AnswerUpdateRequestDto {
     private String content;
+
+    public AnswerUpdateRequestDto() {
+    }
+
+    public AnswerUpdateRequestDto(String content) {
+        this.content = content;
+    }
 }

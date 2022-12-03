@@ -30,7 +30,11 @@ public class QuestionService {
     @Transactional
     public void create(QuestionCreateRequestDto requestDto) {
         User user = userFacade.getCurrentUser();
-        Question question = requestDto.toEntity();
+        Question question = Question.builder()
+                .title(requestDto.getTitle())
+                .content(requestDto.getContent())
+                .category(requestDto.getCategory())
+                .build();
         question.confirmUser(user);
         question.openQuestion();
         questionRepository.save(question);

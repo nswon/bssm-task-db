@@ -1,13 +1,7 @@
 package taskdb.taskdb.domain.auth.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
-import taskdb.taskdb.domain.user.domain.User;
-
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 
 @Getter
 @ToString

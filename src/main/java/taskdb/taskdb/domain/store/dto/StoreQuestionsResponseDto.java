@@ -5,8 +5,11 @@ import taskdb.taskdb.domain.store.domain.QuestionStore;
 
 @Getter
 public class StoreQuestionsResponseDto {
-    private final Long id;
-    private final String title;
+    private Long id;
+    private String title;
+
+    public StoreQuestionsResponseDto() {
+    }
 
     public StoreQuestionsResponseDto(QuestionStore questionStore) {
         this.id = questionStore.getQuestionId();

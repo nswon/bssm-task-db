@@ -25,7 +25,9 @@ public class CommentService {
     public void create(Long id, CommentCreateRequestDto requestDto) {
         User user = userFacade.getCurrentUser();
         Question question = questionFacade.getQuestionById(id);
-        Comment comment = requestDto.toEntity();
+        Comment comment = Comment.builder()
+                .content(requestDto.getContent())
+                .build();
         comment.confirmUser(user);
         comment.confirmQuestion(question);
         commentRepository.save(comment);
@@ -35,7 +37,9 @@ public class CommentService {
         User user = userFacade.getCurrentUser();
         Question question = questionFacade.getQuestionById(questionId);
         Comment parentComment = commentFacade.getCommentById(parentId);
-        Comment comment = requestDto.toEntity();
+        Comment comment = Comment.builder()
+                .content(requestDto.getContent())
+                .build();
         comment.confirmQuestion(question);
         comment.confirmUser(user);
         comment.confirmParent(parentComment);

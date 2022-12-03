@@ -12,16 +12,19 @@ import java.util.List;
 
 @Getter
 public class QuestionResponseDto {
-    private final String title;
-    private final QuestionStatus status;
-    private final String nickname;
-    private final LocalDateTime createdDate;
-    private final LocalDateTime modifiedDate;
-    private final int viewCount;
-    private final int likeCount;
-    private final String content;
-    private final List<CommentsResponseDto> comments;
-    private final List<AnswersResponseDto> answers;
+    private String title;
+    private QuestionStatus status;
+    private String nickname;
+    private LocalDateTime createdDate;
+    private LocalDateTime modifiedDate;
+    private int viewCount;
+    private int likeCount;
+    private String content;
+    private List<CommentsResponseDto> comments;
+    private List<AnswersResponseDto> answers;
+
+    public QuestionResponseDto() {
+    }
 
     @Builder
     public QuestionResponseDto(Question question) {

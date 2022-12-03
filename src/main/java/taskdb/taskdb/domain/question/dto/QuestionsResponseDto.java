@@ -10,13 +10,16 @@ import java.time.LocalDateTime;
 
 @Getter
 public class QuestionsResponseDto {
-    private final Long id;
-    private final QuestionStatus status;
-    private final String title;
-    private final Category category;
-    private final int commentCount;
-    private final int likeCount;
-    private final LocalDateTime createdDate;
+    private Long id;
+    private QuestionStatus status;
+    private String title;
+    private Category category;
+    private int commentCount;
+    private int likeCount;
+    private LocalDateTime createdDate;
+
+    public QuestionsResponseDto() {
+    }
 
     @Builder
     public QuestionsResponseDto(Question question) {

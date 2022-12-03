@@ -1,24 +1,23 @@
 package taskdb.taskdb.domain.question.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
 import taskdb.taskdb.domain.question.domain.Category;
 import taskdb.taskdb.domain.question.domain.Question;
 
 @Getter
-@AllArgsConstructor
 @ToString
 public class QuestionCreateRequestDto {
-    private final String title;
-    private final String content;
-    private final Category category;
+    private String title;
+    private String content;
+    private Category category;
 
-    public Question toEntity() {
-        return Question.builder()
-                .title(title)
-                .content(content)
-                .category(category)
-                .build();
+    public QuestionCreateRequestDto() {
+    }
+
+    public QuestionCreateRequestDto(String title, String content, Category category) {
+        this.title = title;
+        this.content = content;
+        this.category = category;
     }
 }

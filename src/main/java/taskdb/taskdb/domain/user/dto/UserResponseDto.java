@@ -9,11 +9,14 @@ import java.util.List;
 
 @Getter
 public class UserResponseDto {
-    private final String image;
-    private final String nickname;
-    private final int contributionLevel;
-    private final List<QuestionsResponseDto> getMyQuestions;
-    private final List<StoreQuestionsResponseDto> getSavedQuestions;
+    private String image;
+    private String nickname;
+    private int contributionLevel;
+    private List<QuestionsResponseDto> getMyQuestions;
+    private List<StoreQuestionsResponseDto> getSavedQuestions;
+
+    public UserResponseDto() {
+    }
 
     public UserResponseDto(User user) {
         this.image = user.getImage().getUrl();

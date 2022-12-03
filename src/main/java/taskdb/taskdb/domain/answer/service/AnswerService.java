@@ -27,12 +27,14 @@ public class AnswerService {
     public void create(Long id, AnswerCreateRequestDto requestDto) {
         User user = userFacade.getCurrentUser();
         Question question = questionFacade.getQuestionById(id);
-        Answer answer = requestDto.toEntity();
+        Answer answer = Answer.builder()
+                .content(requestDto.getContent())
+                .build();
         answer.confirmUser(user);
         answer.confirmQuestion(question);
         answer.ongoing();
         answerRepository.save(answer);
-        String nickname = user.getNickname();
+        String nickname = user.getNickname().getValue();
         User questionWriter = question.getUser();
         notificationService.sendByCreateAnswer(nickname, questionWriter);
     }
