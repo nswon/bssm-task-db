@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import static taskdb.taskdb.domain.questions.domain.QQuestion.question;
+import static taskdb.taskdb.domain.question.domain.QQuestion.question;
 
 @Repository
 @RequiredArgsConstructor

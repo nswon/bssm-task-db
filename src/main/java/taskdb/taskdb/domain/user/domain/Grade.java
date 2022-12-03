@@ -3,8 +3,7 @@ package taskdb.taskdb.domain.user.domain;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import taskdb.taskdb.domain.user.exception.UserException;
-import taskdb.taskdb.domain.user.exception.UserExceptionType;
+import taskdb.taskdb.domain.user.exception.NotBsmEmailException;
 
 import javax.persistence.Embeddable;
 import java.util.regex.Pattern;
@@ -30,14 +29,14 @@ public class Grade {
         int index = email.indexOf(AT);
         String checkEmail = email.substring(0, index);
         if(checkEmail.length() != EMAIL_SUB_LENGTH) {
-            throw new UserException(UserExceptionType.INVALID_EMAIL);
+            throw new NotBsmEmailException();
         }
         return checkEmail;
     }
 
     private void validateOnlyNumber(String email) {
         if(!ONLY_NUMBER_REGEX.matcher(email).matches()) {
-            throw new UserException(UserExceptionType.INVALID_EMAIL);
+            throw new NotBsmEmailException();
         }
     }
 

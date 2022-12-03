@@ -4,8 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import taskdb.taskdb.domain.answer.domain.Answer;
 import taskdb.taskdb.domain.answer.domain.AnswerRepository;
-import taskdb.taskdb.domain.answer.exception.AnswerException;
-import taskdb.taskdb.domain.answer.exception.AnswerExceptionType;
+import taskdb.taskdb.domain.answer.exception.AnswerNotFoundException;
 
 @Component
 @RequiredArgsConstructor
@@ -14,6 +13,6 @@ public class AnswerFacade {
 
     public Answer getAnswerById(Long id) {
         return answerRepository.findById(id)
-                .orElseThrow(() -> new AnswerException(AnswerExceptionType.NOT_FOUND_ANSWER));
+                .orElseThrow(AnswerNotFoundException::new);
     }
 }

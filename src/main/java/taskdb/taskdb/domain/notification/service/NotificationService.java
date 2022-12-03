@@ -2,15 +2,12 @@ package taskdb.taskdb.domain.notification.service;
 
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.Message;
-import com.google.firebase.messaging.WebpushConfig;
-import com.google.firebase.messaging.WebpushNotification;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import taskdb.taskdb.domain.notification.domain.Notification;
 import taskdb.taskdb.domain.notification.domain.NotificationRepository;
-import taskdb.taskdb.domain.notification.exception.NotificationException;
-import taskdb.taskdb.domain.notification.exception.NotificationExceptionType;
+import taskdb.taskdb.domain.notification.exception.InvalidNotificationException;
 import taskdb.taskdb.domain.notification.facade.NotificationFacade;
 import taskdb.taskdb.domain.notification.presentation.dto.request.NotificationPermitRequestDto;
 import taskdb.taskdb.domain.user.domain.User;
@@ -44,7 +41,7 @@ public class NotificationService {
         try {
             sendPushNotificationByAnswer(token, nickname);
         } catch (ExecutionException | InterruptedException e) {
-            throw new NotificationException(NotificationExceptionType.FAIL_SEND);
+            throw new InvalidNotificationException();
         }
     }
 

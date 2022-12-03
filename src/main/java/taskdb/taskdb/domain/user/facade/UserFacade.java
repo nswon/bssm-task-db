@@ -5,8 +5,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import taskdb.taskdb.domain.user.domain.User;
 import taskdb.taskdb.domain.user.domain.UserRepository;
-import taskdb.taskdb.domain.user.exception.UserException;
-import taskdb.taskdb.domain.user.exception.UserExceptionType;
+import taskdb.taskdb.domain.user.exception.*;
 import taskdb.taskdb.domain.auth.service.EmailService;
 import taskdb.taskdb.global.security.jwt.SecurityUtil;
 
@@ -24,37 +23,38 @@ public class UserFacade {
 
     public void checkAvailableEmail(String email) {
         if(userRepository.findByEmail(email).isPresent()) {
-            throw new UserException(UserExceptionType.ALREADY_EXIST_EMAIL);
+            throw new DuplicateEmailException();
         }
     }
 
     public void checkCorrectEmailCheckCode(String checkCode) {
         if(emailService.verityCode(checkCode)) {
-            throw new UserException(UserExceptionType.WRONG_EMAIL_CHECK_CODE);
+            throw new InvalidAuthCodeException();
         }
     }
 
     public User checkNotJoinByEmail(String email) {
         return userRepository.findByEmail(email)
-                .orElseThrow(() -> new UserException(UserExceptionType.NOT_SIGNUP_EMAIL));
+                .orElseThrow(InvalidEmailException::new);
     }
 
     public void checkCorrectPassword(User user, String password) {
         if(user.isNotCorrectPassword(passwordEncoder, password)) {
-            throw new UserException(UserExceptionType.WRONG_PASSWORD);
+            throw new InvalidPasswordException();
         }
     }
 
     public User getCurrentUser() {
         return userRepository.findByEmail(SecurityUtil.getLoginUserEmail())
-                .orElseThrow(() -> new UserException(UserExceptionType.REQUIRED_DO_LOGIN));
+                .orElseThrow(UserNotFoundException::new);
     }
 
     public void checkDifferentUser(User user, User writer) {
         String email = writer.getEmail();
         if(user.isNotCorrectEmail(email)) {
-            throw new UserException(UserExceptionType.DIFFERENT_USER);
+            throw new DifferentUserException();
         }
+
     }
 
     public List<User> getUsersByContributionLevel() {

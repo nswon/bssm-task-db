@@ -7,8 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import taskdb.taskdb.domain.user.domain.User;
 import taskdb.taskdb.domain.user.domain.UserRepository;
-import taskdb.taskdb.domain.user.exception.UserException;
-import taskdb.taskdb.domain.user.exception.UserExceptionType;
+import taskdb.taskdb.domain.user.exception.UserNotFoundException;
 import taskdb.taskdb.domain.user.facade.UserFacade;
 import taskdb.taskdb.domain.user.presentation.dto.request.UserJoinRequestDto;
 import taskdb.taskdb.domain.user.presentation.dto.request.UserProfileRequestDto;
@@ -52,7 +51,7 @@ public class UserService {
     public UserResponseDto getUserById(Long id) {
         return userRepository.findById(id)
                 .map(UserResponseDto::new)
-                .orElseThrow(() -> new UserException(UserExceptionType.NOT_FOUND_USER));
+                .orElseThrow(UserNotFoundException::new);
     }
 
     @Transactional
