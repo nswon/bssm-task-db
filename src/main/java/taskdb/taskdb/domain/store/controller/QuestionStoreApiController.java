@@ -22,9 +22,7 @@ public class QuestionStoreApiController {
     @GetMapping("")
     public Result getQuestions() {
         List<StoreQuestionsResponseDto> savedQuestions = questionStoreService.getQuestions();
-        return Result.builder()
-                .data(savedQuestions)
-                .build();
+        return new Result(savedQuestions);
     }
 
     @DeleteMapping("/{id}")

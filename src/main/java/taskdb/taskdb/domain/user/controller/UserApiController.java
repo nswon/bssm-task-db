@@ -36,8 +36,6 @@ public class UserApiController {
     @GetMapping("/rank")
     public Result rank() {
         List<UsersRankResponseDto> usersRank = userService.rank();
-        return Result.builder()
-                .data(usersRank)
-                .build();
+        return new Result(usersRank);
     }
 }

@@ -26,9 +26,7 @@ public class QuestionApiController {
     @GetMapping("")
     public Result getQuestions() {
         List<QuestionsResponseDto> questions = questionService.getQuestions();
-        return Result.builder()
-                .data(questions)
-                .build();
+        return new Result(questions);
     }
 
     @GetMapping("/{id}")
@@ -49,40 +47,30 @@ public class QuestionApiController {
     @GetMapping("/search")
     public Result searchByTitleOrId(@RequestParam("q") String keyword) {
         List<QuestionsResponseDto> questions = questionService.searchByTitleOrId(keyword);
-        return Result.builder()
-                .data(questions)
-                .build();
+        return new Result(questions);
     }
 
     @GetMapping("/categories")
     public Result getQuestionsByCategory(@RequestParam("c") Category category) {
         List<QuestionsResponseDto> questions = questionService.getQuestionsByCategory(category);
-        return Result.builder()
-                .data(questions)
-                .build();
+        return new Result(questions);
     }
 
     @GetMapping("/grade")
     public Result getQuestionsByGrade(@RequestParam("g") int grade) {
         List<QuestionsResponseDto> questions = questionService.getQuestionsByGrade(grade);
-        return Result.builder()
-                .data(questions)
-                .build();
+        return new Result(questions);
     }
 
     @GetMapping("/open")
     public Result getOpenQuestions() {
         List<QuestionsResponseDto> openQuestions = questionService.getOpenQuestions();
-        return Result.builder()
-                .data(openQuestions)
-                .build();
+        return new Result(openQuestions);
     }
 
     @GetMapping("/close")
     public Result getCloseQuestions() {
         List<QuestionsResponseDto> closedQuestions = questionService.getCloseQuestions();
-        return Result.builder()
-                .data(closedQuestions)
-                .build();
+        return new Result(closedQuestions);
     }
 }
