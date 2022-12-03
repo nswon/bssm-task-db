@@ -7,10 +7,10 @@ import taskdb.taskdb.domain.auth.exception.LoginFailedException;
 import taskdb.taskdb.domain.user.domain.Email;
 import taskdb.taskdb.domain.user.domain.Password;
 import taskdb.taskdb.domain.user.domain.User;
-import taskdb.taskdb.domain.user.domain.UserRepository;
+import taskdb.taskdb.domain.user.repository.UserRepository;
 import taskdb.taskdb.domain.user.exception.*;
 import taskdb.taskdb.domain.auth.service.EmailService;
-import taskdb.taskdb.domain.user.presentation.dto.request.UserJoinRequestDto;
+import taskdb.taskdb.domain.user.dto.UserJoinRequestDto;
 import taskdb.taskdb.global.security.jwt.SecurityUtil;
 
 import java.util.Comparator;

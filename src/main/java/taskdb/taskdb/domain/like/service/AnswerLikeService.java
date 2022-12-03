@@ -5,10 +5,10 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import taskdb.taskdb.domain.answer.domain.Answer;
-import taskdb.taskdb.domain.answer.domain.AnswerRepository;
+import taskdb.taskdb.domain.answer.repository.AnswerRepository;
 import taskdb.taskdb.domain.answer.facade.AnswerFacade;
 import taskdb.taskdb.domain.like.domain.AnswerLike;
-import taskdb.taskdb.domain.like.domain.AnswerLikeRepository;
+import taskdb.taskdb.domain.like.repository.AnswerLikeRepository;
 import taskdb.taskdb.domain.user.domain.User;
 import taskdb.taskdb.domain.user.facade.UserFacade;
 

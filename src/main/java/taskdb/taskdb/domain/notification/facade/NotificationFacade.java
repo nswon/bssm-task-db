@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import taskdb.taskdb.domain.comment.domain.Comment;
 import taskdb.taskdb.domain.notification.domain.Notification;
-import taskdb.taskdb.domain.notification.domain.NotificationRepository;
+import taskdb.taskdb.domain.notification.repository.NotificationRepository;
 import taskdb.taskdb.domain.notification.exception.UserDeviceTokenNotFoundException;
 import taskdb.taskdb.domain.user.domain.User;
 

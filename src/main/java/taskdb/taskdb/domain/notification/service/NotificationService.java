@@ -6,10 +6,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import taskdb.taskdb.domain.notification.domain.Notification;
-import taskdb.taskdb.domain.notification.domain.NotificationRepository;
+import taskdb.taskdb.domain.notification.repository.NotificationRepository;
 import taskdb.taskdb.domain.notification.exception.InvalidNotificationException;
 import taskdb.taskdb.domain.notification.facade.NotificationFacade;
-import taskdb.taskdb.domain.notification.presentation.dto.request.NotificationPermitRequestDto;
+import taskdb.taskdb.domain.notification.dto.NotificationPermitRequestDto;
 import taskdb.taskdb.domain.user.domain.User;
 import taskdb.taskdb.domain.user.facade.UserFacade;
 

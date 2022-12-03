@@ -8,10 +8,11 @@ import org.springframework.transaction.annotation.Transactional;
 import taskdb.taskdb.domain.user.domain.*;
 import taskdb.taskdb.domain.user.exception.UserNotFoundException;
 import taskdb.taskdb.domain.user.facade.UserFacade;
-import taskdb.taskdb.domain.user.presentation.dto.request.UserJoinRequestDto;
-import taskdb.taskdb.domain.user.presentation.dto.request.UserProfileRequestDto;
-import taskdb.taskdb.domain.user.presentation.dto.response.UserResponseDto;
-import taskdb.taskdb.domain.user.presentation.dto.response.UsersRankResponseDto;
+import taskdb.taskdb.domain.user.dto.UserJoinRequestDto;
+import taskdb.taskdb.domain.user.dto.UserProfileRequestDto;
+import taskdb.taskdb.domain.user.dto.UserResponseDto;
+import taskdb.taskdb.domain.user.dto.UsersRankResponseDto;
+import taskdb.taskdb.domain.user.repository.UserRepository;
 import taskdb.taskdb.domain.user.service.dto.ImageDto;
 
 import java.io.IOException;

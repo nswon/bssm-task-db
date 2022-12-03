@@ -3,7 +3,7 @@ package taskdb.taskdb.domain.comment.facade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import taskdb.taskdb.domain.comment.domain.Comment;
-import taskdb.taskdb.domain.comment.domain.CommentRepository;
+import taskdb.taskdb.domain.comment.repository.CommentRepository;
 import taskdb.taskdb.domain.comment.exception.CommentNotFoundException;
 
 @Component

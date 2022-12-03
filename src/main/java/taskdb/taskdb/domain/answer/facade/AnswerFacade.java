@@ -3,7 +3,7 @@ package taskdb.taskdb.domain.answer.facade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import taskdb.taskdb.domain.answer.domain.Answer;
-import taskdb.taskdb.domain.answer.domain.AnswerRepository;
+import taskdb.taskdb.domain.answer.repository.AnswerRepository;
 import taskdb.taskdb.domain.answer.exception.AnswerNotFoundException;
 
 @Component

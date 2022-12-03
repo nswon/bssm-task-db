@@ -4,15 +4,14 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import taskdb.taskdb.domain.answer.domain.Answer;
 import taskdb.taskdb.domain.comment.domain.Comment;
 import taskdb.taskdb.domain.like.domain.AnswerLike;
 import taskdb.taskdb.domain.like.domain.QuestionLike;
 import taskdb.taskdb.domain.question.domain.Question;
-import taskdb.taskdb.domain.question.presentation.dto.response.QuestionsResponseDto;
+import taskdb.taskdb.domain.question.dto.QuestionsResponseDto;
 import taskdb.taskdb.domain.store.domain.QuestionStore;
-import taskdb.taskdb.domain.store.presentation.dto.response.StoreQuestionsResponseDto;
+import taskdb.taskdb.domain.store.dto.StoreQuestionsResponseDto;
 
 import javax.persistence.*;
 import java.util.ArrayList;

@@ -6,9 +6,9 @@ import org.springframework.transaction.annotation.Transactional;
 import taskdb.taskdb.domain.question.domain.Question;
 import taskdb.taskdb.domain.question.facade.QuestionFacade;
 import taskdb.taskdb.domain.store.domain.QuestionStore;
-import taskdb.taskdb.domain.store.domain.QuestionStoreRepository;
+import taskdb.taskdb.domain.store.repository.QuestionStoreRepository;
 import taskdb.taskdb.domain.store.facade.QuestionStoreFacade;
-import taskdb.taskdb.domain.store.presentation.dto.response.StoreQuestionsResponseDto;
+import taskdb.taskdb.domain.store.dto.StoreQuestionsResponseDto;
 import taskdb.taskdb.domain.user.domain.User;
 import taskdb.taskdb.domain.user.facade.UserFacade;
 
