@@ -28,6 +28,7 @@ public class UserFacade {
     public void validate(UserJoinRequestDto requestDto) {
         checkAvailableEmail(requestDto);
         checkCorrectEmailCheckCode(requestDto);
+        checkUniqueNickname(requestDto);
     }
 
     private void checkAvailableEmail(UserJoinRequestDto requestDto) {
@@ -39,6 +40,13 @@ public class UserFacade {
     private void checkCorrectEmailCheckCode(UserJoinRequestDto requestDto) {
         if(emailService.verityCode(requestDto.getCheckCode())) {
             throw new InvalidAuthCodeException();
+        }
+    }
+
+    private void checkUniqueNickname(UserJoinRequestDto requestDto) {
+        boolean isDuplicateNickname = userRepository.existsUserByNicknameValue(requestDto.getNickname());
+        if(isDuplicateNickname) {
+            throw new DuplicateNicknameException();
         }
     }
 

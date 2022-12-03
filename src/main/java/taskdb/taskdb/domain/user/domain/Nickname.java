@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
 public class Nickname {
     private static final Pattern PATTERN = Pattern.compile("^{2,20}$");
 
-    @Column(name = "nickname")
+    @Column(name = "nickname", unique = true)
     private String value;
 
     protected Nickname() {
