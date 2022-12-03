@@ -10,7 +10,6 @@ import taskdb.taskdb.domain.user.service.UserService;
 import taskdb.taskdb.global.support.Result;
 
 import javax.validation.Valid;
-import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -30,7 +29,7 @@ public class UserApiController {
     }
 
     @PutMapping("/edit")
-    public void update(UserProfileRequestDto requestDto) throws IOException {
+    public void update(UserProfileRequestDto requestDto) {
         userService.updateUser(requestDto);
     }
 

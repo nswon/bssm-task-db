@@ -13,9 +13,7 @@ import taskdb.taskdb.domain.user.dto.UserProfileRequestDto;
 import taskdb.taskdb.domain.user.dto.UserResponseDto;
 import taskdb.taskdb.domain.user.dto.UsersRankResponseDto;
 import taskdb.taskdb.domain.user.repository.UserRepository;
-import taskdb.taskdb.domain.user.dto.ImageResponse;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -52,24 +50,26 @@ public class UserService {
     }
 
     @Transactional
-    public void updateUser(UserProfileRequestDto requestDto) throws IOException {
+    public void updateUser(UserProfileRequestDto requestDto) {
         User user = userFacade.getCurrentUser();
-        if(user.canDeleteImage()) {
-            imageService.delete(user.getImagePath());
-        }
-
-        ImageResponse imageResponse = imageService.create(requestDto.getFile());
-        Image image = Image.of(imageResponse.getImgPath(), imageResponse.getImgUrl());
+        validateCustomImage(user);
+        Image image = imageService.create(requestDto.getFile());
         user.updateImage(image);
         Nickname nickname = Nickname.of(requestDto.getNickname());
         user.updateNickname(nickname);
     }
 
+    private void validateCustomImage(User user) {
+        if(user.canDeleteImage()) {
+            imageService.delete(user.getImagePath());
+        }
+    }
+
     public List<UsersRankResponseDto> rank() {
         List<User> usersRank = userFacade.getUsersByContributionLevel();
        return IntStream.range(0, usersRank.size())
-                .boxed()
+               .boxed()
                .map(count -> new UsersRankResponseDto(count+1, usersRank.get(count)))
-                .collect(Collectors.toList());
+               .collect(Collectors.toList());
     }
 }
