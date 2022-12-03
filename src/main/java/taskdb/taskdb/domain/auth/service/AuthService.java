@@ -19,11 +19,7 @@ public class AuthService {
     private final UserFacade userFacade;
 
     public TokenResponseDto login(UserLoginRequestDto requestDto) {
-        String email = requestDto.getEmail();
-        User user = userFacade.getUserByEmail(email);
-        String password = requestDto.getPassword();
-        userFacade.checkCorrectPassword(user, password);
-
+        User user = userFacade.getUserByEmailAndPassword(requestDto.getEmail(), requestDto.getPassword());
         String accessToken = jwtTokenProvider.createAccessToken(user);
         return TokenResponseDto.builder()
                 .accessToken(accessToken)

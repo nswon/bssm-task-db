@@ -78,10 +78,6 @@ public class User {
         this.role = Role.ROLE_USER;
     }
 
-    public boolean isNotCorrectPassword(PasswordEncoder passwordEncoder, String checkPassword) {
-        return password.checkPassword(passwordEncoder, checkPassword);
-    }
-
     public boolean isNotCorrectEmail(Email checkEmail) {
         return !this.email.equals(checkEmail);
     }

@@ -30,7 +30,7 @@ public class JwtTokenProvider {
     private static final String HEADER_ACCESS_TOKEN = "ACCESS_TOKEN";
 
     public String createAccessToken(User user) {
-        final String email = user.getEmail();
+        final String email = user.getEmail().getValue();
         final String role = user.getRole().name();
         final long ACCESS_TOKEN_VALID_TIME = 30 * 24 * 60 * 60 * 1000L;
         Claims claims = Jwts.claims().setSubject(email);

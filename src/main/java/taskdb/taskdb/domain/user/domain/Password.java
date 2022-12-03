@@ -33,8 +33,4 @@ public class Password {
             throw new InvalidPasswordException();
         }
     }
-
-    public boolean checkPassword(PasswordEncoder passwordEncoder, String password) {
-        return !passwordEncoder.matches(password, value);
-    }
 }
