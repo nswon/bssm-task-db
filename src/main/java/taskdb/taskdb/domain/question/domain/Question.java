@@ -1,8 +1,7 @@
 package taskdb.taskdb.domain.question.domain;
-import lombok.AccessLevel;
+
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import taskdb.taskdb.domain.answer.domain.Answer;
 import taskdb.taskdb.domain.answer.dto.AnswersResponseDto;
 import taskdb.taskdb.domain.comment.domain.Comment;
@@ -18,22 +17,17 @@ import java.util.stream.Collectors;
 
 @Entity
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "QUESTION")
 public class Question extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private String title;
+    @Embedded
+    private Title title;
 
-    @Column(columnDefinition = "TEXT")
-    private String content;
-
-    private int viewCount;
-
-    private int likeCount;
+    @Embedded
+    private Content content;
 
     @Enumerated(EnumType.STRING)
     private QuestionStatus questionStatus;
@@ -45,6 +39,10 @@ public class Question extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private Category category;
 
+    private int viewCount;
+
+    private int likeCount;
+
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
     private final List<Comment> comments = new ArrayList<>();
 
@@ -54,8 +52,11 @@ public class Question extends BaseTimeEntity {
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
     private final List<QuestionLike> questionLikes = new ArrayList<>();
 
+    protected Question() {
+    }
+
     @Builder
-    public Question(String title, String content, Category category) {
+    public Question(Title title, Content content, Category category) {
         this.title = title;
         this.content = content;
         this.category = category;
@@ -73,7 +74,7 @@ public class Question extends BaseTimeEntity {
         this.questionStatus = QuestionStatus.CLOSE;
     }
 
-    public void update(String title, String content) {
+    public void update(Title title, Content content) {
         this.title = title;
         this.content = content;
     }
@@ -117,10 +118,6 @@ public class Question extends BaseTimeEntity {
 
     public void addQuestionLike(QuestionLike questionLike) {
         this.questionLikes.add(questionLike);
-    }
-
-    public boolean isTitleContainsByKeyword(String keyword) {
-        return title.contains(keyword);
     }
 
     public void addLikeCount() {

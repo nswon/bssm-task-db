@@ -4,7 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import taskdb.taskdb.domain.question.domain.Category;
+import taskdb.taskdb.domain.question.domain.Content;
 import taskdb.taskdb.domain.question.domain.Question;
+import taskdb.taskdb.domain.question.domain.Title;
 import taskdb.taskdb.domain.question.repository.QuestionQuerydslRepository;
 import taskdb.taskdb.domain.question.repository.QuestionRepository;
 import taskdb.taskdb.domain.question.facade.QuestionFacade;
@@ -31,8 +33,8 @@ public class QuestionService {
     public void create(QuestionCreateRequestDto requestDto) {
         User user = userFacade.getCurrentUser();
         Question question = Question.builder()
-                .title(requestDto.getTitle())
-                .content(requestDto.getContent())
+                .title(Title.of(requestDto.getTitle()))
+                .content(Content.of(requestDto.getContent()))
                 .category(requestDto.getCategory())
                 .build();
         question.confirmUser(user);
@@ -61,7 +63,9 @@ public class QuestionService {
         Question question = questionFacade.getQuestionById(id);
         User writer = question.getUser();
         userFacade.checkDifferentUser(user, writer);
-        question.update(requestDto.getTitle(), requestDto.getContent());
+        Title title = Title.of(requestDto.getTitle());
+        Content content = Content.of(requestDto.getContent());
+        question.update(title, content);
     }
 
     @Transactional

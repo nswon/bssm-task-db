@@ -28,14 +28,14 @@ public class QuestionResponseDto {
 
     @Builder
     public QuestionResponseDto(Question question) {
-        this.title = question.getTitle();
+        this.title = question.getTitle().getValue();
         this.status = question.getQuestionStatus();
         this.nickname = question.getUser().getNickname().getValue();
         this.createdDate = question.getCreatedDate();
         this.modifiedDate = question.getModifiedDate();
         this.viewCount = question.getViewCount();
         this.likeCount = question.getLikeCount();
-        this.content = question.getContent();
+        this.content = question.getContent().getValue();
         this.comments = question.toCommentsResponseDto();
         this.answers = question.toAnswersResponseDto();
     }
