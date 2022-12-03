@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 @Getter
 @Embeddable
 public class Content {
-    private static final Pattern PATTERN = Pattern.compile("^{1,10000}");
+    private static final Pattern PATTERN = Pattern.compile("^{1,10000}$");
 
     @Column(name = "content", columnDefinition = "TEXT")
     private String value;
@@ -28,7 +28,7 @@ public class Content {
     }
 
     private static void validate(String value) {
-        if(!PATTERN.matcher(value).matches()) {
+        if(PATTERN.matcher(value).matches()) {
             throw new OverflowContentException();
         }
     }

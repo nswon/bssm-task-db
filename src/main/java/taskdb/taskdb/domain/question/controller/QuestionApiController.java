@@ -3,10 +3,7 @@ package taskdb.taskdb.domain.question.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import taskdb.taskdb.domain.question.domain.Category;
-import taskdb.taskdb.domain.question.dto.QuestionCreateRequestDto;
-import taskdb.taskdb.domain.question.dto.QuestionResponseDto;
-import taskdb.taskdb.domain.question.dto.QuestionsResponseDto;
-import taskdb.taskdb.domain.question.dto.QuestionUpdateRequestDto;
+import taskdb.taskdb.domain.question.dto.*;
 import taskdb.taskdb.domain.question.service.QuestionService;
 import taskdb.taskdb.global.support.Result;
 
@@ -72,5 +69,11 @@ public class QuestionApiController {
     public Result getCloseQuestions() {
         List<QuestionsResponseDto> closedQuestions = questionService.getCloseQuestions();
         return new Result(closedQuestions);
+    }
+
+    @GetMapping("/subject/rank")
+    public Result getQuestionsRankBySubject() {
+        List<QuestionsRankResponseDto> response = questionService.getQuestionsRankBySubject();
+        return new Result(response);
     }
 }

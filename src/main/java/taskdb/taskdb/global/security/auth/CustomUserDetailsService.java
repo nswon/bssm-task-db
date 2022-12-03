@@ -5,6 +5,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import taskdb.taskdb.domain.user.exception.UserNotFoundException;
 import taskdb.taskdb.domain.user.repository.UserRepository;
 
 @Service
@@ -15,8 +16,8 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return memberRepository.findByEmail(email)
+        return memberRepository.findByEmailValue(email)
                 .map(CustomUserDetails::new)
-                .orElseThrow(() -> new IllegalArgumentException("사용자가 존재하지 않습니다."));
+                .orElseThrow(UserNotFoundException::new);
     }
 }

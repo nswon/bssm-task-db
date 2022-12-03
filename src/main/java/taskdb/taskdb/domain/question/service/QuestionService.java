@@ -7,18 +7,16 @@ import taskdb.taskdb.domain.question.domain.Category;
 import taskdb.taskdb.domain.question.domain.Content;
 import taskdb.taskdb.domain.question.domain.Question;
 import taskdb.taskdb.domain.question.domain.Title;
+import taskdb.taskdb.domain.question.dto.*;
 import taskdb.taskdb.domain.question.repository.QuestionQuerydslRepository;
 import taskdb.taskdb.domain.question.repository.QuestionRepository;
 import taskdb.taskdb.domain.question.facade.QuestionFacade;
-import taskdb.taskdb.domain.question.dto.QuestionCreateRequestDto;
-import taskdb.taskdb.domain.question.dto.QuestionResponseDto;
-import taskdb.taskdb.domain.question.dto.QuestionsResponseDto;
-import taskdb.taskdb.domain.question.dto.QuestionUpdateRequestDto;
 import taskdb.taskdb.domain.user.domain.User;
 import taskdb.taskdb.domain.user.facade.UserFacade;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Service
 @RequiredArgsConstructor
@@ -106,6 +104,17 @@ public class QuestionService {
         return questionRepository.findAll().stream()
                 .filter(Question::isClose)
                 .map(QuestionsResponseDto::new)
+                .collect(Collectors.toList());
+    }
+
+    public List<QuestionsRankResponseDto> getQuestionsRankBySubject() {
+        double questionTotalCount = 1.0 * questionRepository.findAll().size();
+        return Category.getValues().stream()
+                .map(category -> {
+                    String subjectName = category.name();
+                    String rate = questionFacade.getRate(questionTotalCount, category);
+                    return new QuestionsRankResponseDto(subjectName, rate);
+                })
                 .collect(Collectors.toList());
     }
 }

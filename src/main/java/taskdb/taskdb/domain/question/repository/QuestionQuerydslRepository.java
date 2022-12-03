@@ -35,20 +35,20 @@ public class QuestionQuerydslRepository {
         if(ONLY_NUMBER_REGEX.matcher(keyword).matches()) {
             return question.id.eq(Long.valueOf(keyword));
         }
-        return question.title.contains(keyword);
+        return question.title.value.contains(keyword);
     }
 
     private BooleanExpression isJunior(int grade) {
         if(grade == 0) {
             return null;
         }
-        return question.user.grade.grade.eq(grade);
+        return question.user.grade.value.eq(grade);
     }
 
     private BooleanExpression isSophomore(int grade) {
         if(grade == 0) {
             return null;
         }
-        return question.user.grade.grade.eq(grade);
+        return question.user.grade.value.eq(grade);
     }
 }

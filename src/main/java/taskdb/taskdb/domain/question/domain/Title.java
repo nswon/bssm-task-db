@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 @Getter
 @Embeddable
 public class Title {
-    private static final Pattern PATTERN = Pattern.compile("^{1,50}");
+    private static final Pattern PATTERN = Pattern.compile("^{1,50}$");
     @Column(name = "title")
     private String value;
 
@@ -27,7 +27,7 @@ public class Title {
     }
 
     private static void validate(String value) {
-        if(!PATTERN.matcher(value).matches()) {
+        if(PATTERN.matcher(value).matches()) {
             throw new OverflowTitleException();
         }
     }
