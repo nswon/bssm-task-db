@@ -50,7 +50,7 @@ public class UserFacade {
 
     public User getCurrentUser() {
         return userRepository.findByEmailValue(SecurityUtil.getLoginUserEmail())
-                .orElseThrow(UserNotFoundException::new);
+                .orElseThrow(AuthorizationException::new);
     }
 
     public void checkDifferentUser(User user, User writer) {
