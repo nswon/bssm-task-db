@@ -3,10 +3,12 @@ package taskdb.taskdb.domain.user.facade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import taskdb.taskdb.domain.user.domain.Email;
 import taskdb.taskdb.domain.user.domain.User;
 import taskdb.taskdb.domain.user.domain.UserRepository;
 import taskdb.taskdb.domain.user.exception.*;
 import taskdb.taskdb.domain.auth.service.EmailService;
+import taskdb.taskdb.domain.user.presentation.dto.request.UserJoinRequestDto;
 import taskdb.taskdb.global.security.jwt.SecurityUtil;
 
 import java.util.Comparator;
@@ -21,19 +23,24 @@ public class UserFacade {
     private final EmailService emailService;
     private final PasswordEncoder passwordEncoder;
 
-    public void checkAvailableEmail(String email) {
-        if(userRepository.findByEmail(email).isPresent()) {
+    public void validate(UserJoinRequestDto requestDto) {
+        checkAvailableEmail(requestDto);
+        checkCorrectEmailCheckCode(requestDto);
+    }
+
+    private void checkAvailableEmail(UserJoinRequestDto requestDto) {
+        if(userRepository.findByEmail(requestDto.getEmail()).isPresent()) {
             throw new DuplicateEmailException();
         }
     }
 
-    public void checkCorrectEmailCheckCode(String checkCode) {
-        if(emailService.verityCode(checkCode)) {
+    private void checkCorrectEmailCheckCode(UserJoinRequestDto requestDto) {
+        if(emailService.verityCode(requestDto.getCheckCode())) {
             throw new InvalidAuthCodeException();
         }
     }
 
-    public User checkNotJoinByEmail(String email) {
+    public User getUserByEmail(String email) {
         return userRepository.findByEmail(email)
                 .orElseThrow(InvalidEmailException::new);
     }
@@ -50,11 +57,10 @@ public class UserFacade {
     }
 
     public void checkDifferentUser(User user, User writer) {
-        String email = writer.getEmail();
+        Email email = writer.getEmail();
         if(user.isNotCorrectEmail(email)) {
             throw new DifferentUserException();
         }
-
     }
 
     public List<User> getUsersByContributionLevel() {

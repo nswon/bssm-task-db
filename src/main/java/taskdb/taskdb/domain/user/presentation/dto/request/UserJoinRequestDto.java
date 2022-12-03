@@ -12,30 +12,21 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 @Getter
-@AllArgsConstructor
 @ToString
 public class UserJoinRequestDto {
-    @NotNull(message = "이메일을 입력해주세요.")
-    @Email
-    private final String email;
+    private String email;
+    private String checkCode;
+    private int grade;
+    private String nickname;
+    private String password;
 
-    @NotNull(message = "인증코드를 입력해주세요.")
-    private final String checkCode;
+    public UserJoinRequestDto() {
+    }
 
-    @NotNull(message = "닉네임을 입력해주세요.")
-    @Size(min = 2, max = 20)
-    private final String nickname;
-
-    @NotNull(message = "비밀번호를 입력해주세요.")
-    @Pattern(regexp = "(?=.*[0-9])(?=.*[a-zA-Z])(?=.*\\W)(?=\\S+$).{6,20}",
-            message = "영문 대,소문자와 숫자, 특수기호가 적어도 1개 이상씩 포함된 6자 ~ 20자여야 합니다.")
-    private final String password;
-
-    public User toEntity() {
-        return User.builder()
-                .email(email)
-                .nickname(nickname)
-                .password(password)
-                .build();
+    public UserJoinRequestDto(String email, int grade, String nickname, String password) {
+        this.email = email;
+        this.grade = grade;
+        this.nickname = nickname;
+        this.password = password;
     }
 }

@@ -20,7 +20,7 @@ public class AuthService {
 
     public TokenResponseDto login(UserLoginRequestDto requestDto) {
         String email = requestDto.getEmail();
-        User user = userFacade.checkNotJoinByEmail(email);
+        User user = userFacade.getUserByEmail(email);
         String password = requestDto.getPassword();
         userFacade.checkCorrectPassword(user, password);
 

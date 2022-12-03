@@ -1,47 +1,33 @@
 package taskdb.taskdb.domain.user.domain;
 
-import lombok.AccessLevel;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
+import taskdb.taskdb.domain.user.exception.InvalidGradeFormatException;
 import taskdb.taskdb.domain.user.exception.NotBsmEmailException;
 
 import javax.persistence.Embeddable;
 import java.util.regex.Pattern;
 
 @Embeddable
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class Grade {
-    private static final Pattern ONLY_NUMBER_REGEX = Pattern.compile("^[0-9]*$");
-    private static final Character AT = '@';
-    private static final int START_GRADE_SUB = 4;
-    private static final int END_GRADE_SUB = 5;
-    private static final int EMAIL_SUB_LENGTH = 9;
-    private int grade;
+    private static final Pattern PATTERN = Pattern.compile("^[1-3]*$");
+    private int value;
 
-    public Grade(String email) {
-        String checkEmail = validateSplit(email);
-        validateOnlyNumber(checkEmail);
-        this.grade = getGradeByEmail(email);
+    protected Grade() {
     }
 
-    private String validateSplit(String email) {
-        int index = email.indexOf(AT);
-        String checkEmail = email.substring(0, index);
-        if(checkEmail.length() != EMAIL_SUB_LENGTH) {
-            throw new NotBsmEmailException();
+    private Grade(int value) {
+        this.value = value;
+    }
+
+    public static Grade of(int value) {
+        validate(value);
+        return new Grade(value);
+    }
+
+    private static void validate(int value) {
+        if(!PATTERN.matcher(String.valueOf(value)).matches()) {
+            throw new InvalidGradeFormatException();
         }
-        return checkEmail;
-    }
-
-    private void validateOnlyNumber(String email) {
-        if(!ONLY_NUMBER_REGEX.matcher(email).matches()) {
-            throw new NotBsmEmailException();
-        }
-    }
-
-    private int getGradeByEmail(String email) {
-        String grade = email.substring(START_GRADE_SUB, END_GRADE_SUB);
-        return Integer.parseInt(grade);
     }
 }

@@ -20,8 +20,8 @@ public class UserApiController {
     private final UserService userService;
 
     @PostMapping("/join")
-    public boolean join(@RequestBody @Valid UserJoinRequestDto requestDto) {
-        return userService.join(requestDto);
+    public void join(@RequestBody @Valid UserJoinRequestDto requestDto) {
+        userService.join(requestDto);
     }
 
     @GetMapping("/{id}")
@@ -30,8 +30,8 @@ public class UserApiController {
     }
 
     @PutMapping("/edit")
-    public void updateProfileImage(UserProfileRequestDto requestDto) throws IOException {
-        userService.updateProfile(requestDto);
+    public void update(UserProfileRequestDto requestDto) throws IOException {
+        userService.updateUser(requestDto);
     }
 
     @GetMapping("/rank")

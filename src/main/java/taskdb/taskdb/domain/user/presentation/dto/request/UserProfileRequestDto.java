@@ -7,4 +7,12 @@ import org.springframework.web.multipart.MultipartFile;
 public class UserProfileRequestDto {
     private MultipartFile file;
     private String nickname;
+
+    public UserProfileRequestDto() {
+    }
+
+    public UserProfileRequestDto(MultipartFile file, String nickname) {
+        this.file = file;
+        this.nickname = nickname;
+    }
 }

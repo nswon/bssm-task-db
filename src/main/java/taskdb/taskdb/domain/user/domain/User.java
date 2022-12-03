@@ -28,22 +28,22 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private String email;
+    @Embedded
+    private Email email;
 
-    @Column(nullable = false)
-    private String nickname;
+    @Embedded
+    private Nickname nickname;
 
     @Embedded
     private Grade grade;
 
+    @Embedded
+    private Password password;
+
     private int contributionLevel;
 
-    private String imgPath;
-    private String imgUrl;
-
-    @Column(nullable = false)
-    private String password;
+    @Embedded
+    private Image image;
 
     @Enumerated(EnumType.STRING)
     private Role role;
@@ -67,14 +67,11 @@ public class User {
     private final List<AnswerLike> answerLikes = new ArrayList<>();
 
     @Builder
-    public User(String email, String nickname, String password) {
+    public User(Email email, Grade grade, Nickname nickname, Password password) {
         this.email = email;
+        this.grade = grade;
         this.nickname = nickname;
         this.password = password;
-    }
-
-    public void encodedPassword(PasswordEncoder passwordEncoder) {
-        this.password = passwordEncoder.encode(password);
     }
 
     public void addUserAuthority() {
@@ -82,27 +79,11 @@ public class User {
     }
 
     public boolean isNotCorrectPassword(PasswordEncoder passwordEncoder, String checkPassword) {
-        return !passwordEncoder.matches(checkPassword, this.password);
+        return password.checkPassword(passwordEncoder, checkPassword);
     }
 
-    public void addQuestion(Question question) {
-        this.questions.add(question);
-    }
-
-    public boolean isNotCorrectEmail(String checkEmail) {
+    public boolean isNotCorrectEmail(Email checkEmail) {
         return !this.email.equals(checkEmail);
-    }
-
-    public void generateGrade() {
-        this.grade = new Grade(this.email);
-    }
-
-    public void addComment(Comment comment) {
-        this.comments.add(comment);
-    }
-
-    public void addAnswer(Answer answer) {
-        this.answers.add(answer);
     }
 
     public List<QuestionsResponseDto> toQuestionsResponseDto() {
@@ -121,10 +102,6 @@ public class User {
         this.contributionLevel += 1;
     }
 
-    public void addQuestion(QuestionStore question) {
-        this.questionStores.add(question);
-    }
-
     public int getAnswerCount() {
         return this.answers.size();
     }
@@ -133,6 +110,23 @@ public class User {
         return this.questions.size();
     }
 
+    public boolean canDeleteImage() {
+        return !image.isDefault() || !image.isEmpty();
+    }
+
+    public String getImagePath() {
+        return image.getPath();
+    }
+
+    public void updateImage(Image image) {
+        this.image = image;
+    }
+
+    public void updateNickname(Nickname nickname) {
+        this.nickname = nickname;
+    }
+
+    //== 연관관계 ==//
     public void addQuestionLike(QuestionLike questionLike) {
         this.questionLikes.add(questionLike);
     }
@@ -141,12 +135,19 @@ public class User {
         this.answerLikes.add(answerLike);
     }
 
-    public void upload(String imgPath, String imgUrl) {
-        this.imgPath = imgPath;
-        this.imgUrl = imgUrl;
+    public void addQuestion(QuestionStore question) {
+        this.questionStores.add(question);
     }
 
-    public void update(String nickname) {
-        this.nickname = nickname;
+    public void addComment(Comment comment) {
+        this.comments.add(comment);
+    }
+
+    public void addAnswer(Answer answer) {
+        this.answers.add(answer);
+    }
+
+    public void addQuestion(Question question) {
+        this.questions.add(question);
     }
 }
