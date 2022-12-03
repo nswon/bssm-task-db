@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import taskdb.taskdb.domain.question.domain.Title;
 import taskdb.taskdb.domain.user.domain.User;
 
 import javax.persistence.*;
@@ -22,10 +23,12 @@ public class QuestionStore {
     private User user;
 
     private Long questionId;
-    private String questionTitle;
+
+    @Embedded
+    private Title questionTitle;
 
     @Builder
-    public QuestionStore(Long questionId, String questionTitle) {
+    public QuestionStore(Long questionId, Title questionTitle) {
         this.questionId = questionId;
         this.questionTitle = questionTitle;
     }

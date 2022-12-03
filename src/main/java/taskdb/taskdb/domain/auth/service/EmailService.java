@@ -20,7 +20,6 @@ import java.util.stream.IntStream;
 public class EmailService {
     private static final int RANDOM_SIZE = 10;
     private static final int RANDOM_NUMBER_COUNT = 8;
-
     private final JavaMailSender javaMailSender;
     private static String ePw;
 

@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import taskdb.taskdb.domain.question.domain.Question;
+import taskdb.taskdb.domain.question.domain.Title;
 import taskdb.taskdb.domain.question.facade.QuestionFacade;
 import taskdb.taskdb.domain.store.domain.QuestionStore;
 import taskdb.taskdb.domain.store.repository.QuestionStoreRepository;
@@ -29,7 +30,7 @@ public class QuestionStoreService {
         Question question = questionFacade.getQuestionById(id);
         QuestionStore questionStore = QuestionStore.builder()
                 .questionId(question.getId())
-                .questionTitle(question.getTitle().getValue())
+                .questionTitle(question.getTitle())
                 .build();
         questionStore.confirmUser(user);
         questionStoreRepository.save(questionStore);

@@ -13,6 +13,6 @@ public class StoreQuestionsResponseDto {
 
     public StoreQuestionsResponseDto(QuestionStore questionStore) {
         this.id = questionStore.getQuestionId();
-        this.title = questionStore.getQuestionTitle();
+        this.title = questionStore.getQuestionTitle().getValue();
     }
 }
