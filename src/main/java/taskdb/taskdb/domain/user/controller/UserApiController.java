@@ -6,6 +6,7 @@ import taskdb.taskdb.domain.user.dto.UserJoinRequestDto;
 import taskdb.taskdb.domain.user.dto.UserProfileRequestDto;
 import taskdb.taskdb.domain.user.dto.UserResponseDto;
 import taskdb.taskdb.domain.user.dto.UsersRankResponseDto;
+import taskdb.taskdb.domain.user.service.RankingService;
 import taskdb.taskdb.domain.user.service.UserService;
 import taskdb.taskdb.global.support.Result;
 
@@ -17,6 +18,7 @@ import java.util.List;
 @RequestMapping("/user")
 public class UserApiController {
     private final UserService userService;
+    private final RankingService rankingService;
 
     @PostMapping("/join")
     public void join(@RequestBody @Valid UserJoinRequestDto requestDto) {
@@ -35,7 +37,7 @@ public class UserApiController {
 
     @GetMapping("/rank")
     public Result rank() {
-        List<UsersRankResponseDto> usersRank = userService.rank();
-        return new Result(usersRank);
+        List<UsersRankResponseDto> response = rankingService.getRankingList();
+        return new Result(response);
     }
 }

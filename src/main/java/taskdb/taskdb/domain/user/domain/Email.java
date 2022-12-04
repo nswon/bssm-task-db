@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
 @Embeddable
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Email {
-    private static final Pattern PATTERN = Pattern.compile("^+@");
+    private static final Pattern PATTERN = Pattern.compile("^+@$");
 
     @Column(name = "email")
     private String value;
@@ -28,7 +28,7 @@ public class Email {
     }
 
     private static void validate(String value) {
-        if(!PATTERN.matcher(value).matches()) {
+        if(PATTERN.matcher(value).matches()) {
             throw new InvalidEmailException();
         }
     }

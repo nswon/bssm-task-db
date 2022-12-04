@@ -28,7 +28,7 @@ public class Nickname {
     }
 
     private static void validate(String value) {
-        if(!PATTERN.matcher(value).matches()) {
+        if(PATTERN.matcher(value).matches()) {
             throw new OverflowNicknameException();
         }
     }

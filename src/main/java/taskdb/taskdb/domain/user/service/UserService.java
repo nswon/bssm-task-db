@@ -10,12 +10,7 @@ import taskdb.taskdb.domain.user.facade.UserFacade;
 import taskdb.taskdb.domain.user.dto.UserJoinRequestDto;
 import taskdb.taskdb.domain.user.dto.UserProfileRequestDto;
 import taskdb.taskdb.domain.user.dto.UserResponseDto;
-import taskdb.taskdb.domain.user.dto.UsersRankResponseDto;
 import taskdb.taskdb.domain.user.repository.UserRepository;
-
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 @Service
 @RequiredArgsConstructor
@@ -36,9 +31,9 @@ public class UserService {
                 .nickname(Nickname.of(requestDto.getNickname()))
                 .password(Password.of(passwordEncoder, requestDto.getPassword()))
                 .build();
-        userRepository.save(user);
-        user.addUserAuthority();
         user.updateImage(Image.createDefault());
+        user.addUserAuthority();
+        userRepository.save(user);
     }
 
     public UserResponseDto getUserById(Long id) {
@@ -61,13 +56,5 @@ public class UserService {
         if(user.canDeleteImage()) {
             imageService.delete(user.getImagePath());
         }
-    }
-
-    public List<UsersRankResponseDto> rank() {
-        List<User> usersRank = userFacade.getUsersByContributionLevel();
-       return IntStream.range(0, usersRank.size())
-               .boxed()
-               .map(count -> new UsersRankResponseDto(count+1, usersRank.get(count)))
-               .collect(Collectors.toList());
     }
 }

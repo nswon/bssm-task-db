@@ -6,8 +6,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
+import taskdb.taskdb.domain.user.domain.User;
 
 @Configuration
 public class RedisConfig {
@@ -24,6 +26,15 @@ public class RedisConfig {
         redisStandaloneConfiguration.setHostName(host);
         redisStandaloneConfiguration.setPort(port);
         return new LettuceConnectionFactory(redisStandaloneConfiguration);
+    }
+
+    @Bean
+    public RedisTemplate<String, User> redisTemplate() {
+        RedisTemplate<String, User> redisTemplate = new RedisTemplate<>();
+        redisTemplate.setKeySerializer(new StringRedisSerializer());
+        redisTemplate.setValueSerializer(new StringRedisSerializer());
+        redisTemplate.setConnectionFactory(redisConnectionFactory());
+        return redisTemplate;
     }
 
     @Bean

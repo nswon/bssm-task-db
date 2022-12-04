@@ -1,5 +1,6 @@
 package taskdb.taskdb.global.exception;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -8,8 +9,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
+@Slf4j
 public class ControllerAdvice {
-    private static final String UNKNOWN_PROBLEM = "서버에 알 수 없는 문제가 발생하였습니다. : \n";
+    private static final String UNKNOWN_PROBLEM = "서버에 알 수 없는 문제가 발생하였습니다.";
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorResponse> handleMethodArgumentException(BindingResult bindingResult) {
@@ -36,6 +38,7 @@ public class ControllerAdvice {
 
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<ErrorResponse> handleRuntimeException(RuntimeException e) {
-        return ResponseEntity.internalServerError().body(new ErrorResponse(UNKNOWN_PROBLEM + e.getMessage()));
+        log.error(e.getMessage());
+        return ResponseEntity.internalServerError().body(new ErrorResponse(UNKNOWN_PROBLEM));
     }
 }

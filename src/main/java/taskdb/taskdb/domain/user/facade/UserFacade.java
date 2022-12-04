@@ -20,7 +20,6 @@ import java.util.stream.Collectors;
 @Component
 @RequiredArgsConstructor
 public class UserFacade {
-    private static final int RANK_SIZE = 10;
     private final UserRepository userRepository;
     private final EmailService emailService;
     private final PasswordEncoder passwordEncoder;
@@ -66,14 +65,5 @@ public class UserFacade {
         if(user.isNotCorrectEmail(email)) {
             throw new DifferentUserException();
         }
-    }
-
-    public List<User> getUsersByContributionLevel() {
-        return userRepository.findAll().stream()
-                .sorted(Comparator.comparing(User::getContributionLevel).reversed()
-                        .thenComparing(User::getAnswerCount).reversed()
-                        .thenComparing(User::getQuestionCount).reversed())
-                .limit(RANK_SIZE)
-                .collect(Collectors.toList());
     }
 }

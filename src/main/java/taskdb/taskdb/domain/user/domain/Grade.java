@@ -2,15 +2,16 @@ package taskdb.taskdb.domain.user.domain;
 
 import lombok.Getter;
 import taskdb.taskdb.domain.user.exception.InvalidGradeFormatException;
-import taskdb.taskdb.domain.user.exception.NotBsmEmailException;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.util.regex.Pattern;
 
 @Embeddable
 @Getter
 public class Grade {
-    private static final Pattern PATTERN = Pattern.compile("^[1-3]*$");
+    private static final Pattern PATTERN = Pattern.compile("^{1,3}$");
+    @Column(name = "grade")
     private int value;
 
     protected Grade() {
@@ -26,7 +27,7 @@ public class Grade {
     }
 
     private static void validate(int value) {
-        if(!PATTERN.matcher(String.valueOf(value)).matches()) {
+        if(PATTERN.matcher(String.valueOf(value)).matches()) {
             throw new InvalidGradeFormatException();
         }
     }

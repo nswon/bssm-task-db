@@ -14,6 +14,7 @@ import taskdb.taskdb.domain.question.domain.Question;
 import taskdb.taskdb.domain.question.facade.QuestionFacade;
 import taskdb.taskdb.domain.user.domain.User;
 import taskdb.taskdb.domain.user.facade.UserFacade;
+import taskdb.taskdb.domain.user.service.RankingService;
 
 @Service
 @RequiredArgsConstructor
@@ -24,6 +25,7 @@ public class AnswerService {
     private final UserFacade userFacade;
     private final AnswerFacade answerFacade;
     private final NotificationService notificationService;
+    private final RankingService rankingService;
 
     public void create(Long id, AnswerCreateRequestDto requestDto) {
         User user = userFacade.getCurrentUser();
@@ -65,6 +67,8 @@ public class AnswerService {
         userFacade.checkDifferentUser(user, writer);
         answer.adopt();
         question.closeQuestion();
-        writer.addContributionLevel();
+        User answeredUser = answer.getUser();
+        answeredUser.addContributionLevel();
+        rankingService.updateUser(answeredUser);
     }
 }
