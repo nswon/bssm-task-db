@@ -3,7 +3,7 @@ package taskdb.taskdb.domain.user.domain;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import taskdb.taskdb.domain.user.exception.InvalidEmailException;
+import taskdb.taskdb.domain.user.exception.NotBsmEmailFormatException;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
 @Embeddable
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Email {
-    private static final Pattern PATTERN = Pattern.compile("^+@$");
+    private static final Pattern PATTERN = Pattern.compile("[0-9]{9}@+(bssm.hs.kr)");
 
     @Column(name = "email")
     private String value;
@@ -28,8 +28,8 @@ public class Email {
     }
 
     private static void validate(String value) {
-        if(PATTERN.matcher(value).matches()) {
-            throw new InvalidEmailException();
+        if(!PATTERN.matcher(value).matches()) {
+            throw new NotBsmEmailFormatException();
         }
     }
 }
