@@ -7,6 +7,7 @@ import taskdb.taskdb.domain.question.dto.*;
 import taskdb.taskdb.domain.question.service.QuestionService;
 import taskdb.taskdb.global.support.Result;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -16,7 +17,7 @@ public class QuestionApiController {
     private final QuestionService questionService;
 
     @PostMapping("/new")
-    public void create(@RequestBody QuestionCreateRequestDto requestDto) {
+    public void create(@RequestBody @Valid QuestionCreateRequestDto requestDto) {
         questionService.create(requestDto);
     }
 

@@ -15,8 +15,9 @@ public class UserJoinRequestDto {
     public UserJoinRequestDto() {
     }
 
-    public UserJoinRequestDto(String email, int grade, String nickname, String password) {
+    public UserJoinRequestDto(String email, String checkCode, int grade, String nickname, String password) {
         this.email = email;
+        this.checkCode = checkCode;
         this.grade = grade;
         this.nickname = nickname;
         this.password = password;

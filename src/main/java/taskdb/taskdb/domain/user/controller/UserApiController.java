@@ -21,7 +21,7 @@ public class UserApiController {
     private final RankingService rankingService;
 
     @PostMapping("/join")
-    public void join(@RequestBody @Valid UserJoinRequestDto requestDto) {
+    public void join(@RequestBody UserJoinRequestDto requestDto) {
         userService.join(requestDto);
     }
 
