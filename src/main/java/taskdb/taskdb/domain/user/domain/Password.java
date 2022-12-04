@@ -1,8 +1,6 @@
 package taskdb.taskdb.domain.user.domain;
 
-import lombok.AccessLevel;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import taskdb.taskdb.domain.user.exception.InvalidPasswordFormatException;
 
@@ -12,9 +10,11 @@ import java.util.regex.Pattern;
 
 @Getter
 @Embeddable
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Password {
-    private static final Pattern PATTERN = Pattern.compile("^{8,20}$");
+    private static final Pattern PATTERN = Pattern.compile("^(?=.*[0-9])(?=.*[a-zA-Z]).{8,20}$");
+
+    protected Password() {
+    }
 
     @Column(name = "password")
     private String value;
