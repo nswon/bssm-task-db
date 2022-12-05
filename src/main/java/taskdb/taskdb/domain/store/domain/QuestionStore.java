@@ -37,4 +37,8 @@ public class QuestionStore {
         this.user = user;
         user.addQuestion(this);
     }
+
+    public String getTitle() {
+        return questionTitle.getValue();
+    }
 }

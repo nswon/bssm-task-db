@@ -131,4 +131,12 @@ public class Question extends BaseTimeEntity {
     public void syncLikeCount(int likeCount) {
         this.likeCount = likeCount;
     }
+
+    public String getContent() {
+        return content.getValue();
+    }
+
+    public String getTitle() {
+        return title.getValue();
+    }
 }

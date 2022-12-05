@@ -25,7 +25,7 @@ public class QuestionsResponseDto {
     public QuestionsResponseDto(Question question) {
         this.id = question.getId();
         this.status = question.getQuestionStatus();
-        this.title = question.getTitle().getValue();
+        this.title = question.getTitle();
         this.category = question.getCategory();
         this.commentCount = question.getCommentsSize();
         this.likeCount = question.getLikeCount();

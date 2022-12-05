@@ -83,4 +83,8 @@ public class Answer extends BaseTimeEntity {
     public void syncLikeCount(int likeCount) {
         this.likeCount = likeCount;
     }
+
+    public String getContent() {
+        return content.getValue();
+    }
 }

@@ -30,7 +30,7 @@ public class QuestionStoreService {
         Question question = questionFacade.getQuestionById(id);
         QuestionStore questionStore = QuestionStore.builder()
                 .questionId(question.getId())
-                .questionTitle(question.getTitle())
+                .questionTitle(Title.of(question.getTitle()))
                 .build();
         questionStore.confirmUser(user);
         questionStoreRepository.save(questionStore);

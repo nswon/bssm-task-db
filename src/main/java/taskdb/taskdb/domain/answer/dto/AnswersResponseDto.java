@@ -17,7 +17,7 @@ public class AnswersResponseDto {
     }
 
     public AnswersResponseDto(Answer answer) {
-        this.content = answer.getContent().getValue();
+        this.content = answer.getContent();
         this.userImage = answer.getUser().getImgUrl();
         this.nickname = answer.getUser().getNickname();
         this.likeCount = answer.getLikeCount();
