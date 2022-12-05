@@ -85,18 +85,6 @@ public class User {
         return !this.email.getValue().equals(checkEmail);
     }
 
-    public List<QuestionsResponseDto> toQuestionsResponseDto() {
-        return this.questions.stream()
-                .map(QuestionsResponseDto::new)
-                .collect(Collectors.toList());
-    }
-
-    public List<StoreQuestionsResponseDto> toStoreQuestionsResponseDto() {
-        return this.questionStores.stream()
-                .map(StoreQuestionsResponseDto::new)
-                .collect(Collectors.toList());
-    }
-
     public void addContributionLevel() {
         this.contributionLevel += 1;
     }

@@ -6,6 +6,7 @@ import taskdb.taskdb.domain.store.dto.StoreQuestionsResponseDto;
 import taskdb.taskdb.domain.user.domain.User;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 public class UserResponseDto {
@@ -26,7 +27,19 @@ public class UserResponseDto {
         this.bio = user.getBio();
         this.grade = user.getGrade();
         this.contributionLevel = user.getContributionLevel();
-        this.getMyQuestions = user.toQuestionsResponseDto();
-        this.getSavedQuestions = user.toStoreQuestionsResponseDto();
+        this.getMyQuestions = toQuestionsResponse(user);
+        this.getSavedQuestions = toStoreQuestionsResponse(user);
+    }
+
+    private List<QuestionsResponseDto> toQuestionsResponse(User user) {
+        return user.getQuestions().stream()
+                .map(QuestionsResponseDto::new)
+                .collect(Collectors.toList());
+    }
+
+    private List<StoreQuestionsResponseDto> toStoreQuestionsResponse(User user) {
+        return user.getQuestionStores().stream()
+                .map(StoreQuestionsResponseDto::new)
+                .collect(Collectors.toList());
     }
 }
