@@ -14,6 +14,7 @@ import java.util.List;
 public class QuestionResponseDto {
     private String title;
     private QuestionStatus status;
+    private String userImage;
     private String nickname;
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
@@ -30,6 +31,7 @@ public class QuestionResponseDto {
     public QuestionResponseDto(Question question) {
         this.title = question.getTitle();
         this.status = question.getQuestionStatus();
+        this.userImage = question.getUser().getImgUrl();
         this.nickname = question.getUser().getNickname();
         this.createdDate = question.getCreatedDate();
         this.modifiedDate = question.getModifiedDate();
