@@ -54,7 +54,7 @@ public class UserFacade {
     }
 
     public void checkDifferentUser(User user, User writer) {
-        Email email = writer.getEmail();
+        String email = writer.getEmail();
         if(user.isNotCorrectEmail(email)) {
             throw new DifferentUserException();
         }

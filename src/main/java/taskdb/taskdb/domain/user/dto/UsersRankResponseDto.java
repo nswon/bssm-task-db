@@ -18,8 +18,8 @@ public class UsersRankResponseDto {
 
     public UsersRankResponseDto(ZSetOperations.TypedTuple<User> userTypedTuple) {
         this.count = userTypedTuple.getScore();
-        this.image = userTypedTuple.getValue().getImage().getUrl();
-        this.nickname = userTypedTuple.getValue().getNickname().getValue();
+        this.image = userTypedTuple.getValue().getImgUrl();
+        this.nickname = userTypedTuple.getValue().getNickname();
         this.contributionLevel = userTypedTuple.getValue().getContributionLevel();
         this.answerCount = userTypedTuple.getValue().getAnswerCount();
         this.questionCount = userTypedTuple.getValue().getQuestionCount();

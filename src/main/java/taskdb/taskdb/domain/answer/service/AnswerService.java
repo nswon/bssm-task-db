@@ -37,7 +37,7 @@ public class AnswerService {
         answer.confirmQuestion(question);
         answer.ongoing();
         answerRepository.save(answer);
-        String nickname = user.getNickname().getValue();
+        String nickname = user.getNickname();
         User questionWriter = question.getUser();
         notificationService.sendByCreateAnswer(nickname, questionWriter);
     }

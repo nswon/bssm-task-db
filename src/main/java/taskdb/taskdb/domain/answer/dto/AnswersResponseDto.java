@@ -18,8 +18,8 @@ public class AnswersResponseDto {
 
     public AnswersResponseDto(Answer answer) {
         this.content = answer.getContent().getValue();
-        this.userImage = answer.getUser().getImage().getUrl();
-        this.nickname = answer.getUser().getNickname().getValue();
+        this.userImage = answer.getUser().getImgUrl();
+        this.nickname = answer.getUser().getNickname();
         this.likeCount = answer.getLikeCount();
         this.createdDate = answer.getCreatedDate();
     }

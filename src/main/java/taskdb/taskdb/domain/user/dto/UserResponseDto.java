@@ -11,6 +11,7 @@ import java.util.List;
 public class UserResponseDto {
     private String image;
     private String nickname;
+    private int grade;
     private int contributionLevel;
     private List<QuestionsResponseDto> getMyQuestions;
     private List<StoreQuestionsResponseDto> getSavedQuestions;
@@ -19,8 +20,9 @@ public class UserResponseDto {
     }
 
     public UserResponseDto(User user) {
-        this.image = user.getImage().getUrl();
-        this.nickname = user.getNickname().getValue();
+        this.image = user.getImgUrl();
+        this.nickname = user.getNickname();
+        this.grade = user.getGrade();
         this.contributionLevel = user.getContributionLevel();
         this.getMyQuestions = user.toQuestionsResponseDto();
         this.getSavedQuestions = user.toStoreQuestionsResponseDto();

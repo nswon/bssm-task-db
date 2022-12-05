@@ -77,8 +77,8 @@ public class User {
         this.role = Role.ROLE_USER;
     }
 
-    public boolean isNotCorrectEmail(Email checkEmail) {
-        return !this.email.equals(checkEmail);
+    public boolean isNotCorrectEmail(String checkEmail) {
+        return !this.email.getValue().equals(checkEmail);
     }
 
     public List<QuestionsResponseDto> toQuestionsResponseDto() {
@@ -119,6 +119,30 @@ public class User {
 
     public void updateNickname(Nickname nickname) {
         this.nickname = nickname;
+    }
+
+    public String getEmail() {
+        return email.getValue();
+    }
+
+    public String getNickname() {
+        return nickname.getValue();
+    }
+
+    public int getGrade() {
+        return grade.getValue();
+    }
+
+    public String getPassword() {
+        return password.getValue();
+    }
+
+    public String getImgPath() {
+        return image.getPath();
+    }
+
+    public String getImgUrl() {
+        return image.getUrl();
     }
 
     //== 연관관계 ==//

@@ -30,7 +30,7 @@ public class QuestionResponseDto {
     public QuestionResponseDto(Question question) {
         this.title = question.getTitle().getValue();
         this.status = question.getQuestionStatus();
-        this.nickname = question.getUser().getNickname().getValue();
+        this.nickname = question.getUser().getNickname();
         this.createdDate = question.getCreatedDate();
         this.modifiedDate = question.getModifiedDate();
         this.viewCount = question.getViewCount();

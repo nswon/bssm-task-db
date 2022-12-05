@@ -32,7 +32,7 @@ public class AuthService {
 
     private void checkPassword(UserLoginRequestDto requestDto, User user) {
         String requestPassword = requestDto.getPassword();
-        String userPassword = user.getPassword().getValue();
+        String userPassword = user.getPassword();
         if(!passwordEncoder.matches(requestPassword, userPassword)) {
             throw new InvalidPasswordException();
         }
