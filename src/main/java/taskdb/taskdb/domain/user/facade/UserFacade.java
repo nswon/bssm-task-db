@@ -13,10 +13,6 @@ import taskdb.taskdb.domain.auth.service.EmailService;
 import taskdb.taskdb.domain.user.dto.UserJoinRequestDto;
 import taskdb.taskdb.global.security.jwt.SecurityUtil;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Component
 @RequiredArgsConstructor
 public class UserFacade {
@@ -25,12 +21,12 @@ public class UserFacade {
     private final PasswordEncoder passwordEncoder;
 
     public void validate(UserJoinRequestDto requestDto) {
-        checkAvailableEmail(requestDto);
+        checkUniqueEmail(requestDto);
         checkCorrectEmailCheckCode(requestDto);
         checkUniqueNickname(requestDto);
     }
 
-    private void checkAvailableEmail(UserJoinRequestDto requestDto) {
+    private void checkUniqueEmail(UserJoinRequestDto requestDto) {
         if(userRepository.findByEmailValue(requestDto.getEmail()).isPresent()) {
             throw new DuplicateEmailException();
         }

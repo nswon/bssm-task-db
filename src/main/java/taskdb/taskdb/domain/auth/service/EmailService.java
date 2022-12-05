@@ -21,7 +21,7 @@ public class EmailService {
     private static final int RANDOM_SIZE = 10;
     private static final int RANDOM_NUMBER_COUNT = 8;
     private final JavaMailSender javaMailSender;
-    private static String ePw;
+    private static String ePw = "empty";
 
     public static void createKey() {
         StringBuilder key = new StringBuilder();

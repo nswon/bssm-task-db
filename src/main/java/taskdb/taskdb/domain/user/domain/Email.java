@@ -15,7 +15,7 @@ import java.util.regex.Pattern;
 public class Email {
     private static final Pattern PATTERN = Pattern.compile("[0-9]{9}@+(bssm.hs.kr)");
 
-    @Column(name = "email")
+    @Column(name = "email", unique = true)
     private String value;
 
     private Email(String value) {

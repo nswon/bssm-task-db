@@ -24,7 +24,6 @@ public class UserService {
     @Transactional
     public void join(UserJoinRequestDto requestDto) {
         userFacade.validate(requestDto);
-
         User user = User.builder()
                 .email(Email.of(requestDto.getEmail()))
                 .grade(Grade.of(requestDto.getGrade()))
