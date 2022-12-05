@@ -1,7 +1,7 @@
 package taskdb.taskdb.domain.user.domain;
 
 import lombok.Getter;
-import taskdb.taskdb.domain.user.exception.InvalidGradeFormatException;
+import taskdb.taskdb.domain.user.exception.InvalidGradeRangeException;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -28,7 +28,7 @@ public class Grade {
 
     private static void validate(int value) {
         if(PATTERN.matcher(String.valueOf(value)).matches()) {
-            throw new InvalidGradeFormatException();
+            throw new InvalidGradeRangeException();
         }
     }
 }

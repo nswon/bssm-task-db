@@ -1,7 +1,7 @@
 package taskdb.taskdb.domain.user.domain;
 
 import lombok.Getter;
-import taskdb.taskdb.domain.user.exception.OverflowNicknameException;
+import taskdb.taskdb.domain.user.exception.InvalidNicknameRangeException;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -29,7 +29,7 @@ public class Nickname {
 
     private static void validate(String value) {
         if(PATTERN.matcher(value).matches()) {
-            throw new OverflowNicknameException();
+            throw new InvalidNicknameRangeException();
         }
     }
 }
