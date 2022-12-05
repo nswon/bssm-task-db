@@ -9,7 +9,7 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class Image {
     private static final String DEFAULT_IMAGE_PATH = "de1d0432-0d45-4872-b27c-8ac19f701837_THUMBNAIL_60_60_icon_rep_box.gif";
-    private static final String DEFAULT_IMAGE_URL = "https://taskdb.s3.ap-northeast-2.amazonaws.com/c80a5160-2d8c-42c1-a17b-1f87fd0f58be_THUMBNAIL_60_60_icon_rep_box.gif";
+    private static final String DEFAULT_IMAGE_URL = "https://taskdb.s3.ap-northeast-2.amazonaws.com/de1d0432-0d45-4872-b27c-8ac19f701837_THUMBNAIL_60_60_icon_rep_box.gif";
 
     @Column(name = "img_path")
     private String path;
