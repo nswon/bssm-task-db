@@ -41,6 +41,11 @@ public class UserService {
                 .orElseThrow(UserNotFoundException::new);
     }
 
+    public UserResponseDto getUser() {
+        User user = userFacade.getCurrentUser();
+        return new UserResponseDto(user);
+    }
+
     @Transactional
     public void updateUser(UserProfileRequestDto requestDto) {
         User user = userFacade.getCurrentUser();

@@ -30,6 +30,11 @@ public class UserApiController {
         return userService.getUserById(id);
     }
 
+    @GetMapping("")
+    public UserResponseDto getUser() {
+        return userService.getUser();
+    }
+
     @PutMapping("/edit")
     public void update(UserProfileRequestDto requestDto) {
         userService.updateUser(requestDto);
