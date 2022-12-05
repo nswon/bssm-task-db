@@ -44,6 +44,9 @@ public class User {
     @Embedded
     private Image image;
 
+    @Embedded
+    private Bio bio;
+
     @Enumerated(EnumType.STRING)
     private Role role;
 
@@ -66,10 +69,11 @@ public class User {
     private final List<AnswerLike> answerLikes = new ArrayList<>();
 
     @Builder
-    public User(Email email, Grade grade, Nickname nickname, Password password) {
+    public User(Email email, Grade grade, Nickname nickname, Bio bio, Password password) {
         this.email = email;
         this.grade = grade;
         this.nickname = nickname;
+        this.bio = bio;
         this.password = password;
     }
 
@@ -121,6 +125,10 @@ public class User {
         this.nickname = nickname;
     }
 
+    public void updateBio(Bio bio) {
+        this.bio = bio;
+    }
+
     public String getEmail() {
         return email.getValue();
     }
@@ -137,12 +145,12 @@ public class User {
         return password.getValue();
     }
 
-    public String getImgPath() {
-        return image.getPath();
-    }
-
     public String getImgUrl() {
         return image.getUrl();
+    }
+
+    public String getBio() {
+        return bio.getValue();
     }
 
     //== 연관관계 ==//

@@ -28,6 +28,7 @@ public class UserService {
                 .email(Email.of(requestDto.getEmail()))
                 .grade(Grade.of(requestDto.getGrade()))
                 .nickname(Nickname.of(requestDto.getNickname()))
+                .bio(Bio.createDefault())
                 .password(Password.of(passwordEncoder, requestDto.getPassword()))
                 .build();
         user.updateImage(Image.createDefault());
@@ -54,6 +55,8 @@ public class UserService {
         user.updateImage(image);
         Nickname nickname = Nickname.of(requestDto.getNickname());
         user.updateNickname(nickname);
+        Bio bio = Bio.of(requestDto.getBio());
+        user.updateBio(bio);
     }
 
     private void validateCustomImage(User user) {
