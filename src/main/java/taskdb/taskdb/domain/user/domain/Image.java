@@ -30,7 +30,7 @@ public class Image {
     }
 
     public static Image createDefault() {
-        return new Image(DEFAULT_IMAGE_PATH, DEFAULT_IMAGE_PATH);
+        return new Image(DEFAULT_IMAGE_PATH, DEFAULT_IMAGE_URL);
     }
 
     public boolean isDefault() {
