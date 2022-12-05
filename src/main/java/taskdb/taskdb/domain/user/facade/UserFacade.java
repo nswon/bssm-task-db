@@ -1,11 +1,10 @@
 package taskdb.taskdb.domain.user.facade;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import taskdb.taskdb.domain.auth.exception.LoginFailedException;
+import taskdb.taskdb.domain.auth.dto.UserLoginRequestDto;
+import taskdb.taskdb.domain.auth.exception.InvalidEmailException;
 import taskdb.taskdb.domain.user.domain.Email;
-import taskdb.taskdb.domain.user.domain.Password;
 import taskdb.taskdb.domain.user.domain.User;
 import taskdb.taskdb.domain.user.repository.UserRepository;
 import taskdb.taskdb.domain.user.exception.*;
@@ -18,7 +17,6 @@ import taskdb.taskdb.global.security.jwt.SecurityUtil;
 public class UserFacade {
     private final UserRepository userRepository;
     private final EmailService emailService;
-    private final PasswordEncoder passwordEncoder;
 
     public void validate(UserJoinRequestDto requestDto) {
         checkUniqueEmail(requestDto);
@@ -45,10 +43,9 @@ public class UserFacade {
         }
     }
 
-    public User getUserByEmailAndPassword(String email, String encodedPassword) {
-        Password password = Password.of(passwordEncoder, encodedPassword);
-        return userRepository.findByEmailValueAndPasswordValue(email, password.getValue())
-                .orElseThrow(LoginFailedException::new);
+    public User getUserByEmail(UserLoginRequestDto requestDto) {
+        return userRepository.findByEmailValue(requestDto.getEmail())
+                .orElseThrow(InvalidEmailException::new);
     }
 
     public User getCurrentUser() {

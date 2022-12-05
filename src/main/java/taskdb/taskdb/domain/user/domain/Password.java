@@ -33,4 +33,8 @@ public class Password {
             throw new InvalidPasswordFormatException();
         }
     }
+
+    public boolean isNotSame(String password) {
+        return !value.equals(password);
+    }
 }
