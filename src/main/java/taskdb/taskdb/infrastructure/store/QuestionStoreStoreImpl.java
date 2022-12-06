@@ -3,6 +3,7 @@ package taskdb.taskdb.infrastructure.store;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import taskdb.taskdb.domain.store.domain.QuestionStore;
+import taskdb.taskdb.domain.store.exception.DuplicateQuestionStoreException;
 import taskdb.taskdb.domain.store.port.QuestionStoreStore;
 import taskdb.taskdb.domain.store.repository.QuestionStoreRepository;
 
@@ -30,6 +31,9 @@ public class QuestionStoreStoreImpl implements QuestionStoreStore {
     }
 
     private void validate(QuestionStore questionStore) {
-
+        boolean isDuplicateQuestion = questionStoreRepository.findById(questionStore.getId()).isPresent();
+        if(isDuplicateQuestion) {
+            throw new DuplicateQuestionStoreException();
+        }
     }
 }
