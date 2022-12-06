@@ -12,7 +12,7 @@ public enum Category {
     JAVA("JAVA"),
     DB("DB"),
     C_DOUBLE_PLUS("C_DOUBLE_PLUS"),
-    CERTIFICATE("CERIFICATE"),
+    CERTIFICATE("CERTIFICATE"),
     OTHERS("OTHERS");
 
     private String command;
@@ -22,11 +22,6 @@ public enum Category {
 
     Category(String command) {
         this.command = command;
-    }
-
-    public static List<Category> getValues() {
-        return Arrays.stream(values())
-                .collect(Collectors.toList());
     }
 
     public static Category toEnum(String command) {

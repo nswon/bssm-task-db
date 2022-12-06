@@ -17,7 +17,6 @@ import java.util.List;
 
 @Entity
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "USERS")
 public class User {
     @Id
@@ -64,6 +63,9 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private final List<AnswerLike> answerLikes = new ArrayList<>();
+
+    protected User() {
+    }
 
     @Builder
     public User(Email email, Grade grade, Nickname nickname, Bio bio, Password password, Image image, Role role) {

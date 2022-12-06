@@ -1,9 +1,7 @@
 package taskdb.taskdb.domain.comment.domain;
 
-import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import taskdb.taskdb.domain.question.domain.Question;
 import taskdb.taskdb.domain.user.domain.User;
 import taskdb.taskdb.global.support.BaseTimeEntity;
@@ -14,7 +12,6 @@ import java.util.List;
 
 @Entity
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "COMMENT")
 public class Comment extends BaseTimeEntity {
     @Id
@@ -38,6 +35,9 @@ public class Comment extends BaseTimeEntity {
 
     @OneToMany(mappedBy = "parent")
     private final List<Comment> child = new ArrayList<>();
+
+    protected Comment() {
+    }
 
     @Builder
     public Comment(Content content, User user, Question question, Comment parent) {

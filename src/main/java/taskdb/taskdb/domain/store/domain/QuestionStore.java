@@ -1,9 +1,7 @@
 package taskdb.taskdb.domain.store.domain;
 
-import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import taskdb.taskdb.domain.question.domain.Title;
 import taskdb.taskdb.domain.user.domain.User;
 
@@ -11,7 +9,6 @@ import javax.persistence.*;
 
 @Entity
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "QUESTION_STORE")
 public class QuestionStore {
     @Id
@@ -26,6 +23,9 @@ public class QuestionStore {
 
     @Embedded
     private Title questionTitle;
+
+    protected QuestionStore() {
+    }
 
     @Builder
     public QuestionStore(Long questionId, Title questionTitle, User user) {

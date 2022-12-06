@@ -13,7 +13,7 @@ public class Bio {
     private static final String DEFAULT = "비어있음";
     private static final Pattern PATTERN = Pattern.compile("^{1,100}$");
 
-    @Column(name = "bio", columnDefinition = "TEXT")
+    @Column(name = "bio")
     private String value;
 
     protected Bio() {

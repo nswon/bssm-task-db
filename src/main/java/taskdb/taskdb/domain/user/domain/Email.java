@@ -1,8 +1,6 @@
 package taskdb.taskdb.domain.user.domain;
 
-import lombok.AccessLevel;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import taskdb.taskdb.domain.user.exception.NotBsmEmailFormatException;
 
 import javax.persistence.Column;
@@ -11,12 +9,14 @@ import java.util.regex.Pattern;
 
 @Getter
 @Embeddable
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Email {
     private static final Pattern PATTERN = Pattern.compile("[0-9]{9}@+(bssm.hs.kr)");
 
     @Column(name = "email", unique = true)
     private String value;
+
+    protected Email() {
+    }
 
     private Email(String value) {
         this.value = value;

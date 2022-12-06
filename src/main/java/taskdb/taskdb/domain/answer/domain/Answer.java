@@ -1,9 +1,7 @@
 package taskdb.taskdb.domain.answer.domain;
 
-import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import taskdb.taskdb.domain.like.domain.AnswerLike;
 import taskdb.taskdb.domain.question.domain.Question;
 import taskdb.taskdb.domain.user.domain.User;
@@ -15,7 +13,6 @@ import java.util.List;
 
 @Entity
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "ANSWER")
 public class Answer extends BaseTimeEntity {
     @Id
@@ -40,6 +37,9 @@ public class Answer extends BaseTimeEntity {
     private final List<AnswerLike> answerLikes = new ArrayList<>();
 
     private int likeCount;
+
+    protected Answer() {
+    }
 
     @Builder
     public Answer(Content content, User user, Question question) {
