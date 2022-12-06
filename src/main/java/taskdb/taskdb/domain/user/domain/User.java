@@ -9,14 +9,11 @@ import taskdb.taskdb.domain.comment.domain.Comment;
 import taskdb.taskdb.domain.like.domain.AnswerLike;
 import taskdb.taskdb.domain.like.domain.QuestionLike;
 import taskdb.taskdb.domain.question.domain.Question;
-import taskdb.taskdb.domain.question.dto.QuestionsResponseDto;
 import taskdb.taskdb.domain.store.domain.QuestionStore;
-import taskdb.taskdb.domain.store.dto.StoreQuestionsResponseDto;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Entity
 @Getter
@@ -69,20 +66,18 @@ public class User {
     private final List<AnswerLike> answerLikes = new ArrayList<>();
 
     @Builder
-    public User(Email email, Grade grade, Nickname nickname, Bio bio, Password password) {
+    public User(Email email, Grade grade, Nickname nickname, Bio bio, Password password, Image image, Role role) {
         this.email = email;
         this.grade = grade;
         this.nickname = nickname;
         this.bio = bio;
         this.password = password;
+        this.image = image;
+        this.role = role;
     }
 
-    public void addUserAuthority() {
-        this.role = Role.ROLE_USER;
-    }
-
-    public boolean isNotCorrectEmail(String checkEmail) {
-        return !this.email.getValue().equals(checkEmail);
+    public boolean isNotCorrectEmail(String email) {
+        return this.email.getValue().equals(email);
     }
 
     public void addContributionLevel() {

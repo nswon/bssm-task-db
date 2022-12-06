@@ -1,67 +1,70 @@
 package taskdb.taskdb.domain.user.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import taskdb.taskdb.domain.auth.service.EmailService;
 import taskdb.taskdb.domain.user.domain.*;
-import taskdb.taskdb.domain.user.exception.UserNotFoundException;
-import taskdb.taskdb.domain.user.facade.UserFacade;
 import taskdb.taskdb.domain.user.dto.UserJoinRequestDto;
 import taskdb.taskdb.domain.user.dto.UserProfileRequestDto;
 import taskdb.taskdb.domain.user.dto.UserResponseDto;
-import taskdb.taskdb.domain.user.repository.UserRepository;
+import taskdb.taskdb.domain.user.exception.InvalidAuthCodeException;
+import taskdb.taskdb.domain.user.port.UserReader;
+import taskdb.taskdb.domain.user.port.UserStore;
+import taskdb.taskdb.mapper.UserMapper;
 
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class UserService {
-    private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
-    private final UserFacade userFacade;
+    private final EmailService emailService;
     private final ImageService imageService;
+    private final UserStore userStore;
+    private final UserReader userReader;
+    private final UserMapper userMapper;
 
     @Transactional
     public void join(UserJoinRequestDto requestDto) {
-        userFacade.validate(requestDto);
-        User user = User.builder()
-                .email(Email.of(requestDto.getEmail()))
-                .grade(Grade.of(requestDto.getGrade()))
-                .nickname(Nickname.of(requestDto.getNickname()))
-                .bio(Bio.createDefault())
-                .password(Password.of(passwordEncoder, requestDto.getPassword()))
-                .build();
-        user.updateImage(Image.createDefault());
-        user.addUserAuthority();
-        userRepository.save(user);
+        checkEmailCode(requestDto.getCheckCode());
+        User user = userMapper.of(requestDto);
+        userStore.store(user);
+    }
+
+    private void checkEmailCode(String code) {
+        if(emailService.verityCode(code)) {
+            throw new InvalidAuthCodeException();
+        }
     }
 
     public UserResponseDto getUserById(Long id) {
-        return userRepository.findById(id)
-                .map(UserResponseDto::new)
-                .orElseThrow(UserNotFoundException::new);
+        var user = userReader.getUser(id);
+        return userMapper.of(user);
     }
 
     public UserResponseDto getUser() {
-        User user = userFacade.getCurrentUser();
-        return new UserResponseDto(user);
+        User user = userReader.getCurrentUser();
+        return userMapper.of(user);
     }
 
     @Transactional
     public void updateUser(UserProfileRequestDto requestDto) {
-        User user = userFacade.getCurrentUser();
-        validateCustomImage(user);
-        Image image = imageService.create(requestDto.getFile());
-        user.updateImage(image);
-        Nickname nickname = Nickname.of(requestDto.getNickname());
-        user.updateNickname(nickname);
-        Bio bio = Bio.of(requestDto.getBio());
-        user.updateBio(bio);
+        User user = userReader.getCurrentUser();
+        checkImage(user);
+        update(user, requestDto);
     }
 
-    private void validateCustomImage(User user) {
+    private void checkImage(User user) {
         if(user.canDeleteImage()) {
             imageService.delete(user.getImagePath());
         }
+    }
+
+    private void update(User user, UserProfileRequestDto requestDto) {
+        Image image = imageService.create(requestDto.getFile());
+        Nickname nickname = Nickname.of(requestDto.getNickname());
+        Bio bio = Bio.of(requestDto.getBio());
+        user.updateImage(image);
+        user.updateNickname(nickname);
+        user.updateBio(bio);
     }
 }

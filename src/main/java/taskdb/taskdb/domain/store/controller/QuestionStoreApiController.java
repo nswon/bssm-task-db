@@ -2,7 +2,7 @@ package taskdb.taskdb.domain.store.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import taskdb.taskdb.domain.store.dto.StoreQuestionsResponseDto;
+import taskdb.taskdb.domain.store.dto.QuestionStoresResponseDto;
 import taskdb.taskdb.domain.store.service.QuestionStoreService;
 import taskdb.taskdb.global.support.Result;
 
@@ -21,7 +21,7 @@ public class QuestionStoreApiController {
 
     @GetMapping("")
     public Result getQuestions() {
-        List<StoreQuestionsResponseDto> savedQuestions = questionStoreService.getQuestions();
+        QuestionStoresResponseDto savedQuestions = questionStoreService.getQuestions();
         return new Result(savedQuestions);
     }
 

@@ -1,8 +1,8 @@
 package taskdb.taskdb.domain.user.dto;
 
 import lombok.Getter;
-import taskdb.taskdb.domain.question.dto.QuestionsResponseDto;
-import taskdb.taskdb.domain.store.dto.StoreQuestionsResponseDto;
+import taskdb.taskdb.domain.question.dto.QuestionAllElementResponse;
+import taskdb.taskdb.domain.store.dto.QuestionStoreResponseDto;
 import taskdb.taskdb.domain.user.domain.User;
 
 import java.util.List;
@@ -15,8 +15,8 @@ public class UserResponseDto {
     private String bio;
     private int grade;
     private int contributionLevel;
-    private List<QuestionsResponseDto> getMyQuestions;
-    private List<StoreQuestionsResponseDto> getSavedQuestions;
+    private List<QuestionAllElementResponse> getMyQuestions;
+    private List<QuestionStoreResponseDto> getSavedQuestions;
 
     public UserResponseDto() {
     }
@@ -31,15 +31,15 @@ public class UserResponseDto {
         this.getSavedQuestions = toStoreQuestionsResponse(user);
     }
 
-    private List<QuestionsResponseDto> toQuestionsResponse(User user) {
+    private List<QuestionAllElementResponse> toQuestionsResponse(User user) {
         return user.getQuestions().stream()
-                .map(QuestionsResponseDto::new)
+                .map(QuestionAllElementResponse::new)
                 .collect(Collectors.toList());
     }
 
-    private List<StoreQuestionsResponseDto> toStoreQuestionsResponse(User user) {
+    private List<QuestionStoreResponseDto> toStoreQuestionsResponse(User user) {
         return user.getQuestionStores().stream()
-                .map(StoreQuestionsResponseDto::new)
+                .map(QuestionStoreResponseDto::new)
                 .collect(Collectors.toList());
     }
 }

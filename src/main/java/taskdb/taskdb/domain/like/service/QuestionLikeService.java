@@ -5,29 +5,32 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import taskdb.taskdb.domain.like.domain.QuestionLike;
-import taskdb.taskdb.domain.like.repository.QuestionLikeRepository;
+import taskdb.taskdb.domain.like.port.QuestionLikeReader;
+import taskdb.taskdb.domain.like.port.QuestionLikeStore;
 import taskdb.taskdb.domain.question.domain.Question;
+import taskdb.taskdb.domain.question.port.QuestionReader;
 import taskdb.taskdb.domain.question.repository.QuestionRepository;
-import taskdb.taskdb.domain.question.facade.QuestionFacade;
 import taskdb.taskdb.domain.user.domain.User;
-import taskdb.taskdb.domain.user.facade.UserFacade;
+import taskdb.taskdb.domain.user.port.UserReader;
 
 @Service
 @RequiredArgsConstructor
 @Transactional
 public class QuestionLikeService {
     private static final String FOUR_A_M_CORN = "0 0 4 * * *";
-    private final QuestionLikeRepository questionLikeRepository;
     private final QuestionRepository questionRepository;
-    private final UserFacade userFacade;
-    private final QuestionFacade questionFacade;
+    private final UserReader userReader;
+    private final QuestionReader questionReader;
+    private final QuestionLikeReader questionLikeReader;
+    private final QuestionLikeStore questionLikeStore;
 
     public boolean like(Long id) {
-        User user = userFacade.getCurrentUser();
-        Question question = questionFacade.getQuestionById(id);
+        User user = userReader.getCurrentUser();
+        Question question = questionReader.getQuestionById(id);
 
-        if(questionLikeRepository.existsByQuestionAndUser(question, user)) {
-            questionLikeRepository.deleteByQuestionAndUser(question, user);
+        boolean hasLike = questionLikeReader.hasByQuestionAndUser(question, user);
+        if(hasLike) {
+            questionLikeStore.delete(question, user);
             question.downLikeCount();
             return true;
         }
@@ -38,7 +41,7 @@ public class QuestionLikeService {
 
         questionLike.addQuestion();
         questionLike.addUser();
-        questionLikeRepository.save(questionLike);
+        questionLikeStore.store(questionLike);
         question.addLikeCount();
         return true;
     }
@@ -50,7 +53,7 @@ public class QuestionLikeService {
     }
 
     private void syncQuestionLike(Question question) {
-        int likeCount = questionLikeRepository.findByQuestion(question).size();
+        int likeCount = questionLikeReader.getQuestionLikeByQuestion(question).size();
         question.syncLikeCount(likeCount);
     }
 }

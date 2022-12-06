@@ -4,14 +4,14 @@ import lombok.Getter;
 import taskdb.taskdb.domain.store.domain.QuestionStore;
 
 @Getter
-public class StoreQuestionsResponseDto {
+public class QuestionStoreResponseDto {
     private Long id;
     private String title;
 
-    public StoreQuestionsResponseDto() {
+    public QuestionStoreResponseDto() {
     }
 
-    public StoreQuestionsResponseDto(QuestionStore questionStore) {
+    public QuestionStoreResponseDto(QuestionStore questionStore) {
         this.id = questionStore.getQuestionId();
         this.title = questionStore.getTitle();
     }

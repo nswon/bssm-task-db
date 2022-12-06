@@ -4,54 +4,51 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import taskdb.taskdb.domain.question.domain.Question;
-import taskdb.taskdb.domain.question.domain.Title;
-import taskdb.taskdb.domain.question.facade.QuestionFacade;
+import taskdb.taskdb.domain.question.port.QuestionReader;
 import taskdb.taskdb.domain.store.domain.QuestionStore;
-import taskdb.taskdb.domain.store.repository.QuestionStoreRepository;
-import taskdb.taskdb.domain.store.facade.QuestionStoreFacade;
-import taskdb.taskdb.domain.store.dto.StoreQuestionsResponseDto;
+import taskdb.taskdb.domain.store.port.QuestionStoreReader;
+import taskdb.taskdb.domain.store.port.QuestionStoreStore;
+import taskdb.taskdb.domain.store.dto.QuestionStoresResponseDto;
 import taskdb.taskdb.domain.user.domain.User;
 import taskdb.taskdb.domain.user.facade.UserFacade;
+import taskdb.taskdb.domain.user.port.UserReader;
+import taskdb.taskdb.mapper.QuestionStoreMapper;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 @Transactional
 public class QuestionStoreService {
-    private final QuestionStoreRepository questionStoreRepository;
+    private final UserReader userReader;
     private final UserFacade userFacade;
-    private final QuestionFacade questionFacade;
-    private final QuestionStoreFacade questionStoreFacade;
+    private final QuestionReader questionReader;
+    private final QuestionStoreReader questionStoreReader;
+    private final QuestionStoreStore questionStoreStore;
+    private final QuestionStoreMapper questionStoreMapper;
 
     public void create(Long id) {
-        User user = userFacade.getCurrentUser();
-        Question question = questionFacade.getQuestionById(id);
-        QuestionStore questionStore = QuestionStore.builder()
-                .questionId(question.getId())
-                .questionTitle(Title.of(question.getTitle()))
-                .build();
-        questionStore.confirmUser(user);
-        questionStoreRepository.save(questionStore);
+        User user = userReader.getCurrentUser();
+        Question question = questionReader.getQuestionById(id);
+        QuestionStore questionStore = questionStoreMapper.of(question, user);
+        questionStoreStore.store(questionStore);
     }
 
     @Transactional(readOnly = true)
-    public List<StoreQuestionsResponseDto> getQuestions() {
-        return questionStoreRepository.findAll().stream()
-                .map(StoreQuestionsResponseDto::new)
-                .collect(Collectors.toList());
+    public QuestionStoresResponseDto getQuestions() {
+        List<QuestionStore> questionStores = questionStoreReader.getQuestions();
+        return questionStoreMapper.of(questionStores);
     }
 
     public void delete(Long id) {
-        User user = userFacade.getCurrentUser();
-        QuestionStore store = questionStoreFacade.getQuestionStoreById(id);
-        User writer = store.getUser();
+        User user = userReader.getCurrentUser();
+        QuestionStore questionStore = questionStoreReader.getQuestionStore(id);
+        User writer = questionStore.getUser();
         userFacade.checkDifferentUser(user, writer);
-        questionStoreRepository.delete(store);
+        questionStoreStore.delete(questionStore);
     }
 
     public void deleteAll() {
-        questionStoreRepository.deleteAllInBatch();
+        questionStoreStore.deleteAll();
     }
 }

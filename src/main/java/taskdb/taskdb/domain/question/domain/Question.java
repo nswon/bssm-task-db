@@ -56,10 +56,12 @@ public class Question extends BaseTimeEntity {
     }
 
     @Builder
-    public Question(Title title, Content content, Category category) {
+    public Question(Title title, Content content, Category category, User user) {
         this.title = title;
         this.content = content;
         this.category = category;
+        this.user = user;
+        user.addQuestion(this);
     }
 
     public void addViewCount() {
@@ -77,11 +79,6 @@ public class Question extends BaseTimeEntity {
     public void update(Title title, Content content) {
         this.title = title;
         this.content = content;
-    }
-
-    public void confirmUser(User user) {
-        this.user = user;
-        user.addQuestion(this);
     }
 
     public boolean isOpen() {

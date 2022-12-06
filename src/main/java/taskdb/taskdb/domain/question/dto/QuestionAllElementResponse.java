@@ -9,7 +9,7 @@ import taskdb.taskdb.domain.question.domain.QuestionStatus;
 import java.time.LocalDateTime;
 
 @Getter
-public class QuestionsResponseDto {
+public class QuestionAllElementResponse {
     private Long id;
     private QuestionStatus status;
     private String title;
@@ -18,11 +18,11 @@ public class QuestionsResponseDto {
     private int likeCount;
     private LocalDateTime createdDate;
 
-    public QuestionsResponseDto() {
+    public QuestionAllElementResponse() {
     }
 
     @Builder
-    public QuestionsResponseDto(Question question) {
+    public QuestionAllElementResponse(Question question) {
         this.id = question.getId();
         this.status = question.getQuestionStatus();
         this.title = question.getTitle();

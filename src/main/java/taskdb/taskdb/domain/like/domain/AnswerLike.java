@@ -29,14 +29,8 @@ public class AnswerLike {
     @Builder
     public AnswerLike(Answer answer, User user) {
         this.answer = answer;
-        this.user = user;
-    }
-
-    public void addAnswer() {
         answer.addAnswerLike(this);
-    }
-
-    public void addUser() {
+        this.user = user;
         user.addAnswerLike(this);
     }
 }

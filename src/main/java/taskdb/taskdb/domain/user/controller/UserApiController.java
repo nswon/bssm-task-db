@@ -10,7 +10,6 @@ import taskdb.taskdb.domain.user.service.RankingService;
 import taskdb.taskdb.domain.user.service.UserService;
 import taskdb.taskdb.global.support.Result;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @RestController

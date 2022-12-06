@@ -3,6 +3,7 @@ package taskdb.taskdb.domain.question.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import taskdb.taskdb.domain.question.domain.Category;
+import taskdb.taskdb.domain.question.domain.QuestionStatus;
 import taskdb.taskdb.domain.question.dto.*;
 import taskdb.taskdb.domain.question.service.QuestionService;
 import taskdb.taskdb.global.support.Result;
@@ -23,12 +24,12 @@ public class QuestionApiController {
 
     @GetMapping("")
     public Result getQuestions() {
-        List<QuestionsResponseDto> questions = questionService.getQuestions();
+        QuestionAllResponseDto questions = questionService.getQuestions();
         return new Result(questions);
     }
 
     @GetMapping("/{id}")
-    public QuestionResponseDto getQuestion(@PathVariable("id") Long id) {
+    public QuestionDetailResponse getQuestion(@PathVariable("id") Long id) {
         return questionService.getQuestion(id);
     }
 
@@ -44,37 +45,25 @@ public class QuestionApiController {
 
     @GetMapping("/search")
     public Result searchByTitleOrId(@RequestParam("q") String keyword) {
-        List<QuestionsResponseDto> questions = questionService.searchByTitleOrId(keyword);
+        QuestionAllResponseDto questions = questionService.searchByTitleOrId(keyword);
         return new Result(questions);
     }
 
     @GetMapping("/categories")
-    public Result getQuestionsByCategory(@RequestParam("c") Category category) {
-        List<QuestionsResponseDto> questions = questionService.getQuestionsByCategory(category);
+    public Result getQuestionsByCategory(@RequestParam("c") String command) {
+        QuestionAllResponseDto questions = questionService.getQuestionsByCategory(command);
         return new Result(questions);
     }
 
     @GetMapping("/grade")
     public Result getQuestionsByGrade(@RequestParam("g") int grade) {
-        List<QuestionsResponseDto> questions = questionService.getQuestionsByGrade(grade);
+        QuestionAllResponseDto questions = questionService.getQuestionsByGrade(grade);
         return new Result(questions);
     }
 
-    @GetMapping("/open")
-    public Result getOpenQuestions() {
-        List<QuestionsResponseDto> openQuestions = questionService.getOpenQuestions();
+    @GetMapping("/status")
+    public Result getQuestionsByStatus(@RequestParam("status") String command) {
+        QuestionAllResponseDto openQuestions = questionService.getQuestionsByStatus(command);
         return new Result(openQuestions);
-    }
-
-    @GetMapping("/close")
-    public Result getCloseQuestions() {
-        List<QuestionsResponseDto> closedQuestions = questionService.getCloseQuestions();
-        return new Result(closedQuestions);
-    }
-
-    @GetMapping("/subject/rank")
-    public Result getQuestionsRankBySubject() {
-        List<QuestionsRankResponseDto> response = questionService.getQuestionsRankBySubject();
-        return new Result(response);
     }
 }

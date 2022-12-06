@@ -14,7 +14,7 @@ public class AnswerLikeApiController {
     private final AnswerLikeService likeService;
 
     @PutMapping("/{id}")
-    public boolean like(@PathVariable("id") Long id) {
-        return likeService.like(id);
+    public void like(@PathVariable("id") Long id) {
+        likeService.like(id);
     }
 }

@@ -3,64 +3,59 @@ package taskdb.taskdb.domain.question.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import taskdb.taskdb.domain.question.domain.Category;
-import taskdb.taskdb.domain.question.domain.Content;
-import taskdb.taskdb.domain.question.domain.Question;
-import taskdb.taskdb.domain.question.domain.Title;
+import taskdb.taskdb.domain.question.domain.*;
 import taskdb.taskdb.domain.question.dto.*;
-import taskdb.taskdb.domain.question.repository.QuestionQuerydslRepository;
-import taskdb.taskdb.domain.question.repository.QuestionRepository;
+import taskdb.taskdb.domain.question.port.QuestionReader;
+import taskdb.taskdb.domain.question.port.QuestionStore;
 import taskdb.taskdb.domain.question.facade.QuestionFacade;
 import taskdb.taskdb.domain.user.domain.User;
 import taskdb.taskdb.domain.user.facade.UserFacade;
+import taskdb.taskdb.domain.user.port.UserReader;
+import taskdb.taskdb.mapper.QuestionMapper;
 
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class QuestionService {
-    private final QuestionRepository questionRepository;
     private final UserFacade userFacade;
+    private final UserReader userReader;
     private final QuestionFacade questionFacade;
-    private final QuestionQuerydslRepository questionQuerydslRepository;
+    private final QuestionStore questionStore;
+    private final QuestionReader questionReader;
+    private final QuestionMapper questionMapper;
 
     @Transactional
     public void create(QuestionCreateRequestDto requestDto) {
-        User user = userFacade.getCurrentUser();
-        Question question = Question.builder()
-                .title(Title.of(requestDto.getTitle()))
-                .content(Content.of(requestDto.getContent()))
-                .category(requestDto.getCategory())
-                .build();
-        question.confirmUser(user);
+        User user = userReader.getCurrentUser();
+        Question question = questionMapper.of(requestDto, user);
         question.openQuestion();
-        questionRepository.save(question);
+        questionStore.store(question);
     }
 
-    public List<QuestionsResponseDto> getQuestions() {
-        return questionRepository.findAll().stream()
-                .map(QuestionsResponseDto::new)
-                .collect(Collectors.toList());
+    public QuestionAllResponseDto getQuestions() {
+        List<Question> questions = questionReader.getQuestions();
+        return questionMapper.of(questions);
     }
 
     @Transactional
-    public QuestionResponseDto getQuestion(Long id) {
-        Question question = questionFacade.getQuestionById(id);
-        questionFacade.addViewCountByVisit(question);
-        return QuestionResponseDto.builder()
-                .question(question)
-                .build();
+    public QuestionDetailResponse getQuestion(Long id) {
+        Question question = questionReader.getQuestionById(id);
+        questionFacade.checkViewCount(question);
+        return questionMapper.of(question);
     }
 
     @Transactional
     public void update(Long id, QuestionUpdateRequestDto requestDto) {
-        User user = userFacade.getCurrentUser();
-        Question question = questionFacade.getQuestionById(id);
+        User user = userReader.getCurrentUser();
+        Question question = questionReader.getQuestionById(id);
         User writer = question.getUser();
         userFacade.checkDifferentUser(user, writer);
+        update(question, requestDto);
+    }
+
+    private void update(Question question, QuestionUpdateRequestDto requestDto) {
         Title title = Title.of(requestDto.getTitle());
         Content content = Content.of(requestDto.getContent());
         question.update(title, content);
@@ -68,53 +63,30 @@ public class QuestionService {
 
     @Transactional
     public void delete(Long id) {
-        User user = userFacade.getCurrentUser();
-        Question question = questionFacade.getQuestionById(id);
+        User user = userReader.getCurrentUser();
+        Question question = questionReader.getQuestionById(id);
         User writer = question.getUser();
         userFacade.checkDifferentUser(user, writer);
-        questionRepository.delete(question);
+        questionStore.delete(question);
     }
 
-    public List<QuestionsResponseDto> searchByTitleOrId(String keyword) {
-        return questionQuerydslRepository.getQuestionByTitleOrId(keyword).stream()
-                .map(QuestionsResponseDto::new)
-                .collect(Collectors.toList());
+    public QuestionAllResponseDto searchByTitleOrId(String keyword) {
+        List<Question> questions = questionReader.getQuestionsByKeyword(keyword);
+        return questionMapper.of(questions);
     }
 
-    public List<QuestionsResponseDto> getQuestionsByCategory(Category category) {
-        return questionRepository.findByCategory(category).stream()
-                .map(QuestionsResponseDto::new)
-                .collect(Collectors.toList());
+    public QuestionAllResponseDto getQuestionsByCategory(String command) {
+        List<Question> questions = questionReader.getQuestionsByCategory(command);
+        return questionMapper.of(questions);
     }
 
-    public List<QuestionsResponseDto> getQuestionsByGrade(int grade) {
-        return questionQuerydslRepository.getQuestionByGrade(grade).stream()
-                .map(QuestionsResponseDto::new)
-                .collect(Collectors.toList());
+    public QuestionAllResponseDto getQuestionsByGrade(int grade) {
+        List<Question> questions = questionReader.getQuestionsByGrade(grade);
+        return questionMapper.of(questions);
     }
 
-    public List<QuestionsResponseDto> getOpenQuestions() {
-        return questionRepository.findAll().stream()
-                .filter(Question::isOpen)
-                .map(QuestionsResponseDto::new)
-                .collect(Collectors.toList());
-    }
-
-    public List<QuestionsResponseDto> getCloseQuestions() {
-        return questionRepository.findAll().stream()
-                .filter(Question::isClose)
-                .map(QuestionsResponseDto::new)
-                .collect(Collectors.toList());
-    }
-
-    public List<QuestionsRankResponseDto> getQuestionsRankBySubject() {
-        double questionTotalCount = 1.0 * questionRepository.findAll().size();
-        return Category.getValues().stream()
-                .map(category -> {
-                    String subjectName = category.name();
-                    String rate = questionFacade.getRate(questionTotalCount, category);
-                    return new QuestionsRankResponseDto(subjectName, rate);
-                })
-                .collect(Collectors.toList());
+    public QuestionAllResponseDto getQuestionsByStatus(String command) {
+        List<Question> questions = questionReader.getQuestionsByStatus(command);
+        return questionMapper.of(questions);
     }
 }

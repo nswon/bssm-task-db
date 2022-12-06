@@ -23,11 +23,8 @@ public class Notification {
     private String token;
 
     @Builder
-    public Notification(String token) {
+    public Notification(String token, User user) {
         this.token = token;
-    }
-
-    public void confirmUser(User user) {
         this.user = user;
     }
 }

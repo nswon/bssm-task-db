@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import taskdb.taskdb.domain.comment.domain.Comment;
 import taskdb.taskdb.domain.notification.domain.Notification;
+import taskdb.taskdb.domain.notification.port.NotificationReader;
 import taskdb.taskdb.domain.notification.repository.NotificationRepository;
 import taskdb.taskdb.domain.notification.exception.UserDeviceTokenNotFoundException;
 import taskdb.taskdb.domain.user.domain.User;
@@ -19,13 +20,13 @@ import java.util.stream.Collectors;
 public class NotificationFacade {
     private static final String PUSH_NOTIFICATION_TITLE = "TaskDB";
     private static final String PUSH_NOTIFICATION_BODY = "님이 답변을 등록하였습니다.";
-    private final NotificationRepository notificationRepository;
+    private final NotificationReader notificationReader;
 
     public List<String> getTokenByCommentUsers(User questionWriter) {
         List<Comment> comments = questionWriter.getComments();
         List<String> tokens = comments.stream()
                 .map(Comment::getUser)
-                .map(this::getNotificationByUser)
+                .map(notificationReader::getNotificationByUser)
                 .map(Notification::getToken)
                 .collect(Collectors.toList());
 
@@ -35,7 +36,7 @@ public class NotificationFacade {
     }
 
     private String getQuestionWriterToken(User questionWriter) {
-        Notification notification = getNotificationByUser(questionWriter);
+        Notification notification = notificationReader.getNotificationByUser(questionWriter);
         return notification.getToken();
     }
 
@@ -49,10 +50,5 @@ public class NotificationFacade {
                         .build())
                 .setToken(token)
                 .build();
-    }
-
-    public Notification getNotificationByUser(User user) {
-        return notificationRepository.findByUser(user)
-                .orElseThrow(UserDeviceTokenNotFoundException::new);
     }
 }

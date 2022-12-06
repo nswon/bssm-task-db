@@ -40,21 +40,12 @@ public class Comment extends BaseTimeEntity {
     private final List<Comment> child = new ArrayList<>();
 
     @Builder
-    public Comment(Content content) {
+    public Comment(Content content, User user, Question question, Comment parent) {
         this.content = content;
-    }
-
-    public void confirmUser(User user) {
         this.user = user;
         user.addComment(this);
-    }
-
-    public void confirmQuestion(Question question) {
         this.question = question;
         question.addComment(this);
-    }
-
-    public void confirmParent(Comment parent) {
         this.parent = parent;
         parent.addChild(this);
     }

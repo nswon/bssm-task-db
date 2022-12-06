@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
-public class QuestionResponseDto {
+public class QuestionDetailResponse {
     private String title;
     private QuestionStatus status;
     private String userImage;
@@ -24,11 +24,11 @@ public class QuestionResponseDto {
     private List<CommentsResponseDto> comments;
     private List<AnswersResponseDto> answers;
 
-    public QuestionResponseDto() {
+    public QuestionDetailResponse() {
     }
 
     @Builder
-    public QuestionResponseDto(Question question) {
+    public QuestionDetailResponse(Question question) {
         this.title = question.getTitle();
         this.status = question.getQuestionStatus();
         this.userImage = question.getUser().getImgUrl();

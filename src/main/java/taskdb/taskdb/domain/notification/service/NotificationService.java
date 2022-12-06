@@ -6,12 +6,16 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import taskdb.taskdb.domain.notification.domain.Notification;
+import taskdb.taskdb.domain.notification.port.NotificationReader;
+import taskdb.taskdb.domain.notification.port.NotificationStore;
 import taskdb.taskdb.domain.notification.repository.NotificationRepository;
 import taskdb.taskdb.domain.notification.exception.InvalidNotificationException;
 import taskdb.taskdb.domain.notification.facade.NotificationFacade;
 import taskdb.taskdb.domain.notification.dto.NotificationPermitRequestDto;
 import taskdb.taskdb.domain.user.domain.User;
 import taskdb.taskdb.domain.user.facade.UserFacade;
+import taskdb.taskdb.domain.user.port.UserReader;
+import taskdb.taskdb.mapper.NotificationMapper;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -20,17 +24,16 @@ import java.util.concurrent.ExecutionException;
 @RequiredArgsConstructor
 @Transactional
 public class NotificationService {
-    private final NotificationRepository notificationRepository;
-    private final UserFacade userFacade;
+    private final UserReader userReader;
+    private final NotificationMapper notificationMapper;
+    private final NotificationStore notificationStore;
     private final NotificationFacade notificationFacade;
+    private final NotificationReader notificationReader;
 
     public void permit(NotificationPermitRequestDto requestDto) {
-        User user = userFacade.getCurrentUser();
-        Notification notification = Notification.builder()
-                .token(requestDto.getToken())
-                .build();
-        notification.confirmUser(user);
-        notificationRepository.save(notification);
+        User user = userReader.getCurrentUser();
+        Notification notification = notificationMapper.of(requestDto, user);
+        notificationStore.store(notification);
     }
 
     @Transactional(readOnly = true)
@@ -39,7 +42,7 @@ public class NotificationService {
         tokens.forEach(token -> sendMessage(token, nickname));
     }
 
-    public void sendMessage(String token, String nickname) {
+    private void sendMessage(String token, String nickname) {
         try {
             sendPushNotificationByAnswer(token, nickname);
         } catch (ExecutionException | InterruptedException e) {
@@ -53,8 +56,8 @@ public class NotificationService {
     }
 
     public void deleteTokenByUser() {
-        User user = userFacade.getCurrentUser();
-        Notification notification = notificationFacade.getNotificationByUser(user);
-        notificationRepository.delete(notification);
+        User user = userReader.getCurrentUser();
+        Notification notification = notificationReader.getNotificationByUser(user);
+        notificationStore.delete(notification);
     }
 }
