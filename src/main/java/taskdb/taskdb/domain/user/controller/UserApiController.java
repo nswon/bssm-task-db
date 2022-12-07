@@ -8,6 +8,7 @@ import taskdb.taskdb.domain.user.dto.UserResponseDto;
 import taskdb.taskdb.domain.user.dto.UsersRankResponseDto;
 import taskdb.taskdb.domain.user.service.RankingService;
 import taskdb.taskdb.domain.user.service.UserService;
+import taskdb.taskdb.domain.user.service.UserServiceImpl;
 import taskdb.taskdb.global.support.Result;
 
 import java.util.List;
@@ -36,7 +37,7 @@ public class UserApiController {
 
     @PutMapping("/edit")
     public void update(UserProfileRequestDto requestDto) {
-        userService.updateUser(requestDto);
+        userService.update(requestDto);
     }
 
     @GetMapping("/rank")
