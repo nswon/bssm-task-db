@@ -10,7 +10,7 @@ import taskdb.taskdb.domain.question.entity.QuestionStatus;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import static taskdb.taskdb.domain.question.domain.QQuestion.question;
+import static taskdb.taskdb.domain.question.entity.QQuestion.question;
 
 @Repository
 @RequiredArgsConstructor

@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import taskdb.taskdb.application.like.port.in.LikeUseCase;
+import taskdb.taskdb.application.like.port.in.QuestionLikeUseCase;
 import taskdb.taskdb.application.like.port.out.DeleteQuestionLikePort;
 import taskdb.taskdb.application.like.port.out.ExistQuestionLikePort;
 import taskdb.taskdb.application.like.port.out.GetQuestionLikePort;
@@ -18,7 +18,7 @@ import taskdb.taskdb.application.user.port.out.GetUserPort;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class QuestionLikeService implements LikeUseCase {
+public class QuestionAnswerLikeService implements QuestionLikeUseCase {
     private static final String FOUR_A_M_CORN = "0 0 4 * * *";
     private final GetUserPort getUserPort;
     private final GetQuestionPort getQuestionPort;

@@ -1,13 +1,15 @@
 package taskdb.taskdb.adapter.question.out.redis;
 
 import lombok.RequiredArgsConstructor;
-import taskdb.taskdb.application.question.port.out.GetVisitQuestionUseCase;
-import taskdb.taskdb.application.question.port.out.SaveVisitQuestionUseCase;
+import org.springframework.stereotype.Component;
+import taskdb.taskdb.application.question.port.out.GetVisitQuestionPort;
+import taskdb.taskdb.application.question.port.out.SaveVisitQuestionPort;
 
 import java.util.List;
 
+@Component
 @RequiredArgsConstructor
-public class VisitQuestionAdapter implements SaveVisitQuestionUseCase, GetVisitQuestionUseCase {
+public class VisitQuestionAdapter implements SaveVisitQuestionPort, GetVisitQuestionPort {
     private final VisitQuestionRepository visitQuestionRepository;
 
     @Override

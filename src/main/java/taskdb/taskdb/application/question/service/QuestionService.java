@@ -7,10 +7,7 @@ import taskdb.taskdb.application.question.dto.QuestionAllResponseDto;
 import taskdb.taskdb.application.question.dto.QuestionCreateRequestDto;
 import taskdb.taskdb.application.question.dto.QuestionDetailResponse;
 import taskdb.taskdb.application.question.dto.QuestionUpdateRequestDto;
-import taskdb.taskdb.application.question.port.in.QuestionDeleteUseCase;
-import taskdb.taskdb.application.question.port.in.QuestionGetUseCase;
-import taskdb.taskdb.application.question.port.in.QuestionSaveUseCase;
-import taskdb.taskdb.application.question.port.in.QuestionUpdateUseCase;
+import taskdb.taskdb.application.question.port.in.*;
 import taskdb.taskdb.application.question.port.out.*;
 import taskdb.taskdb.domain.question.entity.Content;
 import taskdb.taskdb.domain.question.entity.Question;
@@ -32,8 +29,8 @@ public class QuestionService implements
     private final SaveQuestionPort saveQuestionPort;
     private final GetQuestionPort getQuestionPort;
     private final DeleteQuestionPort deleteQuestionPort;
-    private final SaveVisitQuestionUseCase saveVisitQuestionPort;
-    private final GetVisitQuestionUseCase getVisitQuestionUseCase;
+    private final SaveVisitQuestionPort saveVisitQuestionPort;
+    private final GetVisitQuestionPort getVisitQuestionPort;
 
     @Override
     @Transactional
@@ -58,7 +55,7 @@ public class QuestionService implements
     }
 
     private void checkViewCount(Question question) {
-        List<String> questionIds = getVisitQuestionUseCase.getVisitQuestionIds();
+        List<String> questionIds = getVisitQuestionPort.getVisitQuestionIds();
         if(canAddViewCount(questionIds, String.valueOf(question.getId()))) {
             saveVisitQuestionPort.save(question.getId());
             question.addViewCount();

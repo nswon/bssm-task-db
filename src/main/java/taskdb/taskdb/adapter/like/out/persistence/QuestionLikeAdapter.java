@@ -1,6 +1,7 @@
 package taskdb.taskdb.adapter.like.out.persistence;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 import taskdb.taskdb.application.like.port.out.DeleteQuestionLikePort;
 import taskdb.taskdb.application.like.port.out.ExistQuestionLikePort;
 import taskdb.taskdb.application.like.port.out.GetQuestionLikePort;
@@ -11,6 +12,7 @@ import taskdb.taskdb.domain.user.entity.User;
 
 import java.util.List;
 
+@Component
 @RequiredArgsConstructor
 public class QuestionLikeAdapter implements
         ExistQuestionLikePort, DeleteQuestionLikePort, SaveQuestionLikePort, GetQuestionLikePort {

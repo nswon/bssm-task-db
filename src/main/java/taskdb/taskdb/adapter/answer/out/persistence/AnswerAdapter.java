@@ -1,6 +1,7 @@
 package taskdb.taskdb.adapter.answer.out.persistence;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 import taskdb.taskdb.application.answer.port.out.DeleteAnswerPort;
 import taskdb.taskdb.application.answer.port.out.GetAnswerPort;
 import taskdb.taskdb.application.answer.port.out.SaveAnswerPort;
@@ -9,6 +10,7 @@ import taskdb.taskdb.domain.answer.exception.AnswerNotFoundException;
 
 import java.util.List;
 
+@Component
 @RequiredArgsConstructor
 public class AnswerAdapter implements SaveAnswerPort, GetAnswerPort, DeleteAnswerPort {
     private final AnswerRepository answerRepository;

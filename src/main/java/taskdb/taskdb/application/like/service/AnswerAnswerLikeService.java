@@ -5,7 +5,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import taskdb.taskdb.application.answer.port.out.GetAnswerPort;
-import taskdb.taskdb.application.like.port.in.LikeUseCase;
+import taskdb.taskdb.application.like.port.in.AnswerLikeUseCase;
 import taskdb.taskdb.application.like.port.out.DeleteAnswerLikePort;
 import taskdb.taskdb.application.like.port.out.ExistAnswerLikePort;
 import taskdb.taskdb.application.like.port.out.GetAnswerLikePort;
@@ -19,7 +19,7 @@ import taskdb.taskdb.application.like.dto.AnswerLikeMapper;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class AnswerLikeService implements LikeUseCase {
+public class AnswerAnswerLikeService implements AnswerLikeUseCase {
     private static final String FOUR_A_M_CORN = "0 0 4 * * *";
     private final GetUserPort getUserPort;
     private final ExistAnswerLikePort existAnswerLikePort;

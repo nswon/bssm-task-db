@@ -1,5 +1,5 @@
 package taskdb.taskdb.application.question.port.out;
 
-public interface SaveVisitQuestionUseCase {
+public interface SaveVisitQuestionPort {
     Long save(Long id);
 }

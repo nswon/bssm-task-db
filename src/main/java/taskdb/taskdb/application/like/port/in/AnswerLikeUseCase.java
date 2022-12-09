@@ -1,5 +1,5 @@
 package taskdb.taskdb.application.like.port.in;
 
-public interface LikeUseCase {
+public interface AnswerLikeUseCase {
     boolean like(Long id);
 }

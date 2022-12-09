@@ -13,6 +13,7 @@ import taskdb.taskdb.domain.question.exception.QuestionNotFoundException;
 
 import java.util.List;
 
+@Component
 @RequiredArgsConstructor
 public class QuestionAdapter implements SaveQuestionPort, GetQuestionPort, DeleteQuestionPort {
     private final QuestionRepository questionRepository;
