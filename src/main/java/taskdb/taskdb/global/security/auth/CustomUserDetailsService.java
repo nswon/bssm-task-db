@@ -6,7 +6,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import taskdb.taskdb.domain.user.exception.UserNotFoundException;
-import taskdb.taskdb.domain.user.repository.UserRepository;
+import taskdb.taskdb.adapter.user.out.persistence.UserRepository;
 
 @Service
 @RequiredArgsConstructor

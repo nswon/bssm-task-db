@@ -2,9 +2,9 @@ package taskdb.taskdb.domain.answer.domain;
 
 import lombok.Builder;
 import lombok.Getter;
-import taskdb.taskdb.domain.like.domain.AnswerLike;
-import taskdb.taskdb.domain.question.domain.Question;
-import taskdb.taskdb.domain.user.domain.User;
+import taskdb.taskdb.domain.like.entity.AnswerLike;
+import taskdb.taskdb.domain.question.entity.Question;
+import taskdb.taskdb.domain.user.entity.User;
 import taskdb.taskdb.global.support.BaseTimeEntity;
 
 import javax.persistence.*;

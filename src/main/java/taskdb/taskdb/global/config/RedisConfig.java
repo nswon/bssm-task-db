@@ -9,7 +9,7 @@ import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactor
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
-import taskdb.taskdb.domain.user.domain.User;
+import taskdb.taskdb.domain.user.entity.User;
 
 @Configuration
 public class RedisConfig {
@@ -29,8 +29,8 @@ public class RedisConfig {
     }
 
     @Bean
-    public RedisTemplate<String, User> redisTemplate() {
-        RedisTemplate<String, User> redisTemplate = new RedisTemplate<>();
+    public RedisTemplate<String, Long> redisTemplate() {
+        RedisTemplate<String, Long> redisTemplate = new RedisTemplate<>();
         redisTemplate.setKeySerializer(new StringRedisSerializer());
         redisTemplate.setValueSerializer(new StringRedisSerializer());
         redisTemplate.setConnectionFactory(redisConnectionFactory());
