@@ -10,19 +10,21 @@ import taskdb.taskdb.domain.user.entity.User;
 @Component
 public class CommentMapper {
     public Comment of(CommentCreateRequestDto requestDto, User user, Question question) {
-        return Comment.builder()
+        Comment comment = Comment.builder()
                 .content(Content.of(requestDto.getContent()))
-                .user(user)
-                .question(question)
                 .build();
+        comment.confirmUser(user);
+        comment.confirmQuestion(question);
+        return comment;
     }
 
     public Comment of(CommentCreateRequestDto requestDto, User user, Question question, Comment parent) {
-        return Comment.builder()
+        Comment comment = Comment.builder()
                 .content(Content.of(requestDto.getContent()))
-                .user(user)
-                .question(question)
-                .parent(parent)
                 .build();
+        comment.confirmUser(user);
+        comment.confirmQuestion(question);
+        comment.confirmParent(parent);
+        return comment;
     }
 }
