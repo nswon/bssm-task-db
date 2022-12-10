@@ -12,11 +12,12 @@ import java.util.stream.Collectors;
 @Component
 public class QuestionStoreMapper {
     public QuestionStore of(Question question, User user) {
-        return QuestionStore.builder()
+        QuestionStore questionStore = QuestionStore.builder()
                 .questionId(question.getId())
                 .questionTitle(Title.of(question.getTitle()))
-                .user(user)
                 .build();
+        questionStore.confirmUser(user);
+        return questionStore;
     }
 
     public QuestionStoresResponseDto of(List<QuestionStore> questionStores) {

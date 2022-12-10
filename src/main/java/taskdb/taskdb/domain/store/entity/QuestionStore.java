@@ -28,9 +28,12 @@ public class QuestionStore {
     }
 
     @Builder
-    public QuestionStore(Long questionId, Title questionTitle, User user) {
+    public QuestionStore(Long questionId, Title questionTitle) {
         this.questionId = questionId;
         this.questionTitle = questionTitle;
+    }
+
+    public void confirmUser(User user) {
         this.user = user;
         user.addQuestion(this);
     }

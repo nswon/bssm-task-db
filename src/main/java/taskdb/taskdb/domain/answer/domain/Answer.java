@@ -42,10 +42,16 @@ public class Answer extends BaseTimeEntity {
     }
 
     @Builder
-    public Answer(Content content, User user, Question question) {
+    public Answer(Content content) {
         this.content = content;
+    }
+
+    public void confirmUser(User user) {
         this.user = user;
         user.addAnswer(this);
+    }
+
+    public void confirmQuestion(Question question) {
         this.question = question;
         question.addAnswer(this);
     }

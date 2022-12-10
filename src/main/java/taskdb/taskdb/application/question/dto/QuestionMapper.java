@@ -16,12 +16,13 @@ import java.util.stream.Collectors;
 @Component
 public class QuestionMapper {
     public Question of(QuestionCreateRequestDto requestDto, User user) {
-        return Question.builder()
+        Question question = Question.builder()
                 .title(Title.of(requestDto.getTitle()))
                 .content(Content.of(requestDto.getContent()))
                 .category(requestDto.getCategory())
-                .user(user)
                 .build();
+        question.confirmUser(user);
+        return question;
     }
 
     public QuestionAllResponseDto of(List<Question> questions) {

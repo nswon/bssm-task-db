@@ -56,10 +56,13 @@ public class Question extends BaseTimeEntity {
     }
 
     @Builder
-    public Question(Title title, Content content, Category category, User user) {
+    public Question(Title title, Content content, Category category) {
         this.title = title;
         this.content = content;
         this.category = category;
+    }
+
+    public void confirmUser(User user) {
         this.user = user;
         user.addQuestion(this);
     }

@@ -10,10 +10,11 @@ import taskdb.taskdb.domain.user.entity.User;
 @Component
 public class AnswerMapper {
     public Answer of(AnswerCreateRequestDto requestDto, User user, Question question) {
-        return Answer.builder()
+        Answer answer = Answer.builder()
                 .content(Content.of(requestDto.getContent()))
-                .user(user)
-                .question(question)
                 .build();
+        answer.confirmUser(user);
+        answer.confirmQuestion(question);
+        return answer;
     }
 }
