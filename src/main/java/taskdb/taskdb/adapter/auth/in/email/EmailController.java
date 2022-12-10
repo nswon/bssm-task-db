@@ -7,9 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import taskdb.taskdb.application.auth.dto.EmailRequestDto;
 import taskdb.taskdb.application.auth.dto.EmailResponseDto;
 import taskdb.taskdb.application.auth.port.in.EmailSendUseCase;
-import taskdb.taskdb.application.auth.service.EmailService;
-
-import javax.validation.Valid;
 
 @RestController
 @RequiredArgsConstructor

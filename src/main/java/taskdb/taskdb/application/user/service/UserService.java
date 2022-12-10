@@ -3,26 +3,27 @@ package taskdb.taskdb.application.user.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import taskdb.taskdb.application.user.dto.*;
 import taskdb.taskdb.application.user.port.in.GetUserUseCase;
 import taskdb.taskdb.application.user.port.in.UserJoinUseCase;
+import taskdb.taskdb.application.user.port.in.UserRankUseCase;
 import taskdb.taskdb.application.user.port.in.UserUpdateUserCase;
 import taskdb.taskdb.domain.user.entity.Bio;
 import taskdb.taskdb.domain.user.entity.Image;
 import taskdb.taskdb.domain.user.entity.Nickname;
 import taskdb.taskdb.domain.user.entity.User;
-import taskdb.taskdb.application.user.dto.UserJoinRequestDto;
-import taskdb.taskdb.application.user.dto.UserUpdateRequestDto;
-import taskdb.taskdb.application.user.dto.UserResponseDto;
 import taskdb.taskdb.domain.user.exception.InvalidAuthCodeException;
 import taskdb.taskdb.application.user.port.out.GetUserPort;
 import taskdb.taskdb.application.user.port.out.SaveUserPort;
 import taskdb.taskdb.application.auth.service.EmailService;
-import taskdb.taskdb.application.user.dto.UserMapper;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-public class UserService implements UserJoinUseCase, GetUserUseCase, UserUpdateUserCase {
+public class UserService implements UserJoinUseCase, GetUserUseCase, UserUpdateUserCase, UserRankUseCase {
     private final EmailService emailService;
     private final ImageService imageService;
     private final SaveUserPort saveUserPort;
@@ -76,5 +77,12 @@ public class UserService implements UserJoinUseCase, GetUserUseCase, UserUpdateU
         user.updateImage(image);
         user.updateNickname(nickname);
         user.updateBio(bio);
+    }
+
+    @Override
+    public List<UsersRankResponseDto> rank() {
+        return getUserPort.getUser().stream()
+                .map(userMapper::ofRank)
+                .collect(Collectors.toList());
     }
 }

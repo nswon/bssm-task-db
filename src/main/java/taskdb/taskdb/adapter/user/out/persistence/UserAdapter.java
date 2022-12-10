@@ -12,6 +12,10 @@ import taskdb.taskdb.domain.user.exception.DuplicateNicknameException;
 import taskdb.taskdb.application.user.port.out.SaveUserPort;
 import taskdb.taskdb.infrastructure.security.jwt.SecurityUtil;
 
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Component
 @RequiredArgsConstructor
 public class UserAdapter implements SaveUserPort, GetUserPort {
@@ -57,5 +61,15 @@ public class UserAdapter implements SaveUserPort, GetUserPort {
     public User getUserByEmail(String email) {
         return userRepository.findByEmailValue(email)
                 .orElseThrow(InvalidEmailException::new);
+    }
+
+    @Override
+    public List<User> getUser() {
+        return userRepository.findAll().stream()
+                .sorted(Comparator.comparing(User::getContributionLevel).reversed()
+                        .thenComparing(User::getAnswerCount).reversed()
+                        .thenComparing(User::getQuestionCount).reversed())
+                .limit(10)
+                .collect(Collectors.toList());
     }
 }

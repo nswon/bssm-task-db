@@ -23,7 +23,7 @@ public class EmailService implements EmailSendUseCase {
     private final JavaMailSender javaMailSender;
     private static String ePw = "empty";
 
-    public static void createKey() {
+    private static void createKey() {
         StringBuilder key = new StringBuilder();
         Random rnd = new Random();
         IntStream.range(0, RANDOM_NUMBER_COUNT)
