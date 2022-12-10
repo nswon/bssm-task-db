@@ -73,6 +73,7 @@ public class NotificationService implements NotificationSaveUseCase, Notificatio
         List<Comment> comments = question.getComments();
         List<String> tokens = comments.stream()
                 .map(Comment::getUser)
+                .distinct()
                 .map(getNotificationPort::getNotification)
                 .map(Notification::getToken)
                 .collect(Collectors.toList());
