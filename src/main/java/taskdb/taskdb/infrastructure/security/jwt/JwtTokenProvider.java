@@ -1,6 +1,7 @@
 package taskdb.taskdb.infrastructure.security.jwt;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
@@ -8,6 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import taskdb.taskdb.domain.user.entity.User;
+import taskdb.taskdb.infrastructure.security.exception.ExpiredTokenException;
+import taskdb.taskdb.infrastructure.security.exception.InvalidTokenException;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
@@ -50,5 +53,15 @@ public class JwtTokenProvider {
 
     public String getUserEmail(String token) {
         return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
+    }
+
+    public void validateToken(String token) {
+        try {
+            Jwts.parser().setSigningKey(secretKey).parseClaimsJwt(token).getBody();
+        } catch (ExpiredJwtException e) {
+            throw new ExpiredTokenException();
+        } catch (Exception e) {
+            throw new InvalidTokenException();
+        }
     }
 }
