@@ -42,7 +42,7 @@ public class AnswerService implements
         Answer answer = answerMapper.of(requestDto, user, question);
         answer.ongoing();
         saveAnswerPort.save(answer);
-        notificationService.sendMessage(user.getNickname(), question.getUser());
+        notificationService.sendMessage(user.getNickname(), question);
     }
 
     @Override

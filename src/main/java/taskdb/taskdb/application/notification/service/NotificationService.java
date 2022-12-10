@@ -16,6 +16,7 @@ import taskdb.taskdb.domain.comment.domain.Comment;
 import taskdb.taskdb.domain.notification.entity.Notification;
 import taskdb.taskdb.application.notification.dto.NotificationPermitRequestDto;
 import taskdb.taskdb.domain.notification.exception.InvalidNotificationException;
+import taskdb.taskdb.domain.question.entity.Question;
 import taskdb.taskdb.domain.user.entity.User;
 import taskdb.taskdb.application.user.port.out.GetUserPort;
 import taskdb.taskdb.application.notification.dto.NotificationMapper;
@@ -44,8 +45,8 @@ public class NotificationService implements NotificationSaveUseCase, Notificatio
     }
 
     @Transactional(readOnly = true)
-    public void sendMessage(String nickname, User questionWriter) {
-        List<String> tokens = getTokenByCommentUsers(questionWriter);
+    public void sendMessage(String nickname, Question question) {
+        List<String> tokens = getTokenByCommentUsers(question);
         tokens.forEach(token -> send(token, nickname));
     }
 
@@ -68,15 +69,15 @@ public class NotificationService implements NotificationSaveUseCase, Notificatio
         FirebaseMessaging.getInstance().sendAsync(message).get();
     }
 
-    private List<String> getTokenByCommentUsers(User questionWriter) {
-        List<Comment> comments = questionWriter.getComments();
+    private List<String> getTokenByCommentUsers(Question question) {
+        List<Comment> comments = question.getComments();
         List<String> tokens = comments.stream()
                 .map(Comment::getUser)
                 .map(getNotificationPort::getNotification)
                 .map(Notification::getToken)
                 .collect(Collectors.toList());
 
-        String token = getQuestionWriterToken(questionWriter);
+        String token = getQuestionWriterToken(question.getUser());
         tokens.add(token);
         return tokens;
     }

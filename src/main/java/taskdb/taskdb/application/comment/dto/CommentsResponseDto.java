@@ -10,6 +10,7 @@ public class CommentsResponseDto {
     private String content;
     private String userImage;
     private String nickname;
+    private Long userId;
     private LocalDateTime createdDate;
 
     public CommentsResponseDto() {
@@ -19,6 +20,7 @@ public class CommentsResponseDto {
         this.content = comment.getContent();
         this.userImage = comment.getUser().getImgUrl();
         this.nickname = comment.getUser().getNickname();
+        this.userId = comment.getUser().getId();
         this.createdDate = comment.getCreatedDate();
     }
 }

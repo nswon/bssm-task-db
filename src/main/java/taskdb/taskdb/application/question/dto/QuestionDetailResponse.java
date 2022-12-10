@@ -12,10 +12,12 @@ import java.util.List;
 
 @Getter
 public class QuestionDetailResponse {
+    private Long id;
     private String title;
     private QuestionStatus status;
     private String userImage;
     private String nickname;
+    private Long userId;
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
     private int viewCount;
@@ -29,10 +31,12 @@ public class QuestionDetailResponse {
 
     @Builder
     public QuestionDetailResponse(Question question) {
+        this.id = question.getId();
         this.title = question.getTitle();
         this.status = question.getQuestionStatus();
         this.userImage = question.getUser().getImgUrl();
         this.nickname = question.getUser().getNickname();
+        this.userId = question.getUser().getId();
         this.createdDate = question.getCreatedDate();
         this.modifiedDate = question.getModifiedDate();
         this.viewCount = question.getViewCount();
