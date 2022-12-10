@@ -1,4 +1,4 @@
-package taskdb.taskdb.global.security.auth;
+package taskdb.taskdb.infrastructure.security.auth;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;

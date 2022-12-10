@@ -1,4 +1,4 @@
-package taskdb.taskdb.global.security.jwt;
+package taskdb.taskdb.infrastructure.security.jwt;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -6,7 +6,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.filter.OncePerRequestFilter;
-import taskdb.taskdb.global.security.auth.CustomUserDetailsService;
+import taskdb.taskdb.infrastructure.security.auth.CustomUserDetailsService;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;

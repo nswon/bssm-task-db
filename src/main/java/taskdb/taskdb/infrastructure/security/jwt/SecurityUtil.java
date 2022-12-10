@@ -1,7 +1,7 @@
-package taskdb.taskdb.global.security.jwt;
+package taskdb.taskdb.infrastructure.security.jwt;
 
 import org.springframework.security.core.context.SecurityContextHolder;
-import taskdb.taskdb.global.security.auth.CustomUserDetails;
+import taskdb.taskdb.infrastructure.security.auth.CustomUserDetails;
 
 public class SecurityUtil {
     public static String getLoginUserEmail() {

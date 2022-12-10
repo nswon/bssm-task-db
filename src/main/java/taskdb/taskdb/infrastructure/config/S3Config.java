@@ -1,4 +1,4 @@
-package taskdb.taskdb.global.config;
+package taskdb.taskdb.infrastructure.config;
 
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;

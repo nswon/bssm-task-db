@@ -11,7 +11,7 @@ import taskdb.taskdb.domain.user.entity.User;
 import taskdb.taskdb.application.auth.dto.UserLoginRequestDto;
 import taskdb.taskdb.application.auth.dto.TokenResponseDto;
 import taskdb.taskdb.application.user.port.out.GetUserPort;
-import taskdb.taskdb.global.security.jwt.JwtTokenProvider;
+import taskdb.taskdb.infrastructure.security.jwt.JwtTokenProvider;
 import taskdb.taskdb.application.user.dto.UserMapper;
 
 @Service

@@ -1,4 +1,4 @@
-package taskdb.taskdb.global.config;
+package taskdb.taskdb.infrastructure.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,9 +13,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import taskdb.taskdb.global.security.auth.CustomUserDetailsService;
-import taskdb.taskdb.global.security.jwt.JwtAuthenticationFilter;
-import taskdb.taskdb.global.security.jwt.JwtTokenProvider;
+import taskdb.taskdb.infrastructure.security.auth.CustomUserDetailsService;
+import taskdb.taskdb.infrastructure.security.jwt.JwtAuthenticationFilter;
+import taskdb.taskdb.infrastructure.security.jwt.JwtTokenProvider;
 
 import java.util.List;
 
@@ -60,7 +60,7 @@ public class SecurityConfig {
 
         configuration.addAllowedOriginPattern("*");
         configuration.addAllowedOrigin("/**");
-        configuration.setAllowedOrigins(List.of("192.168.10.103:3000"));
+        configuration.setAllowedOrigins(List.of("localhost:3000"));
         configuration.addAllowedHeader("*");
         configuration.addAllowedMethod("*");
         configuration.setAllowCredentials(true);

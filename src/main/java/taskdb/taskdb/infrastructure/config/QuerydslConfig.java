@@ -1,4 +1,4 @@
-package taskdb.taskdb.global.config;
+package taskdb.taskdb.infrastructure.config;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;

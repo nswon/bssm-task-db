@@ -1,4 +1,4 @@
-package taskdb.taskdb.global.config;
+package taskdb.taskdb.infrastructure.config;
 
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;

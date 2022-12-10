@@ -1,4 +1,4 @@
-package taskdb.taskdb.global.security.auth;
+package taskdb.taskdb.infrastructure.security.auth;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

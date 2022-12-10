@@ -1,4 +1,4 @@
-package taskdb.taskdb.global.security.jwt;
+package taskdb.taskdb.infrastructure.security.jwt;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

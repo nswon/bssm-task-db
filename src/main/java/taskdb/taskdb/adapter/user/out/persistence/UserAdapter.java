@@ -10,7 +10,7 @@ import taskdb.taskdb.domain.user.entity.User;
 import taskdb.taskdb.domain.user.exception.DuplicateEmailException;
 import taskdb.taskdb.domain.user.exception.DuplicateNicknameException;
 import taskdb.taskdb.application.user.port.out.SaveUserPort;
-import taskdb.taskdb.global.security.jwt.SecurityUtil;
+import taskdb.taskdb.infrastructure.security.jwt.SecurityUtil;
 
 @Component
 @RequiredArgsConstructor

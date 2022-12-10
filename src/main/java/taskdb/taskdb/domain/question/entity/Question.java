@@ -8,7 +8,7 @@ import taskdb.taskdb.domain.comment.domain.Comment;
 import taskdb.taskdb.application.comment.dto.CommentsResponseDto;
 import taskdb.taskdb.domain.like.entity.QuestionLike;
 import taskdb.taskdb.domain.user.entity.User;
-import taskdb.taskdb.global.support.BaseTimeEntity;
+import taskdb.taskdb.infrastructure.support.BaseTimeEntity;
 
 import javax.persistence.*;
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package taskdb.taskdb.global.exception;
+package taskdb.taskdb.infrastructure.exception;
 
 public class NotFoundException extends BusinessException {
 

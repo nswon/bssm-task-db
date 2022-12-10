@@ -1,4 +1,4 @@
-package taskdb.taskdb.global.support;
+package taskdb.taskdb.infrastructure.support;
 
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;

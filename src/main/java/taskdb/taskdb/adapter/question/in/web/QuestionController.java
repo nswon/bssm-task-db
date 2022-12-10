@@ -10,7 +10,7 @@ import taskdb.taskdb.application.question.port.in.QuestionDeleteUseCase;
 import taskdb.taskdb.application.question.port.in.QuestionGetUseCase;
 import taskdb.taskdb.application.question.port.in.QuestionSaveUseCase;
 import taskdb.taskdb.application.question.port.in.QuestionUpdateUseCase;
-import taskdb.taskdb.global.support.Result;
+import taskdb.taskdb.infrastructure.support.Result;
 
 import javax.validation.Valid;
 
