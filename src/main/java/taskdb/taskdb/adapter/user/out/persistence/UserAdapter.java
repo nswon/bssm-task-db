@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class UserAdapter implements SaveUserPort, GetUserPort {
     private final UserRepository userRepository;
+    private static final int RANK_SIZE = 10;
 
     @Override
     public User save(User user) {
@@ -66,10 +67,11 @@ public class UserAdapter implements SaveUserPort, GetUserPort {
     @Override
     public List<User> getUser() {
         return userRepository.findAll().stream()
-                .sorted(Comparator.comparing(User::getContributionLevel).reversed()
+                .sorted(Comparator.comparing(User::getNickname).reversed()
+                        .thenComparing(User::getQuestionCount).reversed()
                         .thenComparing(User::getAnswerCount).reversed()
-                        .thenComparing(User::getQuestionCount).reversed())
-                .limit(10)
+                        .thenComparing(User::getContributionLevel).reversed())
+                .limit(RANK_SIZE)
                 .collect(Collectors.toList());
     }
 }

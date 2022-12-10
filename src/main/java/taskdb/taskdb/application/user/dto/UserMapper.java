@@ -30,8 +30,4 @@ public class UserMapper {
     public TokenResponseDto of(String accessToken) {
         return new TokenResponseDto(accessToken);
     }
-
-    public UsersRankResponseDto ofRank(User user) {
-        return new UsersRankResponseDto(user);
-    }
 }

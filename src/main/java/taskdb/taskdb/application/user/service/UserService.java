@@ -19,6 +19,7 @@ import taskdb.taskdb.application.auth.service.EmailService;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Service
 @RequiredArgsConstructor
@@ -81,8 +82,10 @@ public class UserService implements UserJoinUseCase, GetUserUseCase, UserUpdateU
 
     @Override
     public List<UsersRankResponseDto> rank() {
-        return getUserPort.getUser().stream()
-                .map(userMapper::ofRank)
+        List<User> users = getUserPort.getUser();
+        return IntStream.range(0, users.size())
+                .boxed()
+                .map(rank -> new UsersRankResponseDto(rank+1, users.get(rank)))
                 .collect(Collectors.toList());
     }
 }
