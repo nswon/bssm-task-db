@@ -15,6 +15,7 @@ public class Notification {
     private Long id;
 
     @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
     private User user;
 
     private String token;
@@ -23,8 +24,12 @@ public class Notification {
     }
 
     @Builder
-    public Notification(String token, User user) {
+    public Notification(String token) {
         this.token = token;
+    }
+
+    public void confirmUser(User user) {
         this.user = user;
+        user.addNotification(this);
     }
 }

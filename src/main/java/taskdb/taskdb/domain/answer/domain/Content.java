@@ -10,9 +10,9 @@ import java.util.regex.Pattern;
 @Getter
 @Embeddable
 public class Content {
-    private static final Pattern PATTERN = Pattern.compile("^{1,1000}$");
+    private static final Pattern PATTERN = Pattern.compile("^{1,10000}$");
 
-    @Column(name = "content")
+    @Column(name = "content", columnDefinition = "LONGTEXT")
     private String value;
 
     protected Content() {

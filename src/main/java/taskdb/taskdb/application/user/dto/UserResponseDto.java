@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 
 @Getter
 public class UserResponseDto {
+    private Long id;
     private String image;
     private String nickname;
     private String bio;
@@ -22,6 +23,7 @@ public class UserResponseDto {
     }
 
     public UserResponseDto(User user) {
+        this.id = user.getId();
         this.image = user.getImgUrl();
         this.nickname = user.getNickname();
         this.bio = user.getBio();

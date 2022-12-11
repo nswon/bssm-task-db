@@ -80,7 +80,6 @@ public class UserService implements UserJoinUseCase, GetUserUseCase, UserUpdateU
         user.updateBio(bio);
     }
 
-    //TODO : 등수 고치기
     @Override
     public List<UsersRankResponseDto> rank() {
         List<User> users = getUserPort.getUser();

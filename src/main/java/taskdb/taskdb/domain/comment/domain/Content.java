@@ -1,6 +1,7 @@
 package taskdb.taskdb.domain.comment.domain;
 
 import lombok.Getter;
+import org.hibernate.validator.constraints.Length;
 import taskdb.taskdb.domain.comment.exception.InvalidCommentRangeException;
 
 import javax.persistence.Column;
@@ -10,9 +11,9 @@ import java.util.regex.Pattern;
 @Getter
 @Embeddable
 public class Content {
-    private static final Pattern PATTERN = Pattern.compile("^{1,500}$");
+    private static final Pattern PATTERN = Pattern.compile("^{1,5000}$");
 
-    @Column(name = "content")
+    @Column(name = "content", columnDefinition = "LONGTEXT")
     private String value;
 
     protected Content() {

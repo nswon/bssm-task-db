@@ -6,6 +6,7 @@ import taskdb.taskdb.domain.answer.domain.Answer;
 import taskdb.taskdb.domain.comment.domain.Comment;
 import taskdb.taskdb.domain.like.entity.AnswerLike;
 import taskdb.taskdb.domain.like.entity.QuestionLike;
+import taskdb.taskdb.domain.notification.entity.Notification;
 import taskdb.taskdb.domain.question.entity.Question;
 import taskdb.taskdb.domain.store.entity.QuestionStore;
 
@@ -61,6 +62,9 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private final List<AnswerLike> answerLikes = new ArrayList<>();
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Notification notification;
 
     protected User() {
     }
@@ -136,6 +140,10 @@ public class User {
         return bio.getValue();
     }
 
+    public boolean hasNotificationToken() {
+        return this.notification != null;
+    }
+
     //== 연관관계 ==//
     public void addQuestionLike(QuestionLike questionLike) {
         this.questionLikes.add(questionLike);
@@ -159,5 +167,9 @@ public class User {
 
     public void addQuestion(Question question) {
         this.questions.add(question);
+    }
+
+    public void addNotification(Notification notification) {
+        this.notification = notification;
     }
 }

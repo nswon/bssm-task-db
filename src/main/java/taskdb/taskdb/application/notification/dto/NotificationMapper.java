@@ -8,9 +8,10 @@ import taskdb.taskdb.domain.user.entity.User;
 @Component
 public class NotificationMapper {
     public Notification of(NotificationPermitRequestDto requestDto, User user) {
-        return Notification.builder()
+        Notification notification = Notification.builder()
                 .token(requestDto.getToken())
-                .user(user)
                 .build();
+        notification.confirmUser(user);
+        return notification;
     }
 }
