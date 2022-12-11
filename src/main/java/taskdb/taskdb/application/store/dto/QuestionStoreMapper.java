@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 
 @Component
 public class QuestionStoreMapper {
+
     public QuestionStore of(Question question, User user) {
         QuestionStore questionStore = QuestionStore.builder()
                 .questionId(question.getId())

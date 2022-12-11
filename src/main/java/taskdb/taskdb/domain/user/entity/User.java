@@ -81,7 +81,7 @@ public class User {
     }
 
     public boolean isNotCorrectEmail(String email) {
-        return this.email.getValue().equals(email);
+        return !this.email.getValue().equals(email);
     }
 
     public void addContributionLevel() {
@@ -153,7 +153,7 @@ public class User {
         this.answerLikes.add(answerLike);
     }
 
-    public void addQuestion(QuestionStore question) {
+    public void addQuestionStore(QuestionStore question) {
         this.questionStores.add(question);
     }
 

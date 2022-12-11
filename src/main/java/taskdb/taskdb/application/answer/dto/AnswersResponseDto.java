@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 
 @Getter
 public class AnswersResponseDto {
+    private Long id;
     private String content;
     private String userImage;
     private String nickname;
@@ -19,6 +20,7 @@ public class AnswersResponseDto {
     }
 
     public AnswersResponseDto(Answer answer) {
+        this.id = answer.getId();
         this.content = answer.getContent();
         this.userImage = answer.getUser().getImgUrl();
         this.nickname = answer.getUser().getNickname();

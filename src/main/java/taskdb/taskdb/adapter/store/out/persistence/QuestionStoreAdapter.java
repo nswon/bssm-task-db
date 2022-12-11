@@ -18,7 +18,7 @@ public class QuestionStoreAdapter implements SaveQuestionStorePort, GetQuestionS
 
     @Override
     public QuestionStore save(QuestionStore questionStore) {
-        validate(questionStore);
+//        validate(questionStore);
         questionStoreRepository.save(questionStore);
         return questionStore;
     }

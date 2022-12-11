@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 
 @Getter
 public class CommentsResponseDto {
+    private Long id;
     private String content;
     private String userImage;
     private String nickname;
@@ -17,6 +18,7 @@ public class CommentsResponseDto {
     }
 
     public CommentsResponseDto(Comment comment) {
+        this.id = comment.getId();
         this.content = comment.getContent();
         this.userImage = comment.getUser().getImgUrl();
         this.nickname = comment.getUser().getNickname();

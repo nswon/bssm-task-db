@@ -2,6 +2,7 @@ package taskdb.taskdb.domain.store.entity;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NonNull;
 import taskdb.taskdb.domain.question.entity.Title;
 import taskdb.taskdb.domain.user.entity.User;
 
@@ -19,6 +20,7 @@ public class QuestionStore {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @Column(name = "question_store_question_id")
     private Long questionId;
 
     @Embedded
@@ -35,7 +37,7 @@ public class QuestionStore {
 
     public void confirmUser(User user) {
         this.user = user;
-        user.addQuestion(this);
+        user.addQuestionStore(this);
     }
 
     public String getTitle() {
