@@ -2,17 +2,12 @@ package taskdb.taskdb.adapter.question.in.web;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import taskdb.taskdb.application.question.dto.QuestionAllResponseDto;
-import taskdb.taskdb.application.question.dto.QuestionCreateRequestDto;
-import taskdb.taskdb.application.question.dto.QuestionDetailResponse;
-import taskdb.taskdb.application.question.dto.QuestionUpdateRequestDto;
-import taskdb.taskdb.application.question.port.in.QuestionDeleteUseCase;
-import taskdb.taskdb.application.question.port.in.QuestionGetUseCase;
-import taskdb.taskdb.application.question.port.in.QuestionSaveUseCase;
-import taskdb.taskdb.application.question.port.in.QuestionUpdateUseCase;
+import taskdb.taskdb.application.question.dto.*;
+import taskdb.taskdb.application.question.port.in.*;
 import taskdb.taskdb.infrastructure.support.Result;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -22,6 +17,7 @@ public class QuestionController {
     private final QuestionGetUseCase questionGetUseCase;
     private final QuestionUpdateUseCase questionUpdateUseCase;
     private final QuestionDeleteUseCase questionDeleteUserCase;
+    private final QuestionRankUseCase questionRankUseCase;
 
     @PostMapping("/new")
     public void create(@RequestBody @Valid QuestionCreateRequestDto requestDto) {
@@ -71,5 +67,11 @@ public class QuestionController {
     public Result getQuestionsByStatus(@RequestParam("status") String command) {
         QuestionAllResponseDto openQuestions = questionGetUseCase.getQuestionsByStatus(command);
         return new Result(openQuestions);
+    }
+
+    @GetMapping("/rank")
+    public Result getQuestionsRank() {
+        List<QuestionsRankResponseDto> response = questionRankUseCase.rank();
+        return new Result(response);
     }
 }

@@ -3,27 +3,26 @@ package taskdb.taskdb.application.question.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import taskdb.taskdb.application.question.dto.QuestionAllResponseDto;
-import taskdb.taskdb.application.question.dto.QuestionCreateRequestDto;
-import taskdb.taskdb.application.question.dto.QuestionDetailResponse;
-import taskdb.taskdb.application.question.dto.QuestionUpdateRequestDto;
+import taskdb.taskdb.application.question.dto.*;
 import taskdb.taskdb.application.question.port.in.*;
 import taskdb.taskdb.application.question.port.out.*;
+import taskdb.taskdb.domain.question.entity.Category;
 import taskdb.taskdb.domain.question.entity.Content;
 import taskdb.taskdb.domain.question.entity.Question;
 import taskdb.taskdb.domain.question.entity.Title;
 import taskdb.taskdb.domain.user.entity.User;
 import taskdb.taskdb.application.user.port.out.GetUserPort;
 import taskdb.taskdb.domain.user.exception.DifferentUserException;
-import taskdb.taskdb.application.question.dto.QuestionMapper;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class QuestionService implements
-        QuestionSaveUseCase, QuestionGetUseCase, QuestionUpdateUseCase, QuestionDeleteUseCase {
+        QuestionSaveUseCase, QuestionGetUseCase, QuestionUpdateUseCase, QuestionDeleteUseCase, QuestionRankUseCase {
     private final GetUserPort getUserPort;
     private final QuestionMapper questionMapper;
     private final SaveQuestionPort saveQuestionPort;
@@ -117,5 +116,30 @@ public class QuestionService implements
         if(user.isNotCorrectEmail(writer.getEmail())) {
             throw new DifferentUserException();
         }
+    }
+
+    @Override
+    public List<QuestionsRankResponseDto> rank() {
+        double questionTotalCount = 1.0 * getQuestionPort.getQuestions().size();
+        return Category.getValues().stream()
+                .map(category -> {
+                    String subjectName = category.name();
+                    String rate = getRate(questionTotalCount, category);
+                    return new QuestionsRankResponseDto(subjectName, rate);
+                })
+                .sorted(Comparator.comparing(QuestionsRankResponseDto::getRate).reversed())
+                .collect(Collectors.toList());
+    }
+
+    private String getRate(double questionCount, Category category) {
+        double subjectCount = getCountByCategory(category);
+        double rate = subjectCount/questionCount * 100;
+        return String.format("%.2f", rate);
+    }
+
+    private double getCountByCategory(Category category) {
+        return 1.0 * (int) getQuestionPort.getQuestions().stream()
+                .filter(question -> question.getCategory().equals(category))
+                .count();
     }
 }

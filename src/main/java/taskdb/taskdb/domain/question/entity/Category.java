@@ -4,6 +4,8 @@ import lombok.Getter;
 import taskdb.taskdb.domain.question.exception.InvalidCategoryException;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 public enum Category {
@@ -27,5 +29,10 @@ public enum Category {
                 .filter(category -> category.command.equals(command))
                 .findAny()
                 .orElseThrow(InvalidCategoryException::new);
+    }
+
+    public static List<Category> getValues() {
+        return Arrays.stream(values())
+                .collect(Collectors.toList());
     }
 }
