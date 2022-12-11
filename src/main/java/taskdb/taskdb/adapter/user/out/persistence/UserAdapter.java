@@ -67,10 +67,9 @@ public class UserAdapter implements SaveUserPort, GetUserPort {
     @Override
     public List<User> getUser() {
         return userRepository.findAll().stream()
-                .sorted(Comparator.comparing(User::getNickname).reversed()
-                        .thenComparing(User::getQuestionCount).reversed()
+                .sorted(Comparator.comparing(User::getContributionLevel).reversed()
                         .thenComparing(User::getAnswerCount).reversed()
-                        .thenComparing(User::getContributionLevel).reversed())
+                        .thenComparing(User::getNickname))
                 .limit(RANK_SIZE)
                 .collect(Collectors.toList());
     }
