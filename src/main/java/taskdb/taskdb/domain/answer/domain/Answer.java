@@ -87,4 +87,8 @@ public class Answer extends BaseTimeEntity {
     public String getContent() {
         return content.getValue();
     }
+
+    public boolean isAdopt() {
+        return this.choose.equals(AnswerChoose.ADOPT);
+    }
 }

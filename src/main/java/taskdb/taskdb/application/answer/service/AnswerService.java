@@ -12,10 +12,12 @@ import taskdb.taskdb.application.answer.port.out.GetAnswerPort;
 import taskdb.taskdb.application.answer.port.out.SaveAnswerPort;
 import taskdb.taskdb.application.question.port.out.GetQuestionPort;
 import taskdb.taskdb.domain.answer.domain.Answer;
+import taskdb.taskdb.domain.answer.domain.AnswerChoose;
 import taskdb.taskdb.domain.answer.domain.Content;
 import taskdb.taskdb.application.answer.dto.AnswerCreateRequestDto;
 import taskdb.taskdb.application.answer.dto.AnswerUpdateRequestDto;
 import taskdb.taskdb.application.notification.service.NotificationService;
+import taskdb.taskdb.domain.answer.exception.DuplicateAdoptException;
 import taskdb.taskdb.domain.question.entity.Question;
 import taskdb.taskdb.domain.user.entity.User;
 import taskdb.taskdb.application.user.port.out.GetUserPort;
@@ -69,6 +71,7 @@ public class AnswerService implements
         Answer answer = getAnswerPort.getAnswer(id);
         Question question = answer.getQuestion();
         checkDifferentUser(question.getUser());
+        checkDuplicateAdopt(answer);
         answer.adopt();
         question.closeQuestion();
         User answeredUser = answer.getUser();
@@ -79,6 +82,12 @@ public class AnswerService implements
         User user = getUserPort.getCurrentUser();
         if(user.isNotCorrectEmail(writer.getEmail())) {
             throw new DifferentUserException();
+        }
+    }
+
+    private void checkDuplicateAdopt(Answer answer) {
+        if(answer.isAdopt()) {
+            throw new DuplicateAdoptException();
         }
     }
 }
