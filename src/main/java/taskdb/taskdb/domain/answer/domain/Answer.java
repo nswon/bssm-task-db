@@ -91,4 +91,8 @@ public class Answer extends BaseTimeEntity {
     public boolean isAdopt() {
         return this.choose.equals(AnswerChoose.ADOPT);
     }
+
+    public boolean isOngoing() {
+        return choose.equals(AnswerChoose.ONGOING);
+    }
 }

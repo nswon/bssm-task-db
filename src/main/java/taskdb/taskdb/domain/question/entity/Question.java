@@ -3,9 +3,7 @@ package taskdb.taskdb.domain.question.entity;
 import lombok.Builder;
 import lombok.Getter;
 import taskdb.taskdb.domain.answer.domain.Answer;
-import taskdb.taskdb.application.answer.dto.AnswersResponseDto;
 import taskdb.taskdb.domain.comment.domain.Comment;
-import taskdb.taskdb.application.comment.dto.CommentsResponseDto;
 import taskdb.taskdb.domain.like.entity.QuestionLike;
 import taskdb.taskdb.domain.user.entity.User;
 import taskdb.taskdb.infrastructure.support.BaseTimeEntity;
@@ -13,7 +11,6 @@ import taskdb.taskdb.infrastructure.support.BaseTimeEntity;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Entity
 @Getter
@@ -98,18 +95,6 @@ public class Question extends BaseTimeEntity {
 
     public int getCommentsSize() {
         return comments.size();
-    }
-
-    public List<CommentsResponseDto> toCommentsResponseDto() {
-        return this.comments.stream()
-                .map(CommentsResponseDto::new)
-                .collect(Collectors.toList());
-    }
-
-    public List<AnswersResponseDto> toAnswersResponseDto() {
-        return this.answers.stream()
-                .map(AnswersResponseDto::new)
-                .collect(Collectors.toList());
     }
 
     public void addAnswer(Answer answer) {

@@ -4,11 +4,16 @@ import lombok.Builder;
 import lombok.Getter;
 import taskdb.taskdb.application.answer.dto.AnswersResponseDto;
 import taskdb.taskdb.application.comment.dto.CommentsResponseDto;
+import taskdb.taskdb.domain.answer.domain.Answer;
+import taskdb.taskdb.domain.comment.domain.Comment;
 import taskdb.taskdb.domain.question.entity.Question;
 import taskdb.taskdb.domain.question.entity.QuestionStatus;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 public class QuestionDetailResponse {
@@ -42,7 +47,22 @@ public class QuestionDetailResponse {
         this.viewCount = question.getViewCount();
         this.likeCount = question.getLikeCount();
         this.content = question.getContent();
-        this.comments = question.toCommentsResponseDto();
-        this.answers = question.toAnswersResponseDto();
+        this.comments = toCommentsResponseDto(question.getComments());
+        this.answers = toAnswersResponseDto(question.getAnswers());
+    }
+
+    private List<CommentsResponseDto> toCommentsResponseDto(List<Comment> comments) {
+        return comments.stream()
+                .map(CommentsResponseDto::new)
+                .collect(Collectors.toList());
+    }
+
+    private List<AnswersResponseDto> toAnswersResponseDto(List<Answer> answers) {
+        return answers.stream()
+                .filter(Answer::isOngoing)
+                .sorted(Comparator.comparing(Answer::isAdopt).reversed()
+                        .thenComparing(Answer::getLikeCount).reversed())
+                .map(AnswersResponseDto::new)
+                .collect(Collectors.toList());
     }
 }
