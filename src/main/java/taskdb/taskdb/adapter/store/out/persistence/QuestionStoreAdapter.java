@@ -8,6 +8,7 @@ import taskdb.taskdb.application.store.port.out.SaveQuestionStorePort;
 import taskdb.taskdb.domain.store.entity.QuestionStore;
 import taskdb.taskdb.domain.store.exception.DuplicateQuestionStoreException;
 import taskdb.taskdb.domain.store.exception.StoreQuestionNotFoundException;
+import taskdb.taskdb.domain.user.entity.User;
 
 import java.util.List;
 
@@ -17,20 +18,29 @@ public class QuestionStoreAdapter implements SaveQuestionStorePort, GetQuestionS
     private final QuestionStoreRepository questionStoreRepository;
 
     @Override
-    public QuestionStore save(QuestionStore questionStore) {
-//        validate(questionStore);
-        questionStoreRepository.save(questionStore);
-        return questionStore;
+    public QuestionStore save(User user, QuestionStore questionStore) {
+        validate(user, questionStore);
+        return questionStoreRepository.save(questionStore);
+    }
+
+    private void validate(User user, QuestionStore target) {
+        boolean isDuplicate = questionStoreRepository.existsByUserAndQuestionId(user, target.getQuestionId());
+        if(isDuplicate) {
+            throw new DuplicateQuestionStoreException();
+        }
     }
 
     @Override
-    public List<QuestionStore> getQuestions() {
-        return questionStoreRepository.findAll();
+    public List<QuestionStore> getQuestions(User user) {
+        return questionStoreRepository.findByUser(user);
     }
 
     @Override
-    public QuestionStore getQuestionStore(Long id) {
-        return questionStoreRepository.findById(id)
+    public QuestionStore getQuestionStore(User user, Long id) {
+        List<QuestionStore> questionStores = questionStoreRepository.findByUser(user);
+        return questionStores.stream()
+                .filter(questionStore -> questionStore.getId().equals(id))
+                .findAny()
                 .orElseThrow(StoreQuestionNotFoundException::new);
     }
 
@@ -42,12 +52,5 @@ public class QuestionStoreAdapter implements SaveQuestionStorePort, GetQuestionS
     @Override
     public void delete() {
         questionStoreRepository.deleteAllInBatch();
-    }
-
-    private void validate(QuestionStore questionStore) {
-        boolean isDuplicateQuestion = questionStoreRepository.findById(questionStore.getId()).isPresent();
-        if(isDuplicateQuestion) {
-            throw new DuplicateQuestionStoreException();
-        }
     }
 }
