@@ -18,7 +18,7 @@ import taskdb.taskdb.application.user.port.out.GetUserPort;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class QuestionAnswerLikeService implements QuestionLikeUseCase {
+public class QuestionLikeService implements QuestionLikeUseCase {
     private static final String FOUR_A_M_CORN = "0 0 4 * * *";
     private final GetUserPort getUserPort;
     private final GetQuestionPort getQuestionPort;
@@ -32,7 +32,7 @@ public class QuestionAnswerLikeService implements QuestionLikeUseCase {
         User user = getUserPort.getCurrentUser();
         Question question = getQuestionPort.getQuestion(id);
 
-        boolean hasLike = existQuestionLikePort.hasAnswerLike(question, user);
+        boolean hasLike = existQuestionLikePort.hasQuestionLike(question, user);
         if(hasLike) {
             deleteQuestionLikePort.delete(question, user);
             question.downLikeCount();

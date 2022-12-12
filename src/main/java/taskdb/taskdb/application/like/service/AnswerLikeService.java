@@ -19,7 +19,7 @@ import taskdb.taskdb.application.like.dto.AnswerLikeMapper;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class AnswerAnswerLikeService implements AnswerLikeUseCase {
+public class AnswerLikeService implements AnswerLikeUseCase {
     private static final String FOUR_A_M_CORN = "0 0 4 * * *";
     private final GetUserPort getUserPort;
     private final ExistAnswerLikePort existAnswerLikePort;

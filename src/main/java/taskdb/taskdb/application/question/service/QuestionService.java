@@ -3,6 +3,7 @@ package taskdb.taskdb.application.question.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import taskdb.taskdb.application.like.port.out.ExistQuestionLikePort;
 import taskdb.taskdb.application.question.dto.*;
 import taskdb.taskdb.application.question.port.in.*;
 import taskdb.taskdb.application.question.port.out.*;
@@ -30,6 +31,7 @@ public class QuestionService implements
     private final DeleteQuestionPort deleteQuestionPort;
     private final SaveVisitQuestionPort saveVisitQuestionPort;
     private final GetVisitQuestionPort getVisitQuestionPort;
+    private final ExistQuestionLikePort existQuestionLikePort;
 
     @Override
     @Transactional
@@ -48,9 +50,11 @@ public class QuestionService implements
 
     @Transactional
     public QuestionDetailResponse getQuestion(Long id) {
+        User user = getUserPort.getCurrentUser();
         Question question = getQuestionPort.getQuestion(id);
         checkViewCount(question);
-        return questionMapper.of(question);
+        boolean hasLike = hasLike(question, user);
+        return questionMapper.of(hasLike, question);
     }
 
     private void checkViewCount(Question question) {
@@ -59,6 +63,10 @@ public class QuestionService implements
             saveVisitQuestionPort.save(question.getId());
             question.addViewCount();
         }
+    }
+
+    private boolean hasLike(Question question, User user) {
+        return existQuestionLikePort.hasQuestionLike(question, user);
     }
 
     private boolean canAddViewCount(List<String> questionIds, String questionId) {

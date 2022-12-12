@@ -30,8 +30,8 @@ public class QuestionMapper {
         return new QuestionAllResponseDto(getQuestionAllElements);
     }
 
-    public QuestionDetailResponse of(Question question) {
-        return new QuestionDetailResponse(question);
+    public QuestionDetailResponse of(boolean hasLike, Question question) {
+        return new QuestionDetailResponse(hasLike, question);
     }
 
     private List<QuestionAllElementResponse> getQuestionsElements(List<Question> questions) {

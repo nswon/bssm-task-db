@@ -3,20 +3,19 @@ package taskdb.taskdb.application.store.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import taskdb.taskdb.adapter.store.out.persistence.QuestionStoreRepository;
 import taskdb.taskdb.application.question.port.out.GetQuestionPort;
+import taskdb.taskdb.application.store.dto.QuestionStoreMapper;
+import taskdb.taskdb.application.store.dto.QuestionStoresResponseDto;
 import taskdb.taskdb.application.store.port.in.DeleteQuestionStoreUseCase;
 import taskdb.taskdb.application.store.port.in.GetQuestionStoreUseCase;
 import taskdb.taskdb.application.store.port.in.QuestionStoreSaveUseCase;
 import taskdb.taskdb.application.store.port.out.DeleteQuestionStorePort;
 import taskdb.taskdb.application.store.port.out.GetQuestionStorePort;
 import taskdb.taskdb.application.store.port.out.SaveQuestionStorePort;
+import taskdb.taskdb.application.user.port.out.GetUserPort;
 import taskdb.taskdb.domain.question.entity.Question;
 import taskdb.taskdb.domain.store.entity.QuestionStore;
-import taskdb.taskdb.application.store.dto.QuestionStoresResponseDto;
 import taskdb.taskdb.domain.user.entity.User;
-import taskdb.taskdb.application.user.port.out.GetUserPort;
-import taskdb.taskdb.application.store.dto.QuestionStoreMapper;
 
 import java.util.List;
 

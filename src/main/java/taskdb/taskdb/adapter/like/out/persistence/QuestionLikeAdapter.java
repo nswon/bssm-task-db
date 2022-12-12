@@ -19,7 +19,7 @@ public class QuestionLikeAdapter implements
     private final QuestionLikeRepository questionLikeRepository;
 
     @Override
-    public boolean hasAnswerLike(Question question, User user) {
+    public boolean hasQuestionLike(Question question, User user) {
         return questionLikeRepository.existsByQuestionAndUser(question, user);
     }
 

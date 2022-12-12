@@ -8,6 +8,7 @@ import taskdb.taskdb.domain.answer.domain.Answer;
 import taskdb.taskdb.domain.comment.domain.Comment;
 import taskdb.taskdb.domain.question.entity.Question;
 import taskdb.taskdb.domain.question.entity.QuestionStatus;
+import taskdb.taskdb.domain.user.entity.User;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
@@ -30,12 +31,13 @@ public class QuestionDetailResponse {
     private String content;
     private List<CommentsResponseDto> comments;
     private List<AnswersResponseDto> answers;
+    private boolean hasLike;
 
     public QuestionDetailResponse() {
     }
 
     @Builder
-    public QuestionDetailResponse(Question question) {
+    public QuestionDetailResponse(boolean hasLike, Question question) {
         this.id = question.getId();
         this.title = question.getTitle();
         this.status = question.getQuestionStatus();
@@ -49,6 +51,7 @@ public class QuestionDetailResponse {
         this.content = question.getContent();
         this.comments = toCommentsResponseDto(question.getComments());
         this.answers = toAnswersResponseDto(question.getAnswers());
+        this.hasLike = hasLike;
     }
 
     private List<CommentsResponseDto> toCommentsResponseDto(List<Comment> comments) {
@@ -59,8 +62,7 @@ public class QuestionDetailResponse {
 
     private List<AnswersResponseDto> toAnswersResponseDto(List<Answer> answers) {
         return answers.stream()
-                .filter(Answer::isOngoing)
-                .sorted(Comparator.comparing(Answer::isAdopt).reversed()
+                .sorted(Comparator.comparing(Answer::isAdopt)
                         .thenComparing(Answer::getLikeCount).reversed())
                 .map(AnswersResponseDto::new)
                 .collect(Collectors.toList());
