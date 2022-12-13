@@ -21,6 +21,7 @@ import taskdb.taskdb.application.answer.dto.AnswerCreateRequestDto;
 import taskdb.taskdb.application.answer.dto.AnswerUpdateRequestDto;
 import taskdb.taskdb.application.notification.service.NotificationService;
 import taskdb.taskdb.domain.answer.exception.DuplicateAdoptException;
+import taskdb.taskdb.domain.answer.exception.UnauthorizedAdoptAnswerException;
 import taskdb.taskdb.domain.question.entity.Question;
 import taskdb.taskdb.domain.user.entity.User;
 import taskdb.taskdb.application.user.port.out.GetUserPort;
@@ -77,6 +78,7 @@ public class AnswerService implements
     public void update(Long id, AnswerUpdateRequestDto requestDto) {
         Answer answer = getAnswerPort.getAnswer(id);
         checkDifferentUser(answer.getUser());
+        checkAdoptAnswer(answer);
         updateContent(requestDto.getContent(), answer);
     }
 
@@ -89,6 +91,7 @@ public class AnswerService implements
     public void delete(Long id) {
         Answer answer = getAnswerPort.getAnswer(id);
         checkDifferentUser(answer.getUser());
+        checkAdoptAnswer(answer);
         deleteAnswerPort.delete(answer);
     }
 
@@ -104,6 +107,12 @@ public class AnswerService implements
         answeredUser.addContributionLevel();
     }
 
+    private void checkDuplicateAdopt(Answer answer) {
+        if(answer.isAdopt()) {
+            throw new DuplicateAdoptException();
+        }
+    }
+
     private void checkDifferentUser(User writer) {
         User user = getUserPort.getCurrentUser();
         if(user.isNotCorrectEmail(writer.getEmail())) {
@@ -111,9 +120,9 @@ public class AnswerService implements
         }
     }
 
-    private void checkDuplicateAdopt(Answer answer) {
+    private void checkAdoptAnswer(Answer answer) {
         if(answer.isAdopt()) {
-            throw new DuplicateAdoptException();
+            throw new UnauthorizedAdoptAnswerException();
         }
     }
 }
