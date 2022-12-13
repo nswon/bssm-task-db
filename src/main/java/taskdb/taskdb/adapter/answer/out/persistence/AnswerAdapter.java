@@ -7,6 +7,7 @@ import taskdb.taskdb.application.answer.port.out.GetAnswerPort;
 import taskdb.taskdb.application.answer.port.out.SaveAnswerPort;
 import taskdb.taskdb.domain.answer.domain.Answer;
 import taskdb.taskdb.domain.answer.exception.AnswerNotFoundException;
+import taskdb.taskdb.domain.question.entity.Question;
 
 import java.util.List;
 
@@ -29,6 +30,11 @@ public class AnswerAdapter implements SaveAnswerPort, GetAnswerPort, DeleteAnswe
     @Override
     public List<Answer> getAnswers() {
         return answerRepository.findAll();
+    }
+
+    @Override
+    public List<Answer> getAnswers(Question question) {
+        return answerRepository.findByQuestion(question);
     }
 
     @Override

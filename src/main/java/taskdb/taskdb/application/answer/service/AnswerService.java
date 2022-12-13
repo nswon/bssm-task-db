@@ -56,9 +56,9 @@ public class AnswerService implements
         notificationService.sendMessage(user.getNickname(), question);
     }
 
-    public List<AnswersResponseDto> getAnswers() {
+    public List<AnswersResponseDto> getAnswers(Question question) {
         User user = getUserPort.getCurrentUser();
-        return getAnswerPort.getAnswers().stream()
+        return getAnswerPort.getAnswers(question).stream()
                 .sorted(Comparator.comparing(Answer::isAdopt)
                         .thenComparing(Answer::getLikeCount).reversed())
                 .map(answer -> new AnswersResponseDto(hasLike(answer, user), hasUnLike(answer, user), answer))

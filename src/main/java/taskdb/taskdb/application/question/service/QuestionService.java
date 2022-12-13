@@ -59,7 +59,10 @@ public class QuestionService implements
         User user = getUserPort.getCurrentUser();
         Question question = getQuestionPort.getQuestion(id);
         checkViewCount(question);
-        return questionMapper.of(hasLike(question, user), hasUnLike(question, user), question, answerService.getAnswers());
+        return questionMapper.of(hasLike(question, user),
+                hasUnLike(question, user),
+                question,
+                answerService.getAnswers(question));
     }
 
     private void checkViewCount(Question question) {
