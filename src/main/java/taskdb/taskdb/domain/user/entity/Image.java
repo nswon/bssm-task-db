@@ -8,8 +8,8 @@ import javax.persistence.Embeddable;
 @Getter
 @Embeddable
 public class Image {
-    private static final String DEFAULT_IMAGE_PATH = "de1d0432-0d45-4872-b27c-8ac19f701837_THUMBNAIL_60_60_icon_rep_box.gif";
-    private static final String DEFAULT_IMAGE_URL = "https://taskdb.s3.ap-northeast-2.amazonaws.com/de1d0432-0d45-4872-b27c-8ac19f701837_THUMBNAIL_60_60_icon_rep_box.gif";
+    private static final String DEFAULT_IMAGE_PATH = "06923f43-7161-40f9-9070-82cbc6e970bd_ho.png";
+    private static final String DEFAULT_IMAGE_URL = "https://taskdb-new.s3.ap-northeast-2.amazonaws.com/06923f43-7161-40f9-9070-82cbc6e970bd_ho.png";
 
     @Column(name = "img_path")
     private String path;
