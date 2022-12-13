@@ -1,6 +1,7 @@
 package taskdb.taskdb.application.question.dto;
 
 import org.springframework.stereotype.Component;
+import taskdb.taskdb.application.answer.dto.AnswersResponseDto;
 import taskdb.taskdb.domain.question.entity.Content;
 import taskdb.taskdb.domain.question.entity.Question;
 import taskdb.taskdb.domain.question.entity.Title;
@@ -30,8 +31,11 @@ public class QuestionMapper {
         return new QuestionAllResponseDto(getQuestionAllElements);
     }
 
-    public QuestionDetailResponse of(boolean hasLike, Question question) {
-        return new QuestionDetailResponse(hasLike, question);
+    public QuestionDetailResponse of(boolean hasLike,
+                                     boolean hasUnLike,
+                                     Question question,
+                                     List<AnswersResponseDto> answersResponseDto) {
+        return new QuestionDetailResponse(hasLike, hasUnLike, question, answersResponseDto);
     }
 
     private List<QuestionAllElementResponse> getQuestionsElements(List<Question> questions) {

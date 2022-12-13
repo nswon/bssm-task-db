@@ -32,12 +32,16 @@ public class QuestionDetailResponse {
     private List<CommentsResponseDto> comments;
     private List<AnswersResponseDto> answers;
     private boolean hasLike;
+    private boolean hasUnLike;
 
     public QuestionDetailResponse() {
     }
 
     @Builder
-    public QuestionDetailResponse(boolean hasLike, Question question) {
+    public QuestionDetailResponse(boolean hasLike,
+                                  boolean hasUnLike,
+                                  Question question,
+                                  List<AnswersResponseDto> answers) {
         this.id = question.getId();
         this.title = question.getTitle();
         this.status = question.getQuestionStatus();
@@ -50,21 +54,14 @@ public class QuestionDetailResponse {
         this.likeCount = question.getLikeCount();
         this.content = question.getContent();
         this.comments = toCommentsResponseDto(question.getComments());
-        this.answers = toAnswersResponseDto(question.getAnswers());
+        this.answers = answers;
         this.hasLike = hasLike;
+        this.hasUnLike = hasUnLike;
     }
 
     private List<CommentsResponseDto> toCommentsResponseDto(List<Comment> comments) {
         return comments.stream()
                 .map(CommentsResponseDto::new)
-                .collect(Collectors.toList());
-    }
-
-    private List<AnswersResponseDto> toAnswersResponseDto(List<Answer> answers) {
-        return answers.stream()
-                .sorted(Comparator.comparing(Answer::isAdopt)
-                        .thenComparing(Answer::getLikeCount).reversed())
-                .map(AnswersResponseDto::new)
                 .collect(Collectors.toList());
     }
 }

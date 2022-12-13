@@ -3,10 +3,14 @@ package taskdb.taskdb.application.question.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import taskdb.taskdb.application.answer.service.AnswerService;
+import taskdb.taskdb.application.answerLike.port.out.ExistAnswerLikePort;
+import taskdb.taskdb.application.answerLike.port.out.ExistAnswerUnLikePort;
 import taskdb.taskdb.application.questionLike.port.out.ExistQuestionLikePort;
 import taskdb.taskdb.application.question.dto.*;
 import taskdb.taskdb.application.question.port.in.*;
 import taskdb.taskdb.application.question.port.out.*;
+import taskdb.taskdb.application.questionLike.port.out.ExistQuestionUnLikePort;
 import taskdb.taskdb.domain.question.entity.Category;
 import taskdb.taskdb.domain.question.entity.Content;
 import taskdb.taskdb.domain.question.entity.Question;
@@ -32,6 +36,8 @@ public class QuestionService implements
     private final SaveVisitQuestionPort saveVisitQuestionPort;
     private final GetVisitQuestionPort getVisitQuestionPort;
     private final ExistQuestionLikePort existQuestionLikePort;
+    private final ExistQuestionUnLikePort existQuestionUnLikePort;
+    private final AnswerService answerService;
 
     @Override
     @Transactional
@@ -53,8 +59,7 @@ public class QuestionService implements
         User user = getUserPort.getCurrentUser();
         Question question = getQuestionPort.getQuestion(id);
         checkViewCount(question);
-        boolean hasLike = hasLike(question, user);
-        return questionMapper.of(hasLike, question);
+        return questionMapper.of(hasLike(question, user), hasUnLike(question, user), question, answerService.getAnswers());
     }
 
     private void checkViewCount(Question question) {
@@ -67,6 +72,10 @@ public class QuestionService implements
 
     private boolean hasLike(Question question, User user) {
         return existQuestionLikePort.hasQuestionLike(question, user);
+    }
+
+    private boolean hasUnLike(Question question, User user) {
+        return existQuestionUnLikePort.hasQuestionUnLike(question, user);
     }
 
     private boolean canAddViewCount(List<String> questionIds, String questionId) {

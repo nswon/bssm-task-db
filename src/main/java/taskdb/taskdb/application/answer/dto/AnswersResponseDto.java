@@ -15,11 +15,13 @@ public class AnswersResponseDto {
     private int likeCount;
     private LocalDateTime createdDate;
     private String status;
+    private boolean hasLike;
+    private boolean hasUnLike;
 
     public AnswersResponseDto() {
     }
 
-    public AnswersResponseDto(Answer answer) {
+    public AnswersResponseDto(boolean hasLike, boolean hasUnLike, Answer answer) {
         this.id = answer.getId();
         this.content = answer.getContent();
         this.userImage = answer.getUser().getImgUrl();
@@ -28,5 +30,7 @@ public class AnswersResponseDto {
         this.likeCount = answer.getLikeCount();
         this.createdDate = answer.getCreatedDate();
         this.status = answer.getChoose().getValue();
+        this.hasLike = hasLike;
+        this.hasUnLike = hasUnLike;
     }
 }
