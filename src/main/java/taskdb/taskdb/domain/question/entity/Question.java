@@ -4,7 +4,8 @@ import lombok.Builder;
 import lombok.Getter;
 import taskdb.taskdb.domain.answer.domain.Answer;
 import taskdb.taskdb.domain.comment.domain.Comment;
-import taskdb.taskdb.domain.like.entity.QuestionLike;
+import taskdb.taskdb.domain.questionLike.entity.QuestionLike;
+import taskdb.taskdb.domain.questionLike.entity.QuestionUnLike;
 import taskdb.taskdb.domain.user.entity.User;
 import taskdb.taskdb.infrastructure.support.BaseTimeEntity;
 
@@ -49,6 +50,9 @@ public class Question extends BaseTimeEntity {
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
     private final List<QuestionLike> questionLikes = new ArrayList<>();
 
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
+    private final List<QuestionUnLike> questionUnLikes = new ArrayList<>();
+
     protected Question() {
     }
 
@@ -79,14 +83,6 @@ public class Question extends BaseTimeEntity {
     public void update(Title title, Content content) {
         this.title = title;
         this.content = content;
-    }
-
-    public boolean isOpen() {
-        return this.questionStatus == QuestionStatus.OPEN;
-    }
-
-    public boolean isClose() {
-        return this.questionStatus == QuestionStatus.CLOSE;
     }
 
     public void addComment(Comment comment) {
@@ -123,5 +119,9 @@ public class Question extends BaseTimeEntity {
 
     public String getTitle() {
         return title.getValue();
+    }
+
+    public void addQuestionUnLike(QuestionUnLike questionUnLike) {
+        questionUnLikes.add(questionUnLike);
     }
 }

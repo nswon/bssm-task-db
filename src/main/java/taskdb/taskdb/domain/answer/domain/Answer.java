@@ -2,8 +2,9 @@ package taskdb.taskdb.domain.answer.domain;
 
 import lombok.Builder;
 import lombok.Getter;
-import taskdb.taskdb.domain.like.entity.AnswerLike;
+import taskdb.taskdb.domain.answerLike.entity.AnswerLike;
 import taskdb.taskdb.domain.question.entity.Question;
+import taskdb.taskdb.domain.answerLike.entity.AnswerUnLike;
 import taskdb.taskdb.domain.user.entity.User;
 import taskdb.taskdb.infrastructure.support.BaseTimeEntity;
 
@@ -35,6 +36,9 @@ public class Answer extends BaseTimeEntity {
 
     @OneToMany(mappedBy = "answer", cascade = CascadeType.ALL, orphanRemoval = true)
     private final List<AnswerLike> answerLikes = new ArrayList<>();
+
+    @OneToMany(mappedBy = "answer", cascade = CascadeType.ALL, orphanRemoval = true)
+    private final List<AnswerUnLike> answerUnLikes = new ArrayList<>();
 
     private int likeCount;
 
@@ -94,5 +98,9 @@ public class Answer extends BaseTimeEntity {
 
     public boolean isOngoing() {
         return choose.equals(AnswerChoose.ONGOING);
+    }
+
+    public void addAnswerUnLike(AnswerUnLike answerUnLike) {
+        answerUnLikes.add(answerUnLike);
     }
 }

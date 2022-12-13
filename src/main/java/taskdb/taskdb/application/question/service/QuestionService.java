@@ -3,7 +3,7 @@ package taskdb.taskdb.application.question.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import taskdb.taskdb.application.like.port.out.ExistQuestionLikePort;
+import taskdb.taskdb.application.questionLike.port.out.ExistQuestionLikePort;
 import taskdb.taskdb.application.question.dto.*;
 import taskdb.taskdb.application.question.port.in.*;
 import taskdb.taskdb.application.question.port.out.*;

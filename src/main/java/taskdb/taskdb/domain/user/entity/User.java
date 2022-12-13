@@ -4,8 +4,10 @@ import lombok.Builder;
 import lombok.Getter;
 import taskdb.taskdb.domain.answer.domain.Answer;
 import taskdb.taskdb.domain.comment.domain.Comment;
-import taskdb.taskdb.domain.like.entity.AnswerLike;
-import taskdb.taskdb.domain.like.entity.QuestionLike;
+import taskdb.taskdb.domain.answerLike.entity.AnswerLike;
+import taskdb.taskdb.domain.questionLike.entity.QuestionLike;
+import taskdb.taskdb.domain.answerLike.entity.AnswerUnLike;
+import taskdb.taskdb.domain.questionLike.entity.QuestionUnLike;
 import taskdb.taskdb.domain.notification.entity.Notification;
 import taskdb.taskdb.domain.question.entity.Question;
 import taskdb.taskdb.domain.store.entity.QuestionStore;
@@ -65,6 +67,12 @@ public class User {
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Notification notification;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private final List<QuestionUnLike> questionUnLikes = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private final List<AnswerUnLike> answerUnLikes = new ArrayList<>();
 
     protected User() {
     }
@@ -171,5 +179,13 @@ public class User {
 
     public void addNotification(Notification notification) {
         this.notification = notification;
+    }
+
+    public void addQuestionUnLike(QuestionUnLike questionUnLike) {
+        questionUnLikes.add(questionUnLike);
+    }
+
+    public void addAnswerUnLike(AnswerUnLike answerUnLike) {
+        answerUnLikes.add(answerUnLike);
     }
 }
