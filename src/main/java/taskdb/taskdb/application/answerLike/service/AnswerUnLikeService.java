@@ -7,6 +7,7 @@ import taskdb.taskdb.application.answer.port.out.GetAnswerPort;
 import taskdb.taskdb.application.answerLike.port.out.DeleteAnswerLikePort;
 import taskdb.taskdb.application.answerLike.dto.AnswerUnLikeMapper;
 import taskdb.taskdb.application.answerLike.port.in.AnswerUnLikeUseCase;
+import taskdb.taskdb.application.answerLike.port.out.ExistAnswerLikePort;
 import taskdb.taskdb.application.answerLike.port.out.ExistAnswerUnLikePort;
 import taskdb.taskdb.application.answerLike.port.out.SaveAnswerUnLikePort;
 import taskdb.taskdb.application.user.port.out.GetUserPort;
@@ -22,6 +23,7 @@ public class AnswerUnLikeService implements AnswerUnLikeUseCase {
     private final GetUserPort getUserPort;
     private final GetAnswerPort getAnswerPort;
     private final ExistAnswerUnLikePort existAnswerUnLikePort;
+    private final ExistAnswerLikePort existAnswerLikePort;
     private final AnswerUnLikeMapper answerUnLikeMapper;
     private final SaveAnswerUnLikePort saveAnswerUnLikePort;
     private final DeleteAnswerLikePort deleteAnswerLikePort;
@@ -33,13 +35,20 @@ public class AnswerUnLikeService implements AnswerUnLikeUseCase {
         checkUnLike(answer, user);
         AnswerUnLike answerUnLike = answerUnLikeMapper.toEntity(answer, user);
         saveAnswerUnLikePort.save(answerUnLike);
-        deleteAnswerLikePort.delete(answer, user);
+        checkUnLikeCount(answer, user);
         answer.downLikeCount();
     }
 
     private void checkUnLike(Answer answer, User user) {
         if(existAnswerUnLikePort.hasAnswerUnLike(answer, user)) {
             throw new DuplicateAnswerUnLikeException();
+        }
+    }
+
+    private void checkUnLikeCount(Answer answer, User user) {
+        if(existAnswerLikePort.hasAnswerLike(answer, user)) {
+            answer.downLikeCount();
+            deleteAnswerLikePort.delete(answer, user);
         }
     }
 }

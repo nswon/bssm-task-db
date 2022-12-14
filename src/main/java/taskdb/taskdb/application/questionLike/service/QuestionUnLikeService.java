@@ -7,6 +7,7 @@ import taskdb.taskdb.application.questionLike.port.out.DeleteQuestionLikePort;
 import taskdb.taskdb.application.question.port.out.GetQuestionPort;
 import taskdb.taskdb.application.questionLike.dto.QuestionUnLikeMapper;
 import taskdb.taskdb.application.questionLike.port.in.QuestionUnLikeUseCase;
+import taskdb.taskdb.application.questionLike.port.out.ExistQuestionLikePort;
 import taskdb.taskdb.application.questionLike.port.out.ExistQuestionUnLikePort;
 import taskdb.taskdb.application.questionLike.port.out.SaveQuestionUnLikePort;
 import taskdb.taskdb.application.user.port.out.GetUserPort;
@@ -25,6 +26,7 @@ public class QuestionUnLikeService implements QuestionUnLikeUseCase {
     private final QuestionUnLikeMapper questionUnLikeMapper;
     private final SaveQuestionUnLikePort saveQuestionUnLikePort;
     private final DeleteQuestionLikePort deleteQuestionLikePort;
+    private final ExistQuestionLikePort existQuestionLikePort;
 
     @Override
     public void unLike(Long id) {
@@ -33,13 +35,20 @@ public class QuestionUnLikeService implements QuestionUnLikeUseCase {
         checkUnLike(question, user);
         QuestionUnLike questionUnLike = questionUnLikeMapper.toEntity(question, user);
         saveQuestionUnLikePort.save(questionUnLike);
-        deleteQuestionLikePort.delete(question, user);
+        checkUnLikeCount(question, user);
         question.downLikeCount();
     }
 
     private void checkUnLike(Question question, User user) {
         if(existQuestionUnLikePort.hasQuestionUnLike(question, user)) {
             throw new DuplicateQuestionUnLikeException();
+        }
+    }
+
+    private void checkUnLikeCount(Question question, User user) {
+        if(existQuestionLikePort.hasQuestionLike(question, user)) {
+            question.downLikeCount();
+            deleteQuestionLikePort.delete(question, user);
         }
     }
 }
