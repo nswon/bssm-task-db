@@ -1,11 +1,27 @@
-version: "3"
+version: "3.7"
 
 services:
-  redis:
+  taskdb-db:
+    image: mysql:8.0
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_DATABASE=taskdb
+      - MYSQL_ROOT_PASSWORD=nswon0729@
+      - MYSQL_USER=nswon
+      - MYSQL_PASSWORD=nswon0729@
+      - TZ=UTC
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+      - --lower_case_table_names=1
+  taskdb-redis:
+    image: redis:alpine
+    command: redis-server --port 6379
     container_name: taskdb-redis
-    image: redis
+    hostname: taskdb
+    labels:
+      - "name=redis"
+      - "mode=standalone"
     ports:
       - 6379:6379
-  server:
-    depends_on:
-      - redis
