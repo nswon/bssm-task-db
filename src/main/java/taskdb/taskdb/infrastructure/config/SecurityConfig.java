@@ -65,7 +65,7 @@ public class SecurityConfig {
 
         configuration.addAllowedOriginPattern("*");
         configuration.addAllowedOrigin("/**");
-        configuration.setAllowedOrigins(List.of("localhost:3000"));
+        configuration.setAllowedOrigins(List.of("localhost:3000", "http://13.209.39.0:3000", "https://13.209.39.0:3000"));
         configuration.addAllowedHeader("*");
         configuration.addAllowedMethod("*");
         configuration.setAllowCredentials(true);

@@ -15,6 +15,6 @@ public class QuestionStoreResponseDto {
     public QuestionStoreResponseDto(QuestionStore questionStore) {
         this.id = questionStore.getId();
         this.questionId = questionStore.getQuestionId();
-        this.title = questionStore.getTitle();
+        this.title = questionStore.getQuestionTitle();
     }
 }

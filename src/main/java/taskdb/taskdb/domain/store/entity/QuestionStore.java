@@ -2,8 +2,6 @@ package taskdb.taskdb.domain.store.entity;
 
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NonNull;
-import taskdb.taskdb.domain.question.entity.Title;
 import taskdb.taskdb.domain.user.entity.User;
 
 import javax.persistence.*;
@@ -23,14 +21,14 @@ public class QuestionStore {
     @Column(name = "question_store_question_id")
     private Long questionId;
 
-    @Embedded
-    private Title questionTitle;
+    @Column(name = "question_store_question_title")
+    private String questionTitle;
 
     protected QuestionStore() {
     }
 
     @Builder
-    public QuestionStore(Long questionId, Title questionTitle) {
+    public QuestionStore(Long questionId, String questionTitle) {
         this.questionId = questionId;
         this.questionTitle = questionTitle;
     }
@@ -38,9 +36,5 @@ public class QuestionStore {
     public void confirmUser(User user) {
         this.user = user;
         user.addQuestionStore(this);
-    }
-
-    public String getTitle() {
-        return questionTitle.getValue();
     }
 }

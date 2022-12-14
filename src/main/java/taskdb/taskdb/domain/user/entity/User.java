@@ -14,7 +14,9 @@ import taskdb.taskdb.domain.store.entity.QuestionStore;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -57,7 +59,7 @@ public class User {
     private final List<Answer> answers = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private final List<QuestionStore> questionStores = new ArrayList<>();
+    private final Set<QuestionStore> questionStores = new HashSet<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private final List<QuestionLike> questionLikes = new ArrayList<>();
@@ -161,8 +163,8 @@ public class User {
         this.answerLikes.add(answerLike);
     }
 
-    public void addQuestionStore(QuestionStore question) {
-        this.questionStores.add(question);
+    public void addQuestionStore(QuestionStore questionStore) {
+        this.questionStores.add(questionStore);
     }
 
     public void addComment(Comment comment) {

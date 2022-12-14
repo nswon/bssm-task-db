@@ -35,7 +35,7 @@ public class QuestionStoreService implements
     public void save(Long id) {
         User user = getUserPort.getCurrentUser();
         Question question = getQuestionPort.getQuestion(id);
-        QuestionStore questionStore = questionStoreMapper.of(question, user);
+        QuestionStore questionStore = questionStoreMapper.toEntity(question, user);
         saveQuestionStorePort.save(user, questionStore);
     }
 

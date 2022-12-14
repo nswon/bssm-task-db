@@ -11,6 +11,7 @@ import taskdb.taskdb.domain.store.exception.StoreQuestionNotFoundException;
 import taskdb.taskdb.domain.user.entity.User;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
@@ -19,20 +20,16 @@ public class QuestionStoreAdapter implements SaveQuestionStorePort, GetQuestionS
 
     @Override
     public QuestionStore save(User user, QuestionStore questionStore) {
-        validate(user, questionStore);
         return questionStoreRepository.save(questionStore);
-    }
-
-    private void validate(User user, QuestionStore target) {
-        boolean isDuplicate = questionStoreRepository.existsByUserAndQuestionId(user, target.getQuestionId());
-        if(isDuplicate) {
-            throw new DuplicateQuestionStoreException();
-        }
     }
 
     @Override
     public List<QuestionStore> getQuestions(User user) {
-        return questionStoreRepository.findByUser(user);
+        return questionStoreRepository.findByUser(user).stream()
+                .map(QuestionStore::getQuestionId)
+                .distinct()
+                .map(questionStoreRepository::findByQuestionId)
+                .collect(Collectors.toList());
     }
 
     @Override

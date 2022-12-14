@@ -9,4 +9,5 @@ import java.util.List;
 public interface QuestionStoreRepository extends JpaRepository<QuestionStore, Long> {
     boolean existsByUserAndQuestionId(User user, Long questionId);
     List<QuestionStore> findByUser(User user);
+    QuestionStore findByQuestionId(Long questionId);
 }
