@@ -107,7 +107,7 @@ public class User {
     }
 
     public boolean canDeleteImage() {
-        return !image.isDefault() || !image.isEmpty();
+        return !image.isDefault() && !image.isEmpty();
     }
 
     public String getImagePath() {

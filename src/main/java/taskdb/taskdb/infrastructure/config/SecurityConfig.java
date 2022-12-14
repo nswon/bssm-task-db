@@ -35,7 +35,8 @@ public class SecurityConfig {
                         "/question",
                         "/question/categories/**",
                         "/question/grade/**",
-                        "/question/status/**");
+                        "/question/status/**",
+                        "/test");
     }
 
     @Bean
