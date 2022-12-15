@@ -32,11 +32,7 @@ public class QuestionStoreAdapter implements SaveQuestionStorePort, GetQuestionS
 
     @Override
     public List<QuestionStore> getQuestions(User user) {
-        return questionStoreRepository.findByUser(user).stream()
-                .map(QuestionStore::getQuestionId)
-                .distinct()
-                .map(questionStoreRepository::findByQuestionId)
-                .collect(Collectors.toList());
+        return questionStoreRepository.findByUser(user);
     }
 
     @Override
