@@ -20,7 +20,14 @@ public class QuestionStoreAdapter implements SaveQuestionStorePort, GetQuestionS
 
     @Override
     public QuestionStore save(User user, QuestionStore questionStore) {
+        validate(user, questionStore.getQuestionId());
         return questionStoreRepository.save(questionStore);
+    }
+
+    private void validate(User user, Long id) {
+        if(questionStoreRepository.existsByUserAndQuestionId(user, id)) {
+            throw new DuplicateQuestionStoreException();
+        }
     }
 
     @Override
