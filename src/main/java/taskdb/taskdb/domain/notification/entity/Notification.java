@@ -14,8 +14,7 @@ public class Notification {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @OneToOne(mappedBy = "notification", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
     private User user;
 
     private String token;

@@ -1,6 +1,7 @@
 package taskdb.taskdb.adapter.store.out.persistence;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import taskdb.taskdb.application.store.port.out.DeleteQuestionStorePort;
 import taskdb.taskdb.application.store.port.out.GetQuestionStorePort;
@@ -11,7 +12,6 @@ import taskdb.taskdb.domain.store.exception.StoreQuestionNotFoundException;
 import taskdb.taskdb.domain.user.entity.User;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor

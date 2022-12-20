@@ -15,7 +15,7 @@ import java.lang.reflect.Method;
 @Component
 @Slf4j
 public class Logging {
-    @Pointcut("execution(* taskdb.taskdb.domain..controller..*.*(..))")
+    @Pointcut("execution(* taskdb.taskdb.adapter..in..*.*(..))")
     private void domainCut() {}
 
     private static final String STARTING_METHOD_MESSAGE = ">>>>>>>>>>starting method = {}";

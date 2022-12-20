@@ -6,7 +6,6 @@ import taskdb.taskdb.domain.user.exception.InvalidNicknameRangeException;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.util.regex.Pattern;
-
 @Getter
 @Embeddable
 public class Nickname {
