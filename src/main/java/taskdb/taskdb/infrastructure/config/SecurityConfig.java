@@ -30,13 +30,9 @@ public class SecurityConfig {
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         return (web) -> web.ignoring()
-                .antMatchers("/user/join",
-                        "/email/join",
-                        "/question",
-                        "/question/categories/**",
-                        "/question/grade/**",
-                        "/question/status/**",
-                        "/test");
+                .antMatchers(
+                        AccessUrl.JOIN.url,
+                        AccessUrl.EMAIL_CONFIRM.url);
     }
 
     @Bean
@@ -45,7 +41,11 @@ public class SecurityConfig {
                                            CustomUserDetailsService customUserDetailsService) throws Exception {
         httpSecurity
                 .authorizeRequests()
-                .antMatchers("/auth/login").permitAll()
+                .antMatchers(AccessUrl.LOGIN.url).permitAll()
+                .antMatchers(AccessUrl.QUESTION_GET_ALL.url).permitAll()
+                .antMatchers(AccessUrl.QUESTION_GET_BY_CATEGORY.url).permitAll()
+                .antMatchers(AccessUrl.QUESTION_GET_BY_GRADE.url).permitAll()
+                .antMatchers(AccessUrl.QUESTION_GET_BY_STATUS.url).permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .httpBasic().disable()
@@ -66,7 +66,7 @@ public class SecurityConfig {
 
         configuration.addAllowedOriginPattern("*");
         configuration.addAllowedOrigin("/**");
-        configuration.setAllowedOrigins(List.of("localhost:3000", "http://13.209.39.0:3000", "https://13.209.39.0:3000"));
+        configuration.setAllowedOrigins(List.of(AccessUrl.ALLOW_ORIGIN.url));
         configuration.addAllowedHeader("*");
         configuration.addAllowedMethod("*");
         configuration.setAllowCredentials(true);
@@ -74,5 +74,23 @@ public class SecurityConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
+    }
+
+    private enum AccessUrl {
+        JOIN("/user/join"),
+        LOGIN("/auth/login"),
+        EMAIL_CONFIRM("/email/confirm"),
+        QUESTION_GET_ALL("/question"),
+        QUESTION_GET_BY_CATEGORY("/question/categories/**"),
+        QUESTION_GET_BY_GRADE("/question/grade/**"),
+        QUESTION_GET_BY_STATUS("/question/status/**"),
+        ALLOW_ORIGIN("localhost:3000")
+        ;
+
+        private final String url;
+
+        AccessUrl(String url) {
+            this.url = url;
+        }
     }
 }

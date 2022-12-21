@@ -14,7 +14,7 @@ import taskdb.taskdb.application.auth.port.in.EmailSendUseCase;
 public class EmailController {
     private final EmailSendUseCase emailSendUseCase;
 
-    @PostMapping("/join")
+    @PostMapping("/confirm")
     public ResponseEntity<EmailResponseDto> sendSimpleMessage(@RequestBody EmailRequestDto request) {
         emailSendUseCase.send(request);
         return ResponseEntity.status(HttpStatus.OK).body(new EmailResponseDto("성공"));
