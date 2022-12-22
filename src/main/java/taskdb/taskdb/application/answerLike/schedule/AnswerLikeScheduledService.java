@@ -18,7 +18,6 @@ public class AnswerLikeScheduledService {
     private final GetAnswerUnLikePort getAnswerUnLikePort;
     private final GetAnswerPort getAnswerPort;
 
-
     @Scheduled(cron = FOUR_A_M_CORN)
     public void syncLike() {
         getAnswerPort.getAnswers()

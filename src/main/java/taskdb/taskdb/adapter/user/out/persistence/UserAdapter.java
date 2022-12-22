@@ -25,13 +25,9 @@ public class UserAdapter implements SaveUserPort, GetUserPort {
 
     @Override
     public User save(User user) {
-        validate(user);
-        return userRepository.save(user);
-    }
-
-    private void validate(User user) {
         checkUniqueEmail(user);
         checkUniqueNickname(user);
+        return userRepository.save(user);
     }
 
     private void checkUniqueEmail(User user) {
