@@ -14,6 +14,7 @@ import taskdb.taskdb.application.answer.port.out.SaveAnswerPort;
 import taskdb.taskdb.application.answerLike.port.out.ExistAnswerLikePort;
 import taskdb.taskdb.application.answerLike.port.out.ExistAnswerUnLikePort;
 import taskdb.taskdb.application.question.port.out.GetQuestionPort;
+import taskdb.taskdb.application.user.policy.UserPolicy;
 import taskdb.taskdb.domain.answer.domain.Answer;
 import taskdb.taskdb.domain.answer.domain.AnswerChoose;
 import taskdb.taskdb.domain.answer.domain.Content;
@@ -46,6 +47,7 @@ public class AnswerService implements
     private final DeleteAnswerPort deleteAnswerPort;
     private final ExistAnswerLikePort existAnswerLikePort;
     private final ExistAnswerUnLikePort existAnswerUnLikePort;
+    private final UserPolicy userPolicy;
 
     @Override
     public void save(Long id, AnswerCreateRequestDto requestDto) {
@@ -76,8 +78,9 @@ public class AnswerService implements
 
     @Override
     public void update(Long id, AnswerUpdateRequestDto requestDto) {
+        User user = getUserPort.getCurrentUser();
         Answer answer = getAnswerPort.getAnswer(id);
-        checkDifferentUser(answer.getUser());
+        userPolicy.check(user, answer.getUser());
         checkAdoptAnswer(answer);
         updateContent(requestDto.getContent(), answer);
     }
@@ -89,17 +92,19 @@ public class AnswerService implements
 
     @Override
     public void delete(Long id) {
+        User user = getUserPort.getCurrentUser();
         Answer answer = getAnswerPort.getAnswer(id);
-        checkDifferentUser(answer.getUser());
+        userPolicy.check(user, answer.getUser());
         checkAdoptAnswer(answer);
         deleteAnswerPort.delete(answer);
     }
 
     @Override
     public void adopt(Long id) {
+        User user = getUserPort.getCurrentUser();
         Answer answer = getAnswerPort.getAnswer(id);
         Question question = answer.getQuestion();
-        checkDifferentUser(question.getUser());
+        userPolicy.check(user, question.getUser());
         checkDuplicateAdopt(answer);
         answer.adopt();
         question.closeQuestion();
@@ -110,13 +115,6 @@ public class AnswerService implements
     private void checkDuplicateAdopt(Answer answer) {
         if(answer.isAdopt()) {
             throw new DuplicateAdoptException();
-        }
-    }
-
-    private void checkDifferentUser(User writer) {
-        User user = getUserPort.getCurrentUser();
-        if(user.isNotCorrectEmail(writer.getEmail())) {
-            throw new DifferentUserException();
         }
     }
 

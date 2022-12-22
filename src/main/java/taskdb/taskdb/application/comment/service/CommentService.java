@@ -12,7 +12,7 @@ import taskdb.taskdb.application.comment.port.out.DeleteCommentPort;
 import taskdb.taskdb.application.comment.port.out.GetCommentPort;
 import taskdb.taskdb.application.comment.port.out.SaveCommentPort;
 import taskdb.taskdb.application.question.port.out.GetQuestionPort;
-import taskdb.taskdb.domain.answer.domain.Answer;
+import taskdb.taskdb.application.user.policy.UserPolicy;
 import taskdb.taskdb.domain.comment.domain.Comment;
 import taskdb.taskdb.domain.comment.domain.Content;
 import taskdb.taskdb.application.comment.dto.CommentCreateRequestDto;
@@ -21,7 +21,6 @@ import taskdb.taskdb.domain.question.entity.Question;
 import taskdb.taskdb.domain.user.entity.User;
 import taskdb.taskdb.application.user.port.out.GetUserPort;
 import taskdb.taskdb.application.comment.dto.CommentMapper;
-import taskdb.taskdb.domain.user.exception.DifferentUserException;
 
 @Service
 @RequiredArgsConstructor
@@ -35,6 +34,7 @@ public class CommentService implements
     private final SaveCommentPort saveCommentPort;
     private final GetCommentPort getCommentPort;
     private final DeleteCommentPort deleteCommentPort;
+    private final UserPolicy userPolicy;
 
     @Override
     public void save(Long id, CommentCreateRequestDto requestDto) {
@@ -57,8 +57,9 @@ public class CommentService implements
 
     @Override
     public void update(Long id, CommentUpdateRequestDto requestDto) {
+        User user = getUserPort.getCurrentUser();
         Comment comment = getCommentPort.getComment(id);
-        checkDifferentUser(comment.getUser());
+        userPolicy.check(user, comment.getUser());
         updateContent(requestDto.getContent(), comment);
     }
 
@@ -69,8 +70,9 @@ public class CommentService implements
 
     @Override
     public void delete(Long id) {
+        User user = getUserPort.getCurrentUser();
         Comment comment = getCommentPort.getComment(id);
-        checkDifferentUser(comment.getUser());
+        userPolicy.check(user, comment.getUser());
         deleteCommentPort.delete(comment);
         Question question = getQuestionPort.getQuestion(comment.getQuestion().getId());
         question.downCommentCount();
@@ -85,12 +87,5 @@ public class CommentService implements
     private void syncComment(Question question) {
         int commentCount = getCommentPort.getComments(question).size();
         question.syncCommentCount(commentCount);
-    }
-
-    private void checkDifferentUser(User writer) {
-        User user = getUserPort.getCurrentUser();
-        if(user.isNotCorrectEmail(writer.getEmail())) {
-            throw new DifferentUserException();
-        }
     }
 }

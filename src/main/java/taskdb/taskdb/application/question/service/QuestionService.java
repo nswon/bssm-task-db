@@ -9,6 +9,8 @@ import taskdb.taskdb.application.question.dto.*;
 import taskdb.taskdb.application.question.port.in.*;
 import taskdb.taskdb.application.question.port.out.*;
 import taskdb.taskdb.application.questionLike.port.out.ExistQuestionUnLikePort;
+import taskdb.taskdb.application.user.policy.DuplicateUserPolicy;
+import taskdb.taskdb.application.user.policy.UserPolicy;
 import taskdb.taskdb.domain.question.entity.Category;
 import taskdb.taskdb.domain.question.entity.Content;
 import taskdb.taskdb.domain.question.entity.Question;
@@ -19,6 +21,7 @@ import taskdb.taskdb.domain.user.exception.DifferentUserException;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -36,6 +39,7 @@ public class QuestionService implements
     private final ExistQuestionLikePort existQuestionLikePort;
     private final ExistQuestionUnLikePort existQuestionUnLikePort;
     private final AnswerService answerService;
+    private final UserPolicy userPolicy;
 
     @Override
     @Transactional
@@ -87,8 +91,9 @@ public class QuestionService implements
     @Override
     @Transactional
     public void update(Long id, QuestionUpdateRequestDto requestDto) {
+        User user = getUserPort.getCurrentUser();
         Question question = getQuestionPort.getQuestion(id);
-        checkDifferentUser(question.getUser());
+        userPolicy.check(user, question.getUser());
         update(question, requestDto);
     }
 
@@ -101,8 +106,9 @@ public class QuestionService implements
     @Override
     @Transactional
     public void delete(Long id) {
+        User user = getUserPort.getCurrentUser();
         Question question = getQuestionPort.getQuestion(id);
-        checkDifferentUser(question.getUser());
+        userPolicy.check(user, question.getUser());
         deleteQuestionPort.delete(question);
     }
 
@@ -127,13 +133,6 @@ public class QuestionService implements
     public List<QuestionAllResponseDto> getQuestionsByStatus(String command) {
         List<Question> questions = getQuestionPort.getQuestionsByStatus(command);
         return questionMapper.of(questions);
-    }
-
-    private void checkDifferentUser(User writer) {
-        User user = getUserPort.getCurrentUser();
-        if(user.isNotCorrectEmail(writer.getEmail())) {
-            throw new DifferentUserException();
-        }
     }
 
     @Override

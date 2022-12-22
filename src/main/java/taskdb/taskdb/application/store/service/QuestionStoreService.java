@@ -12,6 +12,7 @@ import taskdb.taskdb.application.store.port.in.QuestionStoreSaveUseCase;
 import taskdb.taskdb.application.store.port.out.DeleteQuestionStorePort;
 import taskdb.taskdb.application.store.port.out.GetQuestionStorePort;
 import taskdb.taskdb.application.store.port.out.SaveQuestionStorePort;
+import taskdb.taskdb.application.user.policy.UserPolicy;
 import taskdb.taskdb.application.user.port.out.GetUserPort;
 import taskdb.taskdb.domain.question.entity.Question;
 import taskdb.taskdb.domain.store.entity.QuestionStore;
@@ -30,6 +31,7 @@ public class QuestionStoreService implements
     private final GetQuestionStorePort getQuestionsStorePort;
     private final DeleteQuestionStorePort deleteQuestionStorePort;
     private final QuestionStoreMapper questionStoreMapper;
+    private final UserPolicy userPolicy;
 
     @Override
     public void save(Long id) {
@@ -51,6 +53,7 @@ public class QuestionStoreService implements
     public void delete(Long id) {
         User user = getUserPort.getCurrentUser();
         QuestionStore questionStore = getQuestionsStorePort.getQuestionStore(user, id);
+        userPolicy.check(user, questionStore.getUser());
         deleteQuestionStorePort.delete(questionStore);
     }
 

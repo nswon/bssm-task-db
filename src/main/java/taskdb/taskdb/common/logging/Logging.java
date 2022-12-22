@@ -18,16 +18,18 @@ public class Logging {
     @Pointcut("execution(* taskdb.taskdb.adapter..in..*.*(..))")
     private void domainCut() {}
 
-    private static final String STARTING_METHOD_MESSAGE = ">>>>>>>>>>starting method = {}";
-    private static final String END_METHOD_MESSAGE = ">>>>>>>>>>end method = {}";
+    private static final String START = "========== start ==========";
+    private static final String END = "========== end ==========";
+    private static final String METHOD_NAME = "method = {}";
     private static final String TYPE_MESSAGE = "type = {}";
-    private static final String NOT_RESPONSE_DATA_TYPE_MESSAGE = "type = void";
     private static final String VALUE_MESSAGE = "value = {}";
+    private static final String NOT_RESPONSE_DATA_TYPE_MESSAGE = "type = void";
 
     @Before("domainCut()")
     public void domainBefore(JoinPoint joinPoint) {
         Method method = createMethodSignature(joinPoint);
-        log.info(STARTING_METHOD_MESSAGE, method.getName());
+        log.info(START);
+        log.info(METHOD_NAME, method.getName());
         Object[] args = joinPoint.getArgs();
         printRequestLog(args);
     }
@@ -35,8 +37,9 @@ public class Logging {
     @AfterReturning(value = "domainCut()", returning = "object")
     public void domainAfter(JoinPoint joinPoint, Object object) {
         Method method = createMethodSignature(joinPoint);
-        log.info(END_METHOD_MESSAGE, method.getName());
+        log.info(METHOD_NAME, method.getName());
         printResponseLog(object);
+        log.info(END);
     }
 
     private void printRequestLog(Object[] args) {

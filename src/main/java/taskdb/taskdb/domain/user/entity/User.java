@@ -1,6 +1,7 @@
 package taskdb.taskdb.domain.user.entity;
 
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import taskdb.taskdb.domain.answer.domain.Answer;
 import taskdb.taskdb.domain.comment.domain.Comment;
@@ -13,14 +14,12 @@ import taskdb.taskdb.domain.question.entity.Question;
 import taskdb.taskdb.domain.store.entity.QuestionStore;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Getter
 @Table(name = "USERS")
+@EqualsAndHashCode
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
