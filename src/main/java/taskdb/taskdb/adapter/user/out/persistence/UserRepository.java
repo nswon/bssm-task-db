@@ -10,4 +10,6 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByEmailValue(String email);
     boolean existsUserByNicknameValue(String nickname);
+    @Query("select u from User u left join fetch u.questions where u.id =:id")
+    Optional<User> findByIdFetch(@Param("id") Long id);
 }

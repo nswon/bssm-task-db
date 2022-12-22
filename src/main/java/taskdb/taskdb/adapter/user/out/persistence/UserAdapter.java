@@ -48,7 +48,7 @@ public class UserAdapter implements SaveUserPort, GetUserPort {
 
     @Override
     public User getUser(Long id) {
-        return userRepository.findById(id)
+        return userRepository.findByIdFetch(id)
                 .orElseThrow(UserNotFoundException::new);
     }
 
