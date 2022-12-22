@@ -4,7 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 import taskdb.taskdb.domain.question.entity.Question;
 import taskdb.taskdb.domain.user.entity.User;
-import taskdb.taskdb.infrastructure.support.BaseTimeEntity;
+import taskdb.taskdb.common.support.BaseTimeEntity;
 
 import javax.persistence.*;
 import java.util.ArrayList;

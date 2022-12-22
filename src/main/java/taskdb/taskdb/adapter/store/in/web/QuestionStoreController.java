@@ -6,7 +6,7 @@ import taskdb.taskdb.application.store.dto.QuestionStoresResponseDto;
 import taskdb.taskdb.application.store.port.in.DeleteQuestionStoreUseCase;
 import taskdb.taskdb.application.store.port.in.GetQuestionStoreUseCase;
 import taskdb.taskdb.application.store.port.in.QuestionStoreSaveUseCase;
-import taskdb.taskdb.infrastructure.support.Result;
+import taskdb.taskdb.common.support.Result;
 
 @RestController
 @RequiredArgsConstructor

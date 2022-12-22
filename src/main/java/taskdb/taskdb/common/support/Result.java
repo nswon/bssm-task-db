@@ -1,4 +1,4 @@
-package taskdb.taskdb.infrastructure.support;
+package taskdb.taskdb.common.support;
 
 import lombok.Getter;
 

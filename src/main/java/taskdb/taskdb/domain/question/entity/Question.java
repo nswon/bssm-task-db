@@ -7,7 +7,7 @@ import taskdb.taskdb.domain.comment.domain.Comment;
 import taskdb.taskdb.domain.questionLike.entity.QuestionLike;
 import taskdb.taskdb.domain.questionLike.entity.QuestionUnLike;
 import taskdb.taskdb.domain.user.entity.User;
-import taskdb.taskdb.infrastructure.support.BaseTimeEntity;
+import taskdb.taskdb.common.support.BaseTimeEntity;
 
 import javax.persistence.*;
 import java.util.ArrayList;

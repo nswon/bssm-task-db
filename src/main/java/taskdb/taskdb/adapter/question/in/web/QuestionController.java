@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import taskdb.taskdb.application.question.dto.*;
 import taskdb.taskdb.application.question.port.in.*;
-import taskdb.taskdb.infrastructure.support.Result;
+import taskdb.taskdb.common.support.Result;
 
 import javax.validation.Valid;
 import java.util.List;

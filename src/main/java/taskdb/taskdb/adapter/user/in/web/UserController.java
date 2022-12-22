@@ -10,7 +10,7 @@ import taskdb.taskdb.application.user.port.in.GetUserUseCase;
 import taskdb.taskdb.application.user.port.in.UserJoinUseCase;
 import taskdb.taskdb.application.user.port.in.UserRankUseCase;
 import taskdb.taskdb.application.user.port.in.UserUpdateUserCase;
-import taskdb.taskdb.infrastructure.support.Result;
+import taskdb.taskdb.common.support.Result;
 
 import java.util.List;
 
