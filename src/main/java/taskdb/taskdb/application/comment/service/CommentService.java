@@ -1,6 +1,7 @@
 package taskdb.taskdb.application.comment.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import taskdb.taskdb.application.comment.port.in.CommentDeleteUseCase;
@@ -11,6 +12,7 @@ import taskdb.taskdb.application.comment.port.out.DeleteCommentPort;
 import taskdb.taskdb.application.comment.port.out.GetCommentPort;
 import taskdb.taskdb.application.comment.port.out.SaveCommentPort;
 import taskdb.taskdb.application.question.port.out.GetQuestionPort;
+import taskdb.taskdb.domain.answer.domain.Answer;
 import taskdb.taskdb.domain.comment.domain.Comment;
 import taskdb.taskdb.domain.comment.domain.Content;
 import taskdb.taskdb.application.comment.dto.CommentCreateRequestDto;
@@ -26,6 +28,7 @@ import taskdb.taskdb.domain.user.exception.DifferentUserException;
 @Transactional
 public class CommentService implements
         CommentSaveUseCase, ReCommentSaveUseCase, CommentUpdateUseCase, CommentDeleteUseCase {
+    private static final String FOUR_A_M_CORN = "0 0 4 * * *";
     private final GetUserPort getUserPort;
     private final GetQuestionPort getQuestionPort;
     private final CommentMapper commentMapper;
@@ -39,6 +42,7 @@ public class CommentService implements
         Question question = getQuestionPort.getQuestion(id);
         Comment comment = commentMapper.of(requestDto, user, question);
         saveCommentPort.save(comment);
+        question.addCommentCount();
     }
 
     @Override
@@ -48,6 +52,7 @@ public class CommentService implements
         Comment parentComment = getCommentPort.getComment(parentId);
         Comment comment = commentMapper.of(requestDto, user, question, parentComment);
         saveCommentPort.save(comment);
+        question.addCommentCount();
     }
 
     @Override
@@ -67,6 +72,19 @@ public class CommentService implements
         Comment comment = getCommentPort.getComment(id);
         checkDifferentUser(comment.getUser());
         deleteCommentPort.delete(comment);
+        Question question = getQuestionPort.getQuestion(comment.getQuestion().getId());
+        question.downCommentCount();
+    }
+
+    @Scheduled(cron = FOUR_A_M_CORN)
+    public void syncLike() {
+        getQuestionPort.getQuestions()
+                        .forEach(this::syncComment);
+    }
+
+    private void syncComment(Question question) {
+        int commentCount = getCommentPort.getComments(question).size();
+        question.syncCommentCount(commentCount);
     }
 
     private void checkDifferentUser(User writer) {

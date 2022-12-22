@@ -41,6 +41,8 @@ public class Question extends BaseTimeEntity {
 
     private int likeCount;
 
+    private int commentCount;
+
     @OneToMany(mappedBy = "question", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private final List<Comment> comments = new ArrayList<>();
 
@@ -90,7 +92,7 @@ public class Question extends BaseTimeEntity {
     }
 
     public int getCommentsSize() {
-        return comments.size();
+        return commentCount;
     }
 
     public void addAnswer(Answer answer) {
@@ -109,6 +111,14 @@ public class Question extends BaseTimeEntity {
         this.likeCount -= 1;
     }
 
+    public void addCommentCount() {
+        commentCount += 1;
+    }
+
+    public void downCommentCount() {
+        commentCount -= 1;
+    }
+
     public void syncLikeCount(int likeCount) {
         this.likeCount = likeCount;
     }
@@ -123,5 +133,9 @@ public class Question extends BaseTimeEntity {
 
     public void addQuestionUnLike(QuestionUnLike questionUnLike) {
         questionUnLikes.add(questionUnLike);
+    }
+
+    public void syncCommentCount(int commentCount) {
+        this.commentCount = commentCount;
     }
 }

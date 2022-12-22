@@ -7,6 +7,9 @@ import taskdb.taskdb.application.comment.port.out.GetCommentPort;
 import taskdb.taskdb.application.comment.port.out.SaveCommentPort;
 import taskdb.taskdb.domain.comment.domain.Comment;
 import taskdb.taskdb.domain.comment.exception.CommentNotFoundException;
+import taskdb.taskdb.domain.question.entity.Question;
+
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -29,5 +32,10 @@ public class CommentAdapter implements SaveCommentPort, GetCommentPort, DeleteCo
     public Comment getComment(Long id) {
         return commentRepository.findById(id)
                 .orElseThrow(CommentNotFoundException::new);
+    }
+
+    @Override
+    public List<Comment> getComments(Question question) {
+        return commentRepository.findByQuestion(question);
     }
 }
