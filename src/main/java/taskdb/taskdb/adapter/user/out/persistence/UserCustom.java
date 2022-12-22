@@ -12,7 +12,7 @@ import static taskdb.taskdb.domain.user.entity.QUser.user;
 
 @Repository
 @RequiredArgsConstructor
-public class UserQuerydsl implements UserQuerydslRepository {
+public class UserCustom implements UserCustomRepository {
     private final JPAQueryFactory factory;
 
     @Override
@@ -23,5 +23,16 @@ public class UserQuerydsl implements UserQuerydslRepository {
                 .leftJoin(user.questionStores).fetchJoin()
                 .where(user.id.eq(id))
                 .fetchOne());
+    }
+
+    @Override
+    public Optional<User> findByEmail(String email) {
+        return Optional.ofNullable(factory
+                .selectFrom(user)
+                .leftJoin(user.questions).fetchJoin()
+                .leftJoin(user.questionStores).fetchJoin()
+                .where(user.email.value.eq(email))
+                .fetchOne()
+        );
     }
 }

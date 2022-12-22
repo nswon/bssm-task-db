@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class UserAdapter implements SaveUserPort, GetUserPort {
     private final UserRepository userRepository;
-    private final UserQuerydslRepository userQuerydslRepository;
+    private final UserCustomRepository userCustomRepository;
     private static final int RANK_SIZE = 10;
 
     @Override
@@ -49,13 +49,13 @@ public class UserAdapter implements SaveUserPort, GetUserPort {
 
     @Override
     public User getUser(Long id) {
-        return userQuerydslRepository.findById(id)
+        return userCustomRepository.findById(id)
                 .orElseThrow(UserNotFoundException::new);
     }
 
     @Override
     public User getCurrentUser() {
-        return userRepository.findByEmailValue(SecurityUtil.getLoginUserEmail())
+        return userCustomRepository.findByEmail(SecurityUtil.getLoginUserEmail())
                 .orElseThrow(AuthorizationException::new);
     }
 
