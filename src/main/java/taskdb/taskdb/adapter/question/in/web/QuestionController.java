@@ -26,8 +26,8 @@ public class QuestionController {
 
     @GetMapping("")
     public Result getQuestions() {
-        QuestionAllResponseDto questions = questionGetUseCase.getQuestions();
-        return new Result(questions);
+        List<QuestionAllResponseDto> response = questionGetUseCase.getQuestions();
+        return new Result(response);
     }
 
     @GetMapping("/{id}")
@@ -47,25 +47,25 @@ public class QuestionController {
 
     @GetMapping("/search")
     public Result searchByTitleOrId(@RequestParam("q") String keyword) {
-        QuestionAllResponseDto questions = questionGetUseCase.getQuestionsByKeyword(keyword);
+        List<QuestionAllResponseDto> questions = questionGetUseCase.getQuestionsByKeyword(keyword);
         return new Result(questions);
     }
 
     @GetMapping("/categories")
     public Result getQuestionsByCategory(@RequestParam("c") String command) {
-        QuestionAllResponseDto questions = questionGetUseCase.getQuestionsByCategory(command);
+        List<QuestionAllResponseDto> questions = questionGetUseCase.getQuestionsByCategory(command);
         return new Result(questions);
     }
 
     @GetMapping("/grade")
     public Result getQuestionsByGrade(@RequestParam("g") int grade) {
-        QuestionAllResponseDto questions = questionGetUseCase.getQuestionsByGrade(grade);
+        List<QuestionAllResponseDto> questions = questionGetUseCase.getQuestionsByGrade(grade);
         return new Result(questions);
     }
 
     @GetMapping("/status")
     public Result getQuestionsByStatus(@RequestParam("status") String command) {
-        QuestionAllResponseDto openQuestions = questionGetUseCase.getQuestionsByStatus(command);
+        List<QuestionAllResponseDto> openQuestions = questionGetUseCase.getQuestionsByStatus(command);
         return new Result(openQuestions);
     }
 

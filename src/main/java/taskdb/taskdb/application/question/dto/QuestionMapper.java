@@ -5,10 +5,6 @@ import taskdb.taskdb.application.answer.dto.AnswersResponseDto;
 import taskdb.taskdb.domain.question.entity.Content;
 import taskdb.taskdb.domain.question.entity.Question;
 import taskdb.taskdb.domain.question.entity.Title;
-import taskdb.taskdb.application.question.dto.QuestionCreateRequestDto;
-import taskdb.taskdb.application.question.dto.QuestionAllElementResponse;
-import taskdb.taskdb.application.question.dto.QuestionAllResponseDto;
-import taskdb.taskdb.application.question.dto.QuestionDetailResponse;
 import taskdb.taskdb.domain.user.entity.User;
 
 import java.util.List;
@@ -26,9 +22,10 @@ public class QuestionMapper {
         return question;
     }
 
-    public QuestionAllResponseDto of(List<Question> questions) {
-        List<QuestionAllElementResponse> getQuestionAllElements = getQuestionsElements(questions);
-        return new QuestionAllResponseDto(getQuestionAllElements);
+    public List<QuestionAllResponseDto> of(List<Question> questions) {
+        return questions.stream()
+                .map(QuestionAllResponseDto::new)
+                .collect(Collectors.toList());
     }
 
     public QuestionDetailResponse of(boolean hasLike,
@@ -36,11 +33,5 @@ public class QuestionMapper {
                                      Question question,
                                      List<AnswersResponseDto> answersResponseDto) {
         return new QuestionDetailResponse(hasLike, hasUnLike, question, answersResponseDto);
-    }
-
-    private List<QuestionAllElementResponse> getQuestionsElements(List<Question> questions) {
-        return questions.stream()
-                .map(QuestionAllElementResponse::new)
-                .collect(Collectors.toList());
     }
 }

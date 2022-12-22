@@ -1,7 +1,7 @@
 package taskdb.taskdb.application.user.dto;
 
 import lombok.Getter;
-import taskdb.taskdb.application.question.dto.QuestionAllElementResponse;
+import taskdb.taskdb.application.question.dto.QuestionAllResponseDto;
 import taskdb.taskdb.application.store.dto.QuestionStoreResponseDto;
 import taskdb.taskdb.domain.user.entity.User;
 
@@ -16,7 +16,7 @@ public class UserResponseDto {
     private String bio;
     private int grade;
     private int contributionLevel;
-    private List<QuestionAllElementResponse> getMyQuestions;
+    private List<QuestionAllResponseDto> getMyQuestions;
     private List<QuestionStoreResponseDto> getSavedQuestions;
 
     public UserResponseDto() {
@@ -33,9 +33,9 @@ public class UserResponseDto {
         this.getSavedQuestions = toStoreQuestionsResponse(user);
     }
 
-    private List<QuestionAllElementResponse> toQuestionsResponse(User user) {
+    private List<QuestionAllResponseDto> toQuestionsResponse(User user) {
         return user.getQuestions().stream()
-                .map(QuestionAllElementResponse::new)
+                .map(QuestionAllResponseDto::new)
                 .collect(Collectors.toList());
     }
 

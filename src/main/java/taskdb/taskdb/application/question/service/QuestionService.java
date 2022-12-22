@@ -4,8 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import taskdb.taskdb.application.answer.service.AnswerService;
-import taskdb.taskdb.application.answerLike.port.out.ExistAnswerLikePort;
-import taskdb.taskdb.application.answerLike.port.out.ExistAnswerUnLikePort;
 import taskdb.taskdb.application.questionLike.port.out.ExistQuestionLikePort;
 import taskdb.taskdb.application.question.dto.*;
 import taskdb.taskdb.application.question.port.in.*;
@@ -49,7 +47,7 @@ public class QuestionService implements
     }
 
     @Override
-    public QuestionAllResponseDto getQuestions() {
+    public List<QuestionAllResponseDto> getQuestions() {
         List<Question> questions = getQuestionPort.getQuestions();
         return questionMapper.of(questions);
     }
@@ -108,25 +106,25 @@ public class QuestionService implements
         deleteQuestionPort.delete(question);
     }
 
-    public QuestionAllResponseDto getQuestionsByKeyword(String keyword) {
+    public List<QuestionAllResponseDto> getQuestionsByKeyword(String keyword) {
         List<Question> questions = getQuestionPort.getQuestionsByKeyword(keyword);
         return questionMapper.of(questions);
     }
 
     @Override
-    public QuestionAllResponseDto getQuestionsByCategory(String command) {
+    public List<QuestionAllResponseDto> getQuestionsByCategory(String command) {
         List<Question> questions = getQuestionPort.getQuestionsByCategory(command);
         return questionMapper.of(questions);
     }
 
     @Override
-    public QuestionAllResponseDto getQuestionsByGrade(int grade) {
+    public List<QuestionAllResponseDto> getQuestionsByGrade(int grade) {
         List<Question> questions = getQuestionPort.getQuestionsByGrade(grade);
         return questionMapper.of(questions);
     }
 
     @Override
-    public QuestionAllResponseDto getQuestionsByStatus(String command) {
+    public List<QuestionAllResponseDto> getQuestionsByStatus(String command) {
         List<Question> questions = getQuestionPort.getQuestionsByStatus(command);
         return questionMapper.of(questions);
     }
