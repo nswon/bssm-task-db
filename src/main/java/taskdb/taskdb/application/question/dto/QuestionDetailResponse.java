@@ -34,10 +34,12 @@ public class QuestionDetailResponse {
     }
 
     @Builder
-    public QuestionDetailResponse(boolean hasLike,
-                                  boolean hasUnLike,
-                                  Question question,
-                                  List<AnswersResponseDto> answers) {
+    public QuestionDetailResponse(
+            boolean questionHasLike,
+            boolean questionHasUnLike,
+            List<AnswersResponseDto> answers,
+            Question question
+    ) {
         this.id = question.getId();
         this.title = question.getTitle();
         this.status = question.getQuestionStatus();
@@ -51,8 +53,8 @@ public class QuestionDetailResponse {
         this.content = question.getContent();
         this.comments = toCommentsResponseDto(question.getComments());
         this.answers = answers;
-        this.hasLike = hasLike;
-        this.hasUnLike = hasUnLike;
+        this.hasLike = questionHasLike;
+        this.hasUnLike = questionHasUnLike;
     }
 
     private List<CommentsResponseDto> toCommentsResponseDto(List<Comment> comments) {

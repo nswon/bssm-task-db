@@ -60,9 +60,15 @@ public class AnswerService implements
     public List<AnswersResponseDto> getAnswers(Question question) {
         User user = getUserPort.getCurrentUser();
         return getAnswerPort.getAnswers(question).stream()
-                .sorted(Comparator.comparing(Answer::isAdopt)
-                        .thenComparing(Answer::getLikeCount).reversed())
-                .map(answer -> new AnswersResponseDto(hasLike(answer, user), hasUnLike(answer, user), answer))
+                .sorted(
+                        Comparator.comparing(Answer::isAdopt)
+                                .thenComparing(Answer::getLikeCount).reversed()
+                )
+                .map(answer -> new AnswersResponseDto(
+                        hasLike(answer, user),
+                        hasUnLike(answer, user),
+                        answer)
+                )
                 .collect(Collectors.toList());
     }
 

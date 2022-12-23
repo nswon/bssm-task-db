@@ -8,6 +8,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -23,10 +24,12 @@ public class VisitQuestion implements VisitQuestionRepository {
     }
 
     @Override
-    public List<String> getQuestionIds() {
+    public Optional<List<String>> existsQuestionId(Long id) {
         ListOperations<String, String> alreadyVisitQuestionIds = visitQuestionIds.opsForList();
         int questionIdsSize = getQuestionIdsSize();
-        return alreadyVisitQuestionIds.range(KEY, 0, questionIdsSize);
+        return Optional.ofNullable(
+                alreadyVisitQuestionIds.range(KEY, 0, questionIdsSize)
+        );
     }
 
     @Scheduled(cron = EVERYDAY_CRON)

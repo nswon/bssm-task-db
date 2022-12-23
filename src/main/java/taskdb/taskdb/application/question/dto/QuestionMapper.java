@@ -21,9 +21,9 @@ public class QuestionMapper {
     public QuestionDetailResponse of(
             boolean hasLike,
             boolean hasUnLike,
-            Question question,
-            List<AnswersResponseDto> answersResponseDto
+            List<AnswersResponseDto> answers,
+            Question question
     ) {
-        return new QuestionDetailResponse(hasLike, hasUnLike, question, answersResponseDto);
+        return new QuestionDetailResponse(hasLike, hasUnLike, answers, question);
     }
 }

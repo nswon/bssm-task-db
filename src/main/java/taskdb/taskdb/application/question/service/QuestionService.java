@@ -11,6 +11,7 @@ import taskdb.taskdb.application.question.port.out.*;
 import taskdb.taskdb.application.questionLike.port.out.ExistQuestionUnLikePort;
 import taskdb.taskdb.application.user.policy.DuplicateUserPolicy;
 import taskdb.taskdb.application.user.policy.UserPolicy;
+import taskdb.taskdb.domain.answer.entity.Answer;
 import taskdb.taskdb.domain.question.entity.Category;
 import taskdb.taskdb.domain.question.entity.Content;
 import taskdb.taskdb.domain.question.entity.Question;
@@ -71,23 +72,19 @@ public class QuestionService implements
         User user = getUserPort.getCurrentUser();
         Question question = getQuestionPort.getQuestion(id);
         checkViewCount(question);
-        return questionMapper.of(hasLike(question, user),
+        return questionMapper.of(
+                hasLike(question, user),
                 hasUnLike(question, user),
-                question,
-                answerService.getAnswers(question));
+                answerService.getAnswers(question),
+                question);
     }
 
     private void checkViewCount(Question question) {
-        List<String> questionIds = getVisitQuestionPort.getVisitQuestionIds();
-        if(canAddViewCount(questionIds, String.valueOf(question.getId()))) {
+        boolean hasQuestionId = getVisitQuestionPort.hasQuestionId(question.getId());
+        if(!hasQuestionId) {
             saveVisitQuestionPort.save(question.getId());
             question.addViewCount();
         }
-    }
-
-    private boolean canAddViewCount(List<String> questionIds, String questionId) {
-        return questionIds.isEmpty() || questionIds.stream()
-                .noneMatch(id -> id.equals(questionId));
     }
 
     private boolean hasLike(Question question, User user) {

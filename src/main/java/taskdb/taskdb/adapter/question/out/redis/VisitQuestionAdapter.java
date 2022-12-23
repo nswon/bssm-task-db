@@ -5,7 +5,9 @@ import org.springframework.stereotype.Component;
 import taskdb.taskdb.application.question.port.out.GetVisitQuestionPort;
 import taskdb.taskdb.application.question.port.out.SaveVisitQuestionPort;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
@@ -19,7 +21,9 @@ public class VisitQuestionAdapter implements SaveVisitQuestionPort, GetVisitQues
     }
 
     @Override
-    public List<String> getVisitQuestionIds() {
-        return visitQuestionRepository.getQuestionIds();
+    public boolean hasQuestionId(Long id) {
+        List<String> ids = visitQuestionRepository.existsQuestionId(id)
+                .orElse(Collections.emptyList());
+        return ids.contains(String.valueOf(id));
     }
 }
