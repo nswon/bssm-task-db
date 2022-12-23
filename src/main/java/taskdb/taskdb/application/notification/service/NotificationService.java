@@ -5,6 +5,7 @@ import com.google.firebase.messaging.Message;
 import com.google.firebase.messaging.WebpushConfig;
 import com.google.firebase.messaging.WebpushNotification;
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import taskdb.taskdb.application.notification.port.in.NotificationDeleteUseCase;
@@ -28,6 +29,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 @Transactional
+@Async
 public class NotificationService implements NotificationSaveUseCase, NotificationDeleteUseCase {
     private static final String PUSH_NOTIFICATION_TITLE = "TaskDB";
     private static final String PUSH_NOTIFICATION_BODY = "님이 답변을 등록하였습니다.";
