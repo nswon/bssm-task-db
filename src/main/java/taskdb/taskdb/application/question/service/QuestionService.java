@@ -45,9 +45,19 @@ public class QuestionService implements
     @Transactional
     public Question save(QuestionCreateRequestDto requestDto) {
         User user = getUserPort.getCurrentUser();
-        Question question = questionMapper.of(requestDto, user);
+        Question question = of(requestDto, user);
         question.openQuestion();
         return saveQuestionPort.save(question);
+    }
+
+    private Question of(QuestionCreateRequestDto requestDto, User user) {
+        Question question = Question.builder()
+                .title(Title.of(requestDto.getTitle()))
+                .content(Content.of(requestDto.getContent()))
+                .category(requestDto.getCategory())
+                .build();
+        question.relationUser(user);
+        return question;
     }
 
     @Override
@@ -75,17 +85,17 @@ public class QuestionService implements
         }
     }
 
+    private boolean canAddViewCount(List<String> questionIds, String questionId) {
+        return questionIds.isEmpty() || questionIds.stream()
+                .noneMatch(id -> id.equals(questionId));
+    }
+
     private boolean hasLike(Question question, User user) {
         return existQuestionLikePort.hasQuestionLike(question, user);
     }
 
     private boolean hasUnLike(Question question, User user) {
         return existQuestionUnLikePort.hasQuestionUnLike(question, user);
-    }
-
-    private boolean canAddViewCount(List<String> questionIds, String questionId) {
-        return questionIds.isEmpty() || questionIds.stream()
-                .noneMatch(id -> id.equals(questionId));
     }
 
     @Override
@@ -140,11 +150,12 @@ public class QuestionService implements
         double questionTotalCount = 1.0 * getQuestionPort.getQuestions().size();
         return Category.getValues().stream()
                 .map(category -> {
-                    String subjectName = category.name();
                     String rate = getRate(questionTotalCount, category);
-                    return new QuestionsRankResponseDto(subjectName, rate);
+                    return new QuestionsRankResponseDto(category.name(), rate);
                 })
-                .sorted(Comparator.comparing(QuestionsRankResponseDto::getRate).reversed())
+                .sorted(
+                        Comparator.comparing(QuestionsRankResponseDto::getRate).reversed()
+                )
                 .collect(Collectors.toList());
     }
 

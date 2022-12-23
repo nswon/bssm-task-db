@@ -65,7 +65,7 @@ public class Question extends BaseTimeEntity {
         this.category = category;
     }
 
-    public void confirmUser(User user) {
+    public void relationUser(User user) {
         this.user = user;
         user.addQuestion(this);
     }
