@@ -50,31 +50,11 @@ public class NotificationService implements NotificationSaveUseCase, Notificatio
         tokens.forEach(token -> send(token, nickname));
     }
 
-    @Override
-    public void delete() {
-        User user = getUserPort.getCurrentUser();
-        deleteUserDeviceTokenPort.delete(user);
-    }
-
-    private void send(String token, String nickname) {
-        try {
-            sendPushNotificationByAnswer(token, nickname);
-        } catch (ExecutionException | InterruptedException e) {
-            throw new InvalidNotificationException();
-        }
-    }
-
-    private void sendPushNotificationByAnswer(String token, String nickname) throws ExecutionException, InterruptedException {
-        Message message = createPushMessage(token, nickname);
-        FirebaseMessaging.getInstance().sendAsync(message).get();
-    }
-
     private List<String> getTokenByCommentUsers(Question question) {
         List<Comment> comments = question.getComments();
         List<String> tokens = comments.stream()
                 .map(Comment::getUser)
                 .distinct()
-                //TODO : fetch join 써보기
                 .filter(User::hasNotificationToken)
                 .map(getNotificationPort::getNotification)
                 .map(Notification::getToken)
@@ -90,6 +70,19 @@ public class NotificationService implements NotificationSaveUseCase, Notificatio
         return notification.getToken();
     }
 
+    private void send(String token, String nickname) {
+        try {
+            sendPushNotificationByAnswer(token, nickname);
+        } catch (ExecutionException | InterruptedException e) {
+            throw new InvalidNotificationException();
+        }
+    }
+
+    private void sendPushNotificationByAnswer(String token, String nickname) throws ExecutionException, InterruptedException {
+        Message message = createPushMessage(token, nickname);
+        FirebaseMessaging.getInstance().sendAsync(message).get();
+    }
+
     private Message createPushMessage(String token, String nickname) {
         return Message.builder()
                 .setWebpushConfig(WebpushConfig.builder()
@@ -100,5 +93,11 @@ public class NotificationService implements NotificationSaveUseCase, Notificatio
                         .build())
                 .setToken(token)
                 .build();
+    }
+
+    @Override
+    public void delete() {
+        User user = getUserPort.getCurrentUser();
+        deleteUserDeviceTokenPort.delete(user);
     }
 }

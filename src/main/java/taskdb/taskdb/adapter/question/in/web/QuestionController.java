@@ -64,7 +64,7 @@ public class QuestionController {
     }
 
     @GetMapping("/status")
-    public Result getQuestionsByStatus(@RequestParam("status") String command) {
+    public Result getQuestionsByStatus(@RequestParam(value = "status", defaultValue = "OPEN") String command) {
         List<QuestionAllResponseDto> openQuestions = questionGetUseCase.getQuestionsByStatus(command);
         return new Result(openQuestions);
     }

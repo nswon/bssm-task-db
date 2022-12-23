@@ -1,4 +1,4 @@
-package taskdb.taskdb.adapter.question.out.redis;
+package taskdb.taskdb.adapter.question.out.persistence;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

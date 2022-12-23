@@ -14,7 +14,7 @@ import static taskdb.taskdb.domain.question.entity.QQuestion.question;
 
 @Repository
 @RequiredArgsConstructor
-public class QuestionQuerydsl implements QuestionQuerydslRepository {
+public class QuestionCustom implements QuestionCustomRepository {
     private static final Pattern ONLY_NUMBER_REGEX = Pattern.compile("^[0-9]*$");
     private final JPAQueryFactory factory;
 
@@ -26,12 +26,26 @@ public class QuestionQuerydsl implements QuestionQuerydslRepository {
                 .fetch();
     }
 
+    private BooleanExpression isTitleContainsOrIdEq(String keyword) {
+        if(ONLY_NUMBER_REGEX.matcher(keyword).matches()) {
+            return question.id.eq(Long.valueOf(keyword));
+        }
+        return question.title.value.contains(keyword);
+    }
+
     @Override
     public List<Question> getQuestionByGrade(int grade) {
         return factory
                 .selectFrom(question)
-                .where(isJunior(grade), isSophomore(grade))
+                .where(checkGrade(grade))
                 .fetch();
+    }
+
+    private BooleanExpression checkGrade(int grade) {
+        if(grade == 0) {
+            return null;
+        }
+        return question.user.grade.value.eq(grade);
     }
 
     @Override
@@ -40,26 +54,5 @@ public class QuestionQuerydsl implements QuestionQuerydslRepository {
                 .selectFrom(question)
                 .where(question.questionStatus.eq(status))
                 .fetch();
-    }
-
-    private BooleanExpression isTitleContainsOrIdEq(String keyword) {
-        if(ONLY_NUMBER_REGEX.matcher(keyword).matches()) {
-            return question.id.eq(Long.valueOf(keyword));
-        }
-        return question.title.value.contains(keyword);
-    }
-
-    private BooleanExpression isJunior(int grade) {
-        if(grade == 0) {
-            return null;
-        }
-        return question.user.grade.value.eq(grade);
-    }
-
-    private BooleanExpression isSophomore(int grade) {
-        if(grade == 0) {
-            return null;
-        }
-        return question.user.grade.value.eq(grade);
     }
 }

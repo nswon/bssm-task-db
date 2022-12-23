@@ -7,7 +7,6 @@ import taskdb.taskdb.application.question.port.out.GetQuestionPort;
 import taskdb.taskdb.application.question.port.out.SaveQuestionPort;
 import taskdb.taskdb.domain.question.entity.Category;
 import taskdb.taskdb.domain.question.entity.Question;
-import taskdb.taskdb.adapter.question.out.persistence.QuestionRepository;
 import taskdb.taskdb.domain.question.entity.QuestionStatus;
 import taskdb.taskdb.domain.question.exception.QuestionNotFoundException;
 
@@ -17,7 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class QuestionAdapter implements SaveQuestionPort, GetQuestionPort, DeleteQuestionPort {
     private final QuestionRepository questionRepository;
-    private final QuestionQuerydslRepository questionQuerydslRepository;
+    private final QuestionCustomRepository questionCustomRepository;
 
     @Override
     public Question save(Question question) {
@@ -43,7 +42,7 @@ public class QuestionAdapter implements SaveQuestionPort, GetQuestionPort, Delet
 
     @Override
     public List<Question> getQuestionsByKeyword(String keyword) {
-        return questionQuerydslRepository.getQuestionByKeyword(keyword);
+        return questionCustomRepository.getQuestionByKeyword(keyword);
     }
 
     @Override
@@ -54,12 +53,12 @@ public class QuestionAdapter implements SaveQuestionPort, GetQuestionPort, Delet
 
     @Override
     public List<Question> getQuestionsByGrade(int grade) {
-        return questionQuerydslRepository.getQuestionByGrade(grade);
+        return questionCustomRepository.getQuestionByGrade(grade);
     }
 
     @Override
     public List<Question> getQuestionsByStatus(String command) {
         QuestionStatus status = QuestionStatus.toEnum(command);
-        return questionQuerydslRepository.getQuestionByStatus(status);
+        return questionCustomRepository.getQuestionByStatus(status);
     }
 }
