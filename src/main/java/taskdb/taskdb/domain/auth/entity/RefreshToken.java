@@ -1,12 +1,11 @@
 package taskdb.taskdb.domain.auth.entity;
 
 import lombok.Getter;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 
-import javax.persistence.Id;
-
 @Getter
-@RedisHash(value = "refresh", timeToLive = 30 * 24 * 60 * 60 * 1000L)
+@RedisHash(value = "refresh", timeToLive = 2592000)
 public class RefreshToken {
     @Id
     private String email;

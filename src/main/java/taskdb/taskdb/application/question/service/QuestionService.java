@@ -101,10 +101,10 @@ public class QuestionService implements
         User user = getUserPort.getCurrentUser();
         Question question = getQuestionPort.getQuestion(id);
         userPolicy.check(user, question.getUser());
-        update(question, requestDto);
+        updateQuestion(question, requestDto);
     }
 
-    private void update(Question question, QuestionUpdateRequestDto requestDto) {
+    private void updateQuestion(Question question, QuestionUpdateRequestDto requestDto) {
         Title title = Title.of(requestDto.getTitle());
         Content content = Content.of(requestDto.getContent());
         question.update(title, content);

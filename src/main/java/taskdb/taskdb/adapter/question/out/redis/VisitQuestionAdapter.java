@@ -2,28 +2,26 @@ package taskdb.taskdb.adapter.question.out.redis;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import taskdb.taskdb.application.question.port.out.GetVisitQuestionPort;
 import taskdb.taskdb.application.question.port.out.SaveVisitQuestionPort;
-
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import taskdb.taskdb.domain.question.entity.VisitQuestion;
 
 @Component
 @RequiredArgsConstructor
 public class VisitQuestionAdapter implements SaveVisitQuestionPort, GetVisitQuestionPort {
+    private static final String KEY = "visit";
     private final VisitQuestionRepository visitQuestionRepository;
 
     @Override
-    public Long save(Long id) {
-        visitQuestionRepository.save(id);
-        return id;
+    public boolean hasQuestionId(Long id) {
+        return visitQuestionRepository.existsByQuestionId(id);
     }
 
+    @Transactional
     @Override
-    public boolean hasQuestionId(Long id) {
-        List<String> ids = visitQuestionRepository.existsQuestionId(id)
-                .orElse(Collections.emptyList());
-        return ids.contains(String.valueOf(id));
+    public Long save(Long id) {
+        VisitQuestion visitQuestion = VisitQuestion.of(KEY, id);
+        return visitQuestionRepository.save(visitQuestion).getQuestionId();
     }
 }
