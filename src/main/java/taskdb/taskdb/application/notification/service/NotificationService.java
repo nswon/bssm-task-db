@@ -5,6 +5,7 @@ import com.google.firebase.messaging.Message;
 import com.google.firebase.messaging.WebpushConfig;
 import com.google.firebase.messaging.WebpushNotification;
 import lombok.RequiredArgsConstructor;
+import org.example.TaskdbPushMessage;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,14 +17,12 @@ import taskdb.taskdb.application.notification.port.out.SaveUserDeviceTokenPort;
 import taskdb.taskdb.domain.comment.entity.Comment;
 import taskdb.taskdb.domain.notification.entity.Notification;
 import taskdb.taskdb.application.notification.dto.NotificationPermitRequestDto;
-import taskdb.taskdb.domain.notification.exception.InvalidNotificationException;
 import taskdb.taskdb.domain.question.entity.Question;
 import taskdb.taskdb.domain.user.entity.User;
 import taskdb.taskdb.application.user.port.out.GetUserPort;
 import taskdb.taskdb.application.notification.dto.NotificationMapper;
 
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
 @Service
@@ -31,8 +30,6 @@ import java.util.stream.Collectors;
 @Transactional
 @Async
 public class NotificationService implements NotificationSaveUseCase, NotificationDeleteUseCase {
-    private static final String PUSH_NOTIFICATION_TITLE = "TaskDB";
-    private static final String PUSH_NOTIFICATION_BODY = "님이 답변을 등록하였습니다.";
     private final GetUserPort getUserPort;
     private final NotificationMapper notificationMapper;
     private final SaveUserDeviceTokenPort saveUserDeviceTokenPort;
@@ -49,7 +46,7 @@ public class NotificationService implements NotificationSaveUseCase, Notificatio
     @Transactional(readOnly = true)
     public void sendMessage(String nickname, Question question) {
         List<String> tokens = getTokenByCommentUsers(question);
-        tokens.forEach(token -> send(token, nickname));
+        tokens.forEach(token -> TaskdbPushMessage.send(token, nickname));
     }
 
     private List<String> getTokenByCommentUsers(Question question) {
@@ -70,31 +67,6 @@ public class NotificationService implements NotificationSaveUseCase, Notificatio
     private String getQuestionWriterToken(User questionWriter) {
         Notification notification = getNotificationPort.getNotification(questionWriter);
         return notification.getToken();
-    }
-
-    private void send(String token, String nickname) {
-        try {
-            sendPushNotificationByAnswer(token, nickname);
-        } catch (ExecutionException | InterruptedException e) {
-            throw new InvalidNotificationException();
-        }
-    }
-
-    private void sendPushNotificationByAnswer(String token, String nickname) throws ExecutionException, InterruptedException {
-        Message message = createPushMessage(token, nickname);
-        FirebaseMessaging.getInstance().sendAsync(message).get();
-    }
-
-    private Message createPushMessage(String token, String nickname) {
-        return Message.builder()
-                .setWebpushConfig(WebpushConfig.builder()
-                        .setNotification(WebpushNotification.builder()
-                                .setTitle(PUSH_NOTIFICATION_TITLE)
-                                .setBody(nickname + PUSH_NOTIFICATION_BODY)
-                                .build())
-                        .build())
-                .setToken(token)
-                .build();
     }
 
     @Override
