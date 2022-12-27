@@ -27,7 +27,7 @@ repositories {
 }
 
 dependencies {
-	implementation 'com.github.nswon:taskdb-notification-library:ver1.7'
+	implementation 'com.github.nswon:bssm-taskdb-notification-library:3.0.1'
 
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'

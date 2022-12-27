@@ -1,11 +1,8 @@
 package taskdb.taskdb.application.notification.service;
 
-import com.google.firebase.messaging.FirebaseMessaging;
-import com.google.firebase.messaging.Message;
-import com.google.firebase.messaging.WebpushConfig;
-import com.google.firebase.messaging.WebpushNotification;
 import lombok.RequiredArgsConstructor;
-import org.example.TaskdbPushMessage;
+import org.notification.PushMessage;
+import org.notification.SendPushNotification;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -46,7 +43,15 @@ public class NotificationService implements NotificationSaveUseCase, Notificatio
     @Transactional(readOnly = true)
     public void sendMessage(String nickname, Question question) {
         List<String> tokens = getTokenByCommentUsers(question);
-        tokens.forEach(token -> TaskdbPushMessage.send(token, nickname));
+        tokens.forEach(token -> SendPushNotification.send(of(token, nickname)));
+    }
+
+    private PushMessage of(String token, String nickname) {
+        return PushMessage.builder()
+                .token(token)
+                .title("Taskdb")
+                .body(nickname + "님이 답변을 등록하였습니다.")
+                .build();
     }
 
     private List<String> getTokenByCommentUsers(Question question) {

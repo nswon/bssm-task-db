@@ -1,8 +1,8 @@
 package taskdb.taskdb.infrastructure.config;
 
-import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
+import org.notification.CreateFirebaseOptions;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
@@ -16,10 +16,7 @@ public class FcmConfig {
 
     @PostConstruct
     public void initialize() throws IOException {
-        FirebaseOptions options = new FirebaseOptions.Builder()
-                .setCredentials(GoogleCredentials.fromStream(new ClassPathResource(FIREBASE_CONFIG_PATH).getInputStream()))
-                .setProjectId(PROJECT_ID)
-                .build();
+        FirebaseOptions options = CreateFirebaseOptions.create(new ClassPathResource(FIREBASE_CONFIG_PATH).getInputStream(), PROJECT_ID);
         FirebaseApp.initializeApp(options);
     }
 }
