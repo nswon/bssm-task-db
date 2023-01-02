@@ -3,6 +3,7 @@ package taskdb.taskdb.domain.user.entity;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import taskdb.taskdb.common.support.BaseEntity;
 import taskdb.taskdb.domain.answer.entity.Answer;
 import taskdb.taskdb.domain.comment.entity.Comment;
 import taskdb.taskdb.domain.answerLike.entity.AnswerLike;
@@ -19,12 +20,7 @@ import java.util.*;
 @Entity
 @Getter
 @Table(name = "USERS")
-@EqualsAndHashCode
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+public class User extends BaseEntity {
     @Embedded
     private Email email;
 

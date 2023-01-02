@@ -2,9 +2,9 @@ package taskdb.taskdb.domain.comment.entity;
 
 import lombok.Builder;
 import lombok.Getter;
+import taskdb.taskdb.common.support.BaseEntity;
 import taskdb.taskdb.domain.question.entity.Question;
 import taskdb.taskdb.domain.user.entity.User;
-import taskdb.taskdb.common.support.BaseTimeEntity;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -13,11 +13,7 @@ import java.util.List;
 @Entity
 @Getter
 @Table(name = "COMMENT")
-public class Comment extends BaseTimeEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+public class Comment extends BaseEntity {
     @Embedded
     private Content content;
 

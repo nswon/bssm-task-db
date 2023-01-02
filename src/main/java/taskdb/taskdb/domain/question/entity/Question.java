@@ -2,12 +2,12 @@ package taskdb.taskdb.domain.question.entity;
 
 import lombok.Builder;
 import lombok.Getter;
+import taskdb.taskdb.common.support.BaseEntity;
 import taskdb.taskdb.domain.answer.entity.Answer;
 import taskdb.taskdb.domain.comment.entity.Comment;
 import taskdb.taskdb.domain.questionLike.entity.QuestionLike;
 import taskdb.taskdb.domain.questionLike.entity.QuestionUnLike;
 import taskdb.taskdb.domain.user.entity.User;
-import taskdb.taskdb.common.support.BaseTimeEntity;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -16,11 +16,7 @@ import java.util.List;
 @Entity
 @Getter
 @Table(name = "QUESTION")
-public class Question extends BaseTimeEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+public class Question extends BaseEntity {
     @Embedded
     private Title title;
 

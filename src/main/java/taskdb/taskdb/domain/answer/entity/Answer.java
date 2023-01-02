@@ -2,11 +2,11 @@ package taskdb.taskdb.domain.answer.entity;
 
 import lombok.Builder;
 import lombok.Getter;
+import taskdb.taskdb.common.support.BaseEntity;
 import taskdb.taskdb.domain.answerLike.entity.AnswerLike;
 import taskdb.taskdb.domain.question.entity.Question;
 import taskdb.taskdb.domain.answerLike.entity.AnswerUnLike;
 import taskdb.taskdb.domain.user.entity.User;
-import taskdb.taskdb.common.support.BaseTimeEntity;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -15,11 +15,7 @@ import java.util.List;
 @Entity
 @Getter
 @Table(name = "ANSWER")
-public class Answer extends BaseTimeEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+public class Answer extends BaseEntity {
     @Embedded
     private Content content;
 
@@ -94,10 +90,6 @@ public class Answer extends BaseTimeEntity {
 
     public boolean isAdopt() {
         return this.choose.equals(AnswerChoose.ADOPT);
-    }
-
-    public boolean isOngoing() {
-        return choose.equals(AnswerChoose.ONGOING);
     }
 
     public void addAnswerUnLike(AnswerUnLike answerUnLike) {

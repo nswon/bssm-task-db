@@ -2,6 +2,7 @@ package taskdb.taskdb.domain.store.entity;
 
 import lombok.Builder;
 import lombok.Getter;
+import taskdb.taskdb.common.support.BaseEntity;
 import taskdb.taskdb.domain.user.entity.User;
 
 import javax.persistence.*;
@@ -9,11 +10,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Table(name = "QUESTION_STORE")
-public class QuestionStore {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+public class QuestionStore extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
