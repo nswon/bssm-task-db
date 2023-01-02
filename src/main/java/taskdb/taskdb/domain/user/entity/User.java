@@ -90,10 +90,6 @@ public class User {
         this.role = role;
     }
 
-    public boolean isNotCorrectEmail(String email) {
-        return !this.email.getValue().equals(email);
-    }
-
     public void addContributionLevel() {
         this.contributionLevel += 1;
     }
@@ -175,7 +171,7 @@ public class User {
         this.answers.add(answer);
     }
 
-    public void addQuestion(Question question) {
+    public void writeQuestion(Question question) {
         this.questions.add(question);
     }
 

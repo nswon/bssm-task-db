@@ -46,18 +46,18 @@ public class QuestionService implements
     @Transactional
     public Question save(QuestionCreateRequestDto requestDto) {
         User user = getUserPort.getCurrentUser();
-        Question question = of(requestDto, user);
+        Question question = toEntity(requestDto, user);
         question.openQuestion();
         return saveQuestionPort.save(question);
     }
 
-    private Question of(QuestionCreateRequestDto requestDto, User user) {
+    private Question toEntity(QuestionCreateRequestDto requestDto, User user) {
         Question question = Question.builder()
                 .title(Title.of(requestDto.getTitle()))
                 .content(Content.of(requestDto.getContent()))
                 .category(requestDto.getCategory())
                 .build();
-        question.relationUser(user);
+        question.register(user);
         return question;
     }
 
