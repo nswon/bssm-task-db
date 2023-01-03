@@ -18,6 +18,7 @@ import taskdb.taskdb.application.user.port.out.SaveUserPort;
 import taskdb.taskdb.application.auth.service.EmailService;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -46,7 +47,7 @@ public class UserService implements UserJoinUseCase, GetUserUseCase, UserUpdateU
     }
 
     @Override
-    public UserResponseDto getUser(Long id) {
+    public UserResponseDto getUser(UUID id) {
         var user = getUserPort.getUser(id);
         return userMapper.of(user);
     }

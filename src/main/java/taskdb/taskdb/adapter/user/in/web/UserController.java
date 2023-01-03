@@ -13,6 +13,7 @@ import taskdb.taskdb.application.user.port.in.UserUpdateUserCase;
 import taskdb.taskdb.common.support.Result;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -29,7 +30,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public UserResponseDto getUserById(@PathVariable("id") Long id) {
+    public UserResponseDto getUserById(@PathVariable("id") UUID id) {
         return getUserUseCase.getUser(id);
     }
 
