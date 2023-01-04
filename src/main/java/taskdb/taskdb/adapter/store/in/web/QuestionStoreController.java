@@ -8,6 +8,8 @@ import taskdb.taskdb.application.store.port.in.GetQuestionStoreUseCase;
 import taskdb.taskdb.application.store.port.in.QuestionStoreSaveUseCase;
 import taskdb.taskdb.common.support.Result;
 
+import java.util.UUID;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/store")
@@ -17,7 +19,7 @@ public class QuestionStoreController {
     private final DeleteQuestionStoreUseCase deleteQuestionStoreUseCase;
 
     @PostMapping("/{id}/new")
-    public void create(@PathVariable("id") Long id) {
+    public void create(@PathVariable("id") UUID id) {
         questionStoreSaveUseCase.save(id);
     }
 
@@ -28,7 +30,7 @@ public class QuestionStoreController {
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable("id") Long id) {
+    public void delete(@PathVariable("id") UUID id) {
         deleteQuestionStoreUseCase.delete(id);
     }
 

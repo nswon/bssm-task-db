@@ -8,6 +8,7 @@ import taskdb.taskdb.domain.question.entity.Question;
 import taskdb.taskdb.domain.question.entity.QuestionStatus;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.regex.Pattern;
 
 import static taskdb.taskdb.domain.question.entity.QQuestion.question;
@@ -28,7 +29,7 @@ public class QuestionCustom implements QuestionCustomRepository {
 
     private BooleanExpression isTitleContainsOrIdEq(String keyword) {
         if(ONLY_NUMBER_REGEX.matcher(keyword).matches()) {
-            return question.id.eq(Long.valueOf(keyword));
+            return question.id.eq(UUID.fromString(keyword));
         }
         return question.title.value.contains(keyword);
     }

@@ -11,6 +11,7 @@ import taskdb.taskdb.domain.question.entity.QuestionStatus;
 import taskdb.taskdb.domain.question.exception.QuestionNotFoundException;
 
 import java.util.List;
+import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
@@ -35,7 +36,7 @@ public class QuestionAdapter implements SaveQuestionPort, GetQuestionPort, Delet
     }
 
     @Override
-    public Question getQuestion(Long id) {
+    public Question getQuestion(UUID id) {
         return questionRepository.findById(id)
                 .orElseThrow(QuestionNotFoundException::new);
     }

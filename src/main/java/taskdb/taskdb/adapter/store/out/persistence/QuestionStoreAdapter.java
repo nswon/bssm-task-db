@@ -12,11 +12,13 @@ import taskdb.taskdb.domain.store.exception.StoreQuestionNotFoundException;
 import taskdb.taskdb.domain.user.entity.User;
 
 import java.util.List;
+import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
 public class QuestionStoreAdapter implements SaveQuestionStorePort, GetQuestionStorePort, DeleteQuestionStorePort {
     private final QuestionStoreRepository questionStoreRepository;
+    private final QuestionStoreCustomRepository questionStoreCustomRepository;
 
     @Override
     public QuestionStore save(User user, QuestionStore questionStore) {
@@ -36,11 +38,8 @@ public class QuestionStoreAdapter implements SaveQuestionStorePort, GetQuestionS
     }
 
     @Override
-    public QuestionStore getQuestionStore(User user, Long id) {
-        List<QuestionStore> questionStores = questionStoreRepository.findByUser(user);
-        return questionStores.stream()
-                .filter(questionStore -> questionStore.getId().equals(id))
-                .findAny()
+    public QuestionStore getQuestionStore(User user, UUID id) {
+        return questionStoreCustomRepository.getQuestionStoreByUser(user, id)
                 .orElseThrow(StoreQuestionNotFoundException::new);
     }
 

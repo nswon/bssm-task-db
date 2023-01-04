@@ -19,6 +19,7 @@ import taskdb.taskdb.domain.store.entity.QuestionStore;
 import taskdb.taskdb.domain.user.entity.User;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -34,7 +35,7 @@ public class QuestionStoreService implements
     private final UserPolicy userPolicy;
 
     @Override
-    public void save(Long id) {
+    public void save(UUID id) {
         User user = getUserPort.getCurrentUser();
         Question question = getQuestionPort.getQuestion(id);
         QuestionStore questionStore = questionStoreMapper.toEntity(question, user);
@@ -50,7 +51,7 @@ public class QuestionStoreService implements
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(UUID id) {
         User user = getUserPort.getCurrentUser();
         QuestionStore questionStore = getQuestionsStorePort.getQuestionStore(user, id);
         userPolicy.check(user, questionStore.getUser());
