@@ -16,6 +16,8 @@ import taskdb.taskdb.domain.questionLike.entity.QuestionUnLike;
 import taskdb.taskdb.domain.questionLike.exception.DuplicateQuestionUnLikeException;
 import taskdb.taskdb.domain.user.entity.User;
 
+import java.util.UUID;
+
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -29,17 +31,17 @@ public class QuestionUnLikeService implements QuestionUnLikeUseCase {
     private final ExistQuestionLikePort existQuestionLikePort;
 
     @Override
-    public void unLike(Long id) {
+    public void unLike(UUID id) {
         User user = getUserPort.getCurrentUser();
         Question question = getQuestionPort.getQuestion(id);
-        checkUnLike(question, user);
+        checkAlreadyUnLike(question, user);
         QuestionUnLike questionUnLike = questionUnLikeMapper.toEntity(question, user);
         saveQuestionUnLikePort.save(questionUnLike);
         checkUnLikeCount(question, user);
         question.downLikeCount();
     }
 
-    private void checkUnLike(Question question, User user) {
+    private void checkAlreadyUnLike(Question question, User user) {
         if(existQuestionUnLikePort.hasQuestionUnLike(question, user)) {
             throw new DuplicateQuestionUnLikeException();
         }

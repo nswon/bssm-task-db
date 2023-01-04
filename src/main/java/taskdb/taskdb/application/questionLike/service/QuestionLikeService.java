@@ -1,10 +1,8 @@
 package taskdb.taskdb.application.questionLike.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import taskdb.taskdb.application.answerLike.port.out.ExistAnswerUnLikePort;
 import taskdb.taskdb.application.questionLike.dto.QuestionLikeMapper;
 import taskdb.taskdb.application.questionLike.port.in.QuestionLikeUseCase;
 import taskdb.taskdb.application.questionLike.port.out.*;
@@ -14,6 +12,8 @@ import taskdb.taskdb.domain.question.entity.Question;
 import taskdb.taskdb.domain.questionLike.exception.DuplicateQuestionLikeException;
 import taskdb.taskdb.domain.user.entity.User;
 import taskdb.taskdb.application.user.port.out.GetUserPort;
+
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -28,17 +28,17 @@ public class QuestionLikeService implements QuestionLikeUseCase {
     private final ExistQuestionUnLikePort existQuestionUnLikePort;
 
     @Override
-    public void like(Long id) {
+    public void like(UUID id) {
         User user = getUserPort.getCurrentUser();
         Question question = getQuestionPort.getQuestion(id);
-        checkLike(question, user);
+        checkAlreadyLike(question, user);
         QuestionLike questionLike = questionLikeMapper.toEntity(question, user);
         saveQuestionLikePort.save(questionLike);
         checkLikeCount(question, user);
         question.addLikeCount();
     }
 
-    private void checkLike(Question question, User user) {
+    private void checkAlreadyLike(Question question, User user) {
         if(existQuestionLikePort.hasQuestionLike(question, user)) {
             throw new DuplicateQuestionLikeException();
         }
