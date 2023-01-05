@@ -8,6 +8,7 @@ import taskdb.taskdb.common.support.Result;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -31,17 +32,17 @@ public class QuestionController {
     }
 
     @GetMapping("/{id}")
-    public QuestionDetailResponse getQuestion(@PathVariable("id") Long id) {
+    public QuestionDetailResponse getQuestion(@PathVariable("id") UUID id) {
         return questionGetUseCase.getQuestion(id);
     }
 
     @PutMapping("/{id}/edit")
-    public void update(@PathVariable("id") Long id, @RequestBody QuestionUpdateRequestDto requestDto) {
+    public void update(@PathVariable("id") UUID id, @RequestBody QuestionUpdateRequestDto requestDto) {
         questionUpdateUseCase.update(id, requestDto);
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable("id") Long id) {
+    public void delete(@PathVariable("id") UUID id) {
         questionDeleteUserCase.delete(id);
     }
 

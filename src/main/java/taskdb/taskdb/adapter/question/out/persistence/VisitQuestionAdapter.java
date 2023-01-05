@@ -7,6 +7,8 @@ import taskdb.taskdb.application.question.port.out.GetVisitQuestionPort;
 import taskdb.taskdb.application.question.port.out.SaveVisitQuestionPort;
 import taskdb.taskdb.domain.question.entity.VisitQuestion;
 
+import java.util.UUID;
+
 @Component
 @RequiredArgsConstructor
 public class VisitQuestionAdapter implements SaveVisitQuestionPort, GetVisitQuestionPort {
@@ -14,14 +16,14 @@ public class VisitQuestionAdapter implements SaveVisitQuestionPort, GetVisitQues
     private final VisitQuestionRepository visitQuestionRepository;
 
     @Override
-    public boolean hasQuestionId(Long id) {
+    public boolean hasQuestionId(UUID id) {
         return visitQuestionRepository.existsByQuestionId(id);
     }
 
     @Transactional
     @Override
-    public Long save(Long id) {
+    public void save(UUID id) {
         VisitQuestion visitQuestion = VisitQuestion.of(KEY, id);
-        return visitQuestionRepository.save(visitQuestion).getQuestionId();
+        visitQuestionRepository.save(visitQuestion);
     }
 }

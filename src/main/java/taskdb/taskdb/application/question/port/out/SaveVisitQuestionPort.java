@@ -1,5 +1,7 @@
 package taskdb.taskdb.application.question.port.out;
 
+import java.util.UUID;
+
 public interface SaveVisitQuestionPort {
-    Long save(Long id);
+    void save(UUID id);
 }

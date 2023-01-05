@@ -23,6 +23,7 @@ import taskdb.taskdb.domain.user.exception.DifferentUserException;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -68,7 +69,7 @@ public class QuestionService implements
     }
 
     @Transactional
-    public QuestionDetailResponse getQuestion(Long id) {
+    public QuestionDetailResponse getQuestion(UUID id) {
         User user = getUserPort.getCurrentUser();
         Question question = getQuestionPort.getQuestion(id);
         checkViewCount(question);
@@ -97,7 +98,7 @@ public class QuestionService implements
 
     @Override
     @Transactional
-    public void update(Long id, QuestionUpdateRequestDto requestDto) {
+    public void update(UUID id, QuestionUpdateRequestDto requestDto) {
         User user = getUserPort.getCurrentUser();
         Question question = getQuestionPort.getQuestion(id);
         userPolicy.check(user, question.getUser());
@@ -112,7 +113,7 @@ public class QuestionService implements
 
     @Override
     @Transactional
-    public void delete(Long id) {
+    public void delete(UUID id) {
         User user = getUserPort.getCurrentUser();
         Question question = getQuestionPort.getQuestion(id);
         userPolicy.check(user, question.getUser());
