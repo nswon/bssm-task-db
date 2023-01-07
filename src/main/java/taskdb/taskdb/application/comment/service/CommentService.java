@@ -22,6 +22,8 @@ import taskdb.taskdb.domain.user.entity.User;
 import taskdb.taskdb.application.user.port.out.GetUserPort;
 import taskdb.taskdb.application.comment.dto.CommentMapper;
 
+import java.util.UUID;
+
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -37,7 +39,7 @@ public class CommentService implements
     private final UserPolicy userPolicy;
 
     @Override
-    public void save(Long id, CommentCreateRequestDto requestDto) {
+    public void save(UUID id, CommentCreateRequestDto requestDto) {
         User user = getUserPort.getCurrentUser();
         Question question = getQuestionPort.getQuestion(id);
         Comment comment = commentMapper.of(requestDto, user, question);
@@ -46,7 +48,7 @@ public class CommentService implements
     }
 
     @Override
-    public void save(Long questionId, Long parentId, CommentCreateRequestDto requestDto) {
+    public void save(UUID questionId, UUID parentId, CommentCreateRequestDto requestDto) {
         User user = getUserPort.getCurrentUser();
         Question question = getQuestionPort.getQuestion(questionId);
         Comment parentComment = getCommentPort.getComment(parentId);
@@ -56,7 +58,7 @@ public class CommentService implements
     }
 
     @Override
-    public void update(Long id, CommentUpdateRequestDto requestDto) {
+    public void update(UUID id, CommentUpdateRequestDto requestDto) {
         User user = getUserPort.getCurrentUser();
         Comment comment = getCommentPort.getComment(id);
         userPolicy.check(user, comment.getUser());
@@ -69,7 +71,7 @@ public class CommentService implements
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(UUID id) {
         User user = getUserPort.getCurrentUser();
         Comment comment = getCommentPort.getComment(id);
         userPolicy.check(user, comment.getUser());

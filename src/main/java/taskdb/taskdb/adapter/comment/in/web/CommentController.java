@@ -9,6 +9,8 @@ import taskdb.taskdb.application.comment.port.in.CommentSaveUseCase;
 import taskdb.taskdb.application.comment.port.in.CommentUpdateUseCase;
 import taskdb.taskdb.application.comment.port.in.ReCommentSaveUseCase;
 
+import java.util.UUID;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/comment")
@@ -19,24 +21,24 @@ public class CommentController {
     private final CommentDeleteUseCase commentDeleteUseCase;
 
     @PostMapping("/{id}/new")
-    public void create(@PathVariable("id") Long id, @RequestBody CommentCreateRequestDto requestDto) {
+    public void create(@PathVariable("id") UUID id, @RequestBody CommentCreateRequestDto requestDto) {
         commentSaveUseCase.save(id, requestDto);
     }
 
     @PostMapping("/{id}/{pId}/new")
-    public void createReComment(@PathVariable("id") Long questionId,
-                                @PathVariable("pId") Long parentId,
+    public void createReComment(@PathVariable("id") UUID questionId,
+                                @PathVariable("pId") UUID parentId,
                                 @RequestBody CommentCreateRequestDto requestDto) {
         reCommentSaveUseCase.save(questionId, parentId, requestDto);
     }
 
     @PutMapping("/{id}/edit")
-    public void update(@PathVariable("id") Long id, @RequestBody CommentUpdateRequestDto requestDto) {
+    public void update(@PathVariable("id") UUID id, @RequestBody CommentUpdateRequestDto requestDto) {
         commentUpdateUseCase.update(id, requestDto);
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable("id") Long id) {
+    public void delete(@PathVariable("id") UUID id) {
         commentDeleteUseCase.delete(id);
     }
 }

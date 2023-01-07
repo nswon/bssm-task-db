@@ -10,6 +10,7 @@ import taskdb.taskdb.domain.comment.exception.CommentNotFoundException;
 import taskdb.taskdb.domain.question.entity.Question;
 
 import java.util.List;
+import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
@@ -29,7 +30,7 @@ public class CommentAdapter implements SaveCommentPort, GetCommentPort, DeleteCo
     }
 
     @Override
-    public Comment getComment(Long id) {
+    public Comment getComment(UUID id) {
         return commentRepository.findById(id)
                 .orElseThrow(CommentNotFoundException::new);
     }
