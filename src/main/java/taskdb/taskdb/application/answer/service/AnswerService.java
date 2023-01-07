@@ -29,6 +29,7 @@ import taskdb.taskdb.application.answer.dto.AnswerMapper;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -48,7 +49,7 @@ public class AnswerService implements
     private final UserPolicy userPolicy;
 
     @Override
-    public void save(Long id, AnswerCreateRequestDto requestDto) {
+    public void save(UUID id, AnswerCreateRequestDto requestDto) {
         User user = getUserPort.getCurrentUser();
         Question question = getQuestionPort.getQuestion(id);
         Answer answer = answerMapper.of(requestDto, user, question);
@@ -81,7 +82,7 @@ public class AnswerService implements
     }
 
     @Override
-    public void update(Long id, AnswerUpdateRequestDto requestDto) {
+    public void update(UUID id, AnswerUpdateRequestDto requestDto) {
         User user = getUserPort.getCurrentUser();
         Answer answer = getAnswerPort.getAnswer(id);
         userPolicy.check(user, answer.getUser());
@@ -95,7 +96,7 @@ public class AnswerService implements
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(UUID id) {
         User user = getUserPort.getCurrentUser();
         Answer answer = getAnswerPort.getAnswer(id);
         userPolicy.check(user, answer.getUser());
@@ -104,7 +105,7 @@ public class AnswerService implements
     }
 
     @Override
-    public void adopt(Long id) {
+    public void adopt(UUID id) {
         User user = getUserPort.getCurrentUser();
         Answer answer = getAnswerPort.getAnswer(id);
         Question question = answer.getQuestion();

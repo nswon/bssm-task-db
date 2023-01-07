@@ -5,7 +5,8 @@ import taskdb.taskdb.domain.answer.entity.Answer;
 import taskdb.taskdb.domain.question.entity.Question;
 
 import java.util.List;
+import java.util.UUID;
 
-public interface AnswerRepository extends JpaRepository<Answer, Long> {
+public interface AnswerRepository extends JpaRepository<Answer, UUID> {
     List<Answer> findByQuestion(Question question);
 }

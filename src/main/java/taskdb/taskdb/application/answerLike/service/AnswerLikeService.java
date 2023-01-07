@@ -16,6 +16,8 @@ import taskdb.taskdb.domain.user.entity.User;
 import taskdb.taskdb.application.user.port.out.GetUserPort;
 import taskdb.taskdb.application.answerLike.dto.AnswerLikeMapper;
 
+import java.util.UUID;
+
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -29,7 +31,7 @@ public class AnswerLikeService implements AnswerLikeUseCase {
     private final ExistAnswerUnLikePort existAnswerUnLikePort;
 
     @Override
-    public void like(Long id) {
+    public void like(UUID id) {
         User user = getUserPort.getCurrentUser();
         Answer answer = getAnswerPort.getAnswer(id);
         checkLike(answer, user);

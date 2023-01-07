@@ -10,6 +10,7 @@ import taskdb.taskdb.domain.answer.exception.AnswerNotFoundException;
 import taskdb.taskdb.domain.question.entity.Question;
 
 import java.util.List;
+import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
@@ -22,7 +23,7 @@ public class AnswerAdapter implements SaveAnswerPort, GetAnswerPort, DeleteAnswe
     }
 
     @Override
-    public Answer getAnswer(Long id) {
+    public Answer getAnswer(UUID id) {
         return answerRepository.findById(id)
                 .orElseThrow(AnswerNotFoundException::new);
     }

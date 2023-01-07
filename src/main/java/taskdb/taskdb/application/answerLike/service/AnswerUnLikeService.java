@@ -16,6 +16,8 @@ import taskdb.taskdb.domain.answerLike.entity.AnswerUnLike;
 import taskdb.taskdb.domain.answerLike.exception.DuplicateAnswerUnLikeException;
 import taskdb.taskdb.domain.user.entity.User;
 
+import java.util.UUID;
+
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -29,7 +31,7 @@ public class AnswerUnLikeService implements AnswerUnLikeUseCase {
     private final DeleteAnswerLikePort deleteAnswerLikePort;
 
     @Override
-    public void unLike(Long id) {
+    public void unLike(UUID id) {
         User user = getUserPort.getCurrentUser();
         Answer answer = getAnswerPort.getAnswer(id);
         checkUnLike(answer, user);
