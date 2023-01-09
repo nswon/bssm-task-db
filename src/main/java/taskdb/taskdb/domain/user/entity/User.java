@@ -163,7 +163,7 @@ public class User extends BaseEntity {
         this.comments.add(comment);
     }
 
-    public void addAnswer(Answer answer) {
+    public void writeAnswer(Answer answer) {
         this.answers.add(answer);
     }
 

@@ -12,7 +12,7 @@ public class AnswerMapper {
         Answer answer = Answer.builder()
                 .content(Content.of(requestDto.getContent()))
                 .build();
-        answer.confirmUser(user);
+        answer.registerWriter(user);
         answer.confirmQuestion(question);
         return answer;
     }

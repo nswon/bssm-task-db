@@ -46,9 +46,9 @@ public class Answer extends BaseEntity {
         this.content = content;
     }
 
-    public void confirmUser(User user) {
+    public void registerWriter(User user) {
         this.user = user;
-        user.addAnswer(this);
+        user.writeAnswer(this);
     }
 
     public void confirmQuestion(Question question) {
