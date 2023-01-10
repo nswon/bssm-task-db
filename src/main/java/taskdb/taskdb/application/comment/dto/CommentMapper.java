@@ -12,7 +12,7 @@ public class CommentMapper {
         Comment comment = Comment.builder()
                 .content(Content.of(requestDto.getContent()))
                 .build();
-        comment.confirmUser(user);
+        comment.registerWriter(user);
         comment.confirmQuestion(question);
         return comment;
     }
@@ -21,7 +21,7 @@ public class CommentMapper {
         Comment comment = Comment.builder()
                 .content(Content.of(requestDto.getContent()))
                 .build();
-        comment.confirmUser(user);
+        comment.registerWriter(user);
         comment.confirmQuestion(question);
         comment.confirmParent(parent);
         return comment;

@@ -159,7 +159,7 @@ public class User extends BaseEntity {
         this.questionStores.add(questionStore);
     }
 
-    public void addComment(Comment comment) {
+    public void writeComment(Comment comment) {
         this.comments.add(comment);
     }
 
