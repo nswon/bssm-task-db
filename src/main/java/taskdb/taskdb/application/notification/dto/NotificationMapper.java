@@ -11,7 +11,7 @@ public class NotificationMapper {
         Notification notification = Notification.builder()
                 .token(requestDto.getToken())
                 .build();
-        notification.confirmUser(user);
+        notification.registerUser(user);
         return notification;
     }
 }

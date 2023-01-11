@@ -24,8 +24,8 @@ public class Notification extends BaseEntity {
         this.token = token;
     }
 
-    public void confirmUser(User user) {
+    public void registerUser(User user) {
         this.user = user;
-        user.addNotification(this);
+        user.permitNotification(this);
     }
 }

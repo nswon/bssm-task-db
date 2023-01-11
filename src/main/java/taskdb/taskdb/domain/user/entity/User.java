@@ -171,7 +171,7 @@ public class User extends BaseEntity {
         this.questions.add(question);
     }
 
-    public void addNotification(Notification notification) {
+    public void permitNotification(Notification notification) {
         this.notification = notification;
     }
 
