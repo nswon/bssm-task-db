@@ -33,7 +33,7 @@ public class QuestionUnLike extends BaseEntity {
         question.addQuestionUnLike(this);
     }
 
-    public void addUser() {
-        user.addQuestionUnLike(this);
+    public void registerWriter() {
+        user.clickQuestionUnLike(this);
     }
 }

@@ -13,7 +13,7 @@ public class QuestionUnLikeMapper {
                 .user(user)
                 .build();
         questionUnLike.addQuestion();
-        questionUnLike.addUser();
+        questionUnLike.registerWriter();
         return questionUnLike;
     }
 }

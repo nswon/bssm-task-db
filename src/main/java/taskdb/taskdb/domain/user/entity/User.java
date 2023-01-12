@@ -175,7 +175,7 @@ public class User extends BaseEntity {
         this.notification = notification;
     }
 
-    public void addQuestionUnLike(QuestionUnLike questionUnLike) {
+    public void clickQuestionUnLike(QuestionUnLike questionUnLike) {
         questionUnLikes.add(questionUnLike);
     }
 
